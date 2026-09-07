@@ -110,7 +110,6 @@ Partial Class frmLogin
         txtPassword.Location = New Point(40, 282)
         txtPassword.Name = "txtPassword"
         txtPassword.PasswordChar = "●"c
-        txtPassword.PlaceholderText = "Enter password"
         txtPassword.Size = New Size(310, 27)
         txtPassword.TabIndex = 6
         ' 
@@ -133,7 +132,6 @@ Partial Class frmLogin
         txtUsername.ForeColor = Color.FromArgb(CByte(43), CByte(43), CByte(43))
         txtUsername.Location = New Point(40, 218)
         txtUsername.Name = "txtUsername"
-        txtUsername.PlaceholderText = "Enter username"
         txtUsername.Size = New Size(310, 27)
         txtUsername.TabIndex = 4
         ' 
