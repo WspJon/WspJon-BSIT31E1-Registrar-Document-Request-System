@@ -21,7 +21,6 @@ Partial Class frmLogin
         pnlLeft = New Panel()
         picLogo = New PictureBox()
         pnlRight = New Panel()
-        lblVersion = New Label()
         btnLogin = New Button()
         txtPassword = New TextBox()
         lblPassword = New Label()
@@ -62,7 +61,6 @@ Partial Class frmLogin
         ' pnlRight
         ' 
         pnlRight.BackColor = Color.FromArgb(CByte(245), CByte(197), CByte(24))
-        pnlRight.Controls.Add(lblVersion)
         pnlRight.Controls.Add(btnLogin)
         pnlRight.Controls.Add(txtPassword)
         pnlRight.Controls.Add(lblPassword)
@@ -75,17 +73,6 @@ Partial Class frmLogin
         pnlRight.Name = "pnlRight"
         pnlRight.Size = New Size(400, 520)
         pnlRight.TabIndex = 1
-        ' 
-        ' lblVersion
-        ' 
-        lblVersion.Font = New Font("Segoe UI", 8F)
-        lblVersion.ForeColor = Color.FromArgb(CByte(90), CByte(78), CByte(18))
-        lblVersion.Location = New Point(40, 395)
-        lblVersion.Name = "lblVersion"
-        lblVersion.Size = New Size(310, 15)
-        lblVersion.TabIndex = 8
-        lblVersion.Text = "Registrar Document Request System v1.0"
-        lblVersion.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' btnLogin
         ' 
@@ -230,6 +217,5 @@ Partial Class frmLogin
     Friend WithEvents lblPassword As System.Windows.Forms.Label
     Friend WithEvents txtPassword As System.Windows.Forms.TextBox
     Friend WithEvents btnLogin As System.Windows.Forms.Button
-    Friend WithEvents lblVersion As System.Windows.Forms.Label
 
 End Class

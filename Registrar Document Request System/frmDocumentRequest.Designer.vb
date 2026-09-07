@@ -118,7 +118,7 @@ Partial Class frmDocumentRequest
         Me.lblTotalAmountValue.Name = "lblTotalAmountValue"
         Me.lblTotalAmountValue.Size = New System.Drawing.Size(126, 37)
         Me.lblTotalAmountValue.TabIndex = 14
-        Me.lblTotalAmountValue.Text = "₱350.00"
+        Me.lblTotalAmountValue.Text = "₱0.00"
         '
         'lblTotalAmountTitle
         '
@@ -382,9 +382,6 @@ Partial Class frmDocumentRequest
         Me.pnlHeader.PerformLayout()
         Me.ResumeLayout(False)
 
-        ' Preview rows for DataGridView (Design properties representation)
-        Me.dgvDocuments.Rows.Add("Transcript of Records", "150.00", "1", "150.00")
-        Me.dgvDocuments.Rows.Add("Certificate of Good Moral", "100.00", "2", "200.00")
         Me.cboPaymentStatus.SelectedIndex = 0
         Me.cboRequestStatus.SelectedIndex = 0
     End Sub

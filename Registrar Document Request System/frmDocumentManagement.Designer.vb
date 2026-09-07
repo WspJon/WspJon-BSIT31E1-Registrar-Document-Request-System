@@ -231,10 +231,6 @@ Partial Class frmDocumentManagement
         Me.pnlHeader.PerformLayout()
         Me.ResumeLayout(False)
 
-        ' Sample preview rows for design view
-        Me.dgvDocuments.Rows.Add("Transcript of Records", "Official academic record", "150.00", "Active", "Edit | Deactivate")
-        Me.dgvDocuments.Rows.Add("Certificate of Enrollment", "Proof of current enrollment", "50.00", "Active", "Edit | Deactivate")
-        Me.dgvDocuments.Rows.Add("Certificate of Good Moral", "Character reference", "100.00", "Active", "Edit | Deactivate")
     End Sub
 
     Friend WithEvents pnlMainCard As System.Windows.Forms.Panel

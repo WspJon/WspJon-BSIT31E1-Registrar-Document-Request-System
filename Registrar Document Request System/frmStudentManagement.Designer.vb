@@ -254,11 +254,7 @@ Partial Class frmStudentManagement
         Me.pnlHeader.PerformLayout()
         Me.ResumeLayout(False)
 
-        ' Sample preview row setup for design view
         Me.cboCourseFilter.SelectedIndex = 0
-        Me.dgvStudents.Rows.Add("20260045", "Dela Cruz, Juan", "BSIT", "3rd", "Active", "Edit | Deactivate")
-        Me.dgvStudents.Rows.Add("20260046", "Santos, Maria", "BSA", "2nd", "Active", "Edit | Deactivate")
-        Me.dgvStudents.Rows.Add("20260047", "Reyes, Pedro", "BSCS", "4th", "Inactive", "Edit | Reactivate")
     End Sub
 
     Friend WithEvents pnlMainCard As System.Windows.Forms.Panel
