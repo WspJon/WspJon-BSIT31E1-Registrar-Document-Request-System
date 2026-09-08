@@ -31,11 +31,100 @@ Public Class frmLogin
     ' (the person doing functions will fill this in)
     ' ──────────────────────────────────────────────
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        ' TODO: Pass selectedRole to the authentication logic
-        ' e.g. AuthenticateUser(txtUsername.Text, txtPassword.Text, selectedRole)
+        Dim username As String = txtUsername.Text.Trim()
+        Dim password As String = txtPassword.Text.Trim()
+
+        If username = "" OrElse password = "" Then
+            MessageBox.Show("Please enter both username and password.", "Required Fields", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' --- TEMPORARY BYPASS FOR TESTING WITHOUT DATABASE ---
+        If username = "test" And password = "123" Then
+            dbHelper.currentUserName = "Test User"
+            dbHelper.currentUserRole = selectedRole ' Use whatever role tab they clicked
+            MessageBox.Show("Using Temporary Testing Bypass!", "Test Mode", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.Hide()
+            
+            If selectedRole = "Administrator" Then
+                Dim adminDash As New frmAdminDashboard()
+                adminDash.Show()
+            Else
+                Dim staffDash As New frmStaffDashboard()
+                staffDash.Show()
+            End If
+            Return
+        End If
+        ' -----------------------------------------------------
+
+        Try
+            Using conn = dbHelper.GetConnection()
+                conn.Open()
+                ' Parameterized query to prevent SQL injection and check role
+                Dim query As String = "SELECT UserID, FullName, Role, Status FROM tblusers WHERE Username = @username AND Password = @password AND Role = @role"
+                
+                Using cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@username", username)
+                    
+                    ' Hash the password entered by the user before comparing it with the database (Rule 5.6)
+                    Dim hashedPassword As String = HashPassword(password)
+                    cmd.Parameters.AddWithValue("@password", hashedPassword)
+                    
+                    cmd.Parameters.AddWithValue("@role", selectedRole)
+
+                    Using reader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            ' User found! Check if active
+                            Dim status As String = reader("Status").ToString()
+                            
+                            If status = "Inactive" Then
+                                MessageBox.Show("This account has been deactivated. Please contact an administrator.", "Account Inactive", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Return
+                            End If
+
+                            ' Store user details globally in our dbHelper
+                            dbHelper.currentUserID = Convert.ToInt32(reader("UserID"))
+                            dbHelper.currentUserName = reader("FullName").ToString()
+                            dbHelper.currentUserRole = reader("Role").ToString()
+
+                            MessageBox.Show($"Welcome, {dbHelper.currentUserName}!", "Login Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                            ' Route to the correct dashboard based on role
+                            Me.Hide()
+                            If dbHelper.currentUserRole = "Administrator" Then
+                                Dim adminDash As New frmAdminDashboard()
+                                adminDash.Show()
+                            Else
+                                Dim staffDash As New frmStaffDashboard()
+                                staffDash.Show()
+                            End If
+                        Else
+                            ' Incorrect details
+                            MessageBox.Show("Invalid username, password, or role selection.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Database connection error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub pnlLeft_Paint(sender As Object, e As PaintEventArgs) Handles pnlLeft.Paint
 
     End Sub
+
+    ' SHA256 Hashing Implementation (Rule 5.6)
+    Private Function HashPassword(password As String) As String
+        Using sha256 As System.Security.Cryptography.SHA256 = System.Security.Cryptography.SHA256.Create()
+            Dim bytes As Byte() = System.Text.Encoding.UTF8.GetBytes(password)
+            Dim hashBytes As Byte() = sha256.ComputeHash(bytes)
+            Dim builder As New System.Text.StringBuilder()
+            For i As Integer = 0 To hashBytes.Length - 1
+                builder.Append(hashBytes(i).ToString("x2"))
+            Next
+            Return builder.ToString()
+        End Using
+    End Function
+
 End Class
