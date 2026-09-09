@@ -60,30 +60,70 @@ Public Class frmAdminDashboard
         End Try
     End Sub
 
+    ' --- HELPER TO EMBED FORMS ---
+    Private Sub ShowFormInPanel(frm As Form)
+        ' Hide all default dashboard elements (cards, table, labels)
+        For Each ctrl As Control In pnlContent.Controls
+            If Not TypeOf ctrl Is Form Then
+                ctrl.Visible = False
+            End If
+        Next
+        
+        ' Close any previously opened embedded forms
+        For i As Integer = pnlContent.Controls.Count - 1 To 0 Step -1
+            Dim ctrl As Control = pnlContent.Controls(i)
+            If TypeOf ctrl Is Form Then
+                pnlContent.Controls.Remove(ctrl)
+                ctrl.Dispose()
+            End If
+        Next
+
+        ' Prepare and inject the new form
+        frm.TopLevel = False
+        frm.FormBorderStyle = FormBorderStyle.None
+        frm.Dock = DockStyle.Fill
+        pnlContent.Controls.Add(frm)
+        frm.BringToFront()
+        frm.Show()
+    End Sub
+
     ' --- NAVIGATION BUTTONS ---
+    Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
+        ' Remove embedded forms
+        For i As Integer = pnlContent.Controls.Count - 1 To 0 Step -1
+            Dim ctrl As Control = pnlContent.Controls(i)
+            If TypeOf ctrl Is Form Then
+                pnlContent.Controls.Remove(ctrl)
+                ctrl.Dispose()
+            End If
+        Next
+        
+        ' Restore original dashboard controls
+        For Each ctrl As Control In pnlContent.Controls
+            ctrl.Visible = True
+        Next
+        
+        LoadDashboardData()
+    End Sub
+
     Private Sub btnDocumentManagement_Click(sender As Object, e As EventArgs) Handles btnDocumentManagement.Click
-        Dim frmDoc As New frmDocumentManagement()
-        frmDoc.ShowDialog()
+        ShowFormInPanel(New frmDocumentManagement())
     End Sub
 
     Private Sub btnStudentManagement_Click(sender As Object, e As EventArgs) Handles btnStudentManagement.Click
-        Dim frmStudent As New frmStudentManagement()
-        frmStudent.ShowDialog()
+        ShowFormInPanel(New frmStudentManagement())
     End Sub
 
     Private Sub btnDocumentRequests_Click(sender As Object, e As EventArgs) Handles btnDocumentRequests.Click
-        Dim frmReq As New frmAdminRequestList()
-        frmReq.ShowDialog()
+        ShowFormInPanel(New frmAdminRequestList())
     End Sub
 
     Private Sub btnUserManagement_Click(sender As Object, e As EventArgs) Handles btnUserManagement.Click
-        Dim frmUser As New frmUserManagement()
-        frmUser.ShowDialog()
+        ShowFormInPanel(New frmUserManagement())
     End Sub
 
     Private Sub btnReports_Click(sender As Object, e As EventArgs) Handles btnReports.Click
-        Dim frmRep As New frmReports()
-        frmRep.ShowDialog()
+        ShowFormInPanel(New frmReports())
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
