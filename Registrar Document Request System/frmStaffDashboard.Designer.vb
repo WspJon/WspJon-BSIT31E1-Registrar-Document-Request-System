@@ -76,17 +76,19 @@ Partial Class frmStaffDashboard
         pnlSidebar.Controls.Add(pnlLogoArea)
         pnlSidebar.Dock = DockStyle.Left
         pnlSidebar.Location = New Point(0, 0)
+        pnlSidebar.Margin = New Padding(3, 4, 3, 4)
         pnlSidebar.Name = "pnlSidebar"
-        pnlSidebar.Size = New Size(200, 600)
+        pnlSidebar.Size = New Size(229, 800)
         pnlSidebar.TabIndex = 0
         ' 
         ' pnlLogout
         ' 
         pnlLogout.Controls.Add(btnLogout)
         pnlLogout.Dock = DockStyle.Bottom
-        pnlLogout.Location = New Point(0, 545)
+        pnlLogout.Location = New Point(0, 727)
+        pnlLogout.Margin = New Padding(3, 4, 3, 4)
         pnlLogout.Name = "pnlLogout"
-        pnlLogout.Size = New Size(200, 55)
+        pnlLogout.Size = New Size(229, 73)
         pnlLogout.TabIndex = 7
         ' 
         ' btnLogout
@@ -97,9 +99,10 @@ Partial Class frmStaffDashboard
         btnLogout.Font = New Font("Segoe UI", 10.0F)
         btnLogout.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnLogout.Location = New Point(0, 0)
+        btnLogout.Margin = New Padding(3, 4, 3, 4)
         btnLogout.Name = "btnLogout"
-        btnLogout.Padding = New Padding(20, 0, 0, 0)
-        btnLogout.Size = New Size(200, 55)
+        btnLogout.Padding = New Padding(23, 0, 0, 0)
+        btnLogout.Size = New Size(229, 73)
         btnLogout.TabIndex = 0
         btnLogout.Text = "Logout"
         btnLogout.TextAlign = ContentAlignment.MiddleLeft
@@ -112,10 +115,11 @@ Partial Class frmStaffDashboard
         btnReports.FlatStyle = FlatStyle.Flat
         btnReports.Font = New Font("Segoe UI", 10.0F)
         btnReports.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        btnReports.Location = New Point(0, 257)
+        btnReports.Location = New Point(0, 343)
+        btnReports.Margin = New Padding(3, 4, 3, 4)
         btnReports.Name = "btnReports"
-        btnReports.Padding = New Padding(20, 0, 0, 0)
-        btnReports.Size = New Size(200, 48)
+        btnReports.Padding = New Padding(23, 0, 0, 0)
+        btnReports.Size = New Size(229, 64)
         btnReports.TabIndex = 6
         btnReports.Text = "Reports"
         btnReports.TextAlign = ContentAlignment.MiddleLeft
@@ -128,10 +132,11 @@ Partial Class frmStaffDashboard
         btnSearchStudent.FlatStyle = FlatStyle.Flat
         btnSearchStudent.Font = New Font("Segoe UI", 10.0F)
         btnSearchStudent.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        btnSearchStudent.Location = New Point(0, 209)
+        btnSearchStudent.Location = New Point(0, 279)
+        btnSearchStudent.Margin = New Padding(3, 4, 3, 4)
         btnSearchStudent.Name = "btnSearchStudent"
-        btnSearchStudent.Padding = New Padding(20, 0, 0, 0)
-        btnSearchStudent.Size = New Size(200, 48)
+        btnSearchStudent.Padding = New Padding(23, 0, 0, 0)
+        btnSearchStudent.Size = New Size(229, 64)
         btnSearchStudent.TabIndex = 5
         btnSearchStudent.Text = "Search Student"
         btnSearchStudent.TextAlign = ContentAlignment.MiddleLeft
@@ -144,10 +149,11 @@ Partial Class frmStaffDashboard
         btnRequestList.FlatStyle = FlatStyle.Flat
         btnRequestList.Font = New Font("Segoe UI", 10.0F)
         btnRequestList.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        btnRequestList.Location = New Point(0, 161)
+        btnRequestList.Location = New Point(0, 215)
+        btnRequestList.Margin = New Padding(3, 4, 3, 4)
         btnRequestList.Name = "btnRequestList"
-        btnRequestList.Padding = New Padding(20, 0, 0, 0)
-        btnRequestList.Size = New Size(200, 48)
+        btnRequestList.Padding = New Padding(23, 0, 0, 0)
+        btnRequestList.Size = New Size(229, 64)
         btnRequestList.TabIndex = 4
         btnRequestList.Text = "Request List"
         btnRequestList.TextAlign = ContentAlignment.MiddleLeft
@@ -160,10 +166,11 @@ Partial Class frmStaffDashboard
         btnNewRequest.FlatStyle = FlatStyle.Flat
         btnNewRequest.Font = New Font("Segoe UI", 10.0F)
         btnNewRequest.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        btnNewRequest.Location = New Point(0, 113)
+        btnNewRequest.Location = New Point(0, 151)
+        btnNewRequest.Margin = New Padding(3, 4, 3, 4)
         btnNewRequest.Name = "btnNewRequest"
-        btnNewRequest.Padding = New Padding(20, 0, 0, 0)
-        btnNewRequest.Size = New Size(200, 48)
+        btnNewRequest.Padding = New Padding(23, 0, 0, 0)
+        btnNewRequest.Size = New Size(229, 64)
         btnNewRequest.TabIndex = 3
         btnNewRequest.Text = "New Request"
         btnNewRequest.TextAlign = ContentAlignment.MiddleLeft
@@ -177,10 +184,11 @@ Partial Class frmStaffDashboard
         btnDashboard.FlatStyle = FlatStyle.Flat
         btnDashboard.Font = New Font("Segoe UI", 10.0F)
         btnDashboard.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        btnDashboard.Location = New Point(0, 65)
+        btnDashboard.Location = New Point(0, 87)
+        btnDashboard.Margin = New Padding(3, 4, 3, 4)
         btnDashboard.Name = "btnDashboard"
-        btnDashboard.Padding = New Padding(20, 0, 0, 0)
-        btnDashboard.Size = New Size(200, 48)
+        btnDashboard.Padding = New Padding(23, 0, 0, 0)
+        btnDashboard.Size = New Size(229, 64)
         btnDashboard.TabIndex = 2
         btnDashboard.Text = "Dashboard"
         btnDashboard.TextAlign = ContentAlignment.MiddleLeft
@@ -193,17 +201,19 @@ Partial Class frmStaffDashboard
         pnlLogoArea.Controls.Add(lblRegistrarSystem)
         pnlLogoArea.Dock = DockStyle.Top
         pnlLogoArea.Location = New Point(0, 0)
+        pnlLogoArea.Margin = New Padding(3, 4, 3, 4)
         pnlLogoArea.Name = "pnlLogoArea"
-        pnlLogoArea.Size = New Size(200, 65)
+        pnlLogoArea.Size = New Size(229, 87)
         pnlLogoArea.TabIndex = 0
         ' 
         ' picLogo
         ' 
         picLogo.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         picLogo.Image = CType(resources.GetObject("picLogo.Image"), Image)
-        picLogo.Location = New Point(10, 10)
+        picLogo.Location = New Point(11, 13)
+        picLogo.Margin = New Padding(3, 4, 3, 4)
         picLogo.Name = "picLogo"
-        picLogo.Size = New Size(42, 42)
+        picLogo.Size = New Size(48, 56)
         picLogo.SizeMode = PictureBoxSizeMode.Zoom
         picLogo.TabIndex = 0
         picLogo.TabStop = False
@@ -212,9 +222,9 @@ Partial Class frmStaffDashboard
         ' 
         lblRegistrarSystem.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
         lblRegistrarSystem.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        lblRegistrarSystem.Location = New Point(58, 22)
+        lblRegistrarSystem.Location = New Point(66, 29)
         lblRegistrarSystem.Name = "lblRegistrarSystem"
-        lblRegistrarSystem.Size = New Size(135, 30)
+        lblRegistrarSystem.Size = New Size(154, 40)
         lblRegistrarSystem.TabIndex = 1
         lblRegistrarSystem.Text = "Registrar System"
         ' 
@@ -229,9 +239,10 @@ Partial Class frmStaffDashboard
         pnlContent.Controls.Add(lblWelcomeSub)
         pnlContent.Controls.Add(lblWelcome)
         pnlContent.Dock = DockStyle.Fill
-        pnlContent.Location = New Point(200, 0)
+        pnlContent.Location = New Point(229, 0)
+        pnlContent.Margin = New Padding(3, 4, 3, 4)
         pnlContent.Name = "pnlContent"
-        pnlContent.Size = New Size(784, 600)
+        pnlContent.Size = New Size(896, 800)
         pnlContent.TabIndex = 1
         ' 
         ' pnlRecentCard
@@ -240,9 +251,10 @@ Partial Class frmStaffDashboard
         pnlRecentCard.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         pnlRecentCard.Controls.Add(dgvRecent)
         pnlRecentCard.Controls.Add(lblRecentTitle)
-        pnlRecentCard.Location = New Point(25, 270)
+        pnlRecentCard.Location = New Point(29, 360)
+        pnlRecentCard.Margin = New Padding(3, 4, 3, 4)
         pnlRecentCard.Name = "pnlRecentCard"
-        pnlRecentCard.Size = New Size(700, 300)
+        pnlRecentCard.Size = New Size(800, 400)
         pnlRecentCard.TabIndex = 6
         ' 
         ' dgvRecent
@@ -274,38 +286,44 @@ Partial Class frmStaffDashboard
         DataGridViewCellStyle2.WrapMode = DataGridViewTriState.False
         dgvRecent.DefaultCellStyle = DataGridViewCellStyle2
         dgvRecent.EnableHeadersVisualStyles = False
-        dgvRecent.Location = New Point(15, 50)
+        dgvRecent.Location = New Point(17, 67)
+        dgvRecent.Margin = New Padding(3, 4, 3, 4)
         dgvRecent.Name = "dgvRecent"
         dgvRecent.ReadOnly = True
         DataGridViewCellStyle3.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         DataGridViewCellStyle3.ForeColor = Color.White
         dgvRecent.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         dgvRecent.RowHeadersVisible = False
+        dgvRecent.RowHeadersWidth = 51
         dgvRecent.RowTemplate.Height = 40
-        dgvRecent.Size = New Size(670, 235)
+        dgvRecent.Size = New Size(766, 313)
         dgvRecent.TabIndex = 1
         ' 
         ' colRequestNo
         ' 
         colRequestNo.HeaderText = "REQUEST NO."
+        colRequestNo.MinimumWidth = 6
         colRequestNo.Name = "colRequestNo"
         colRequestNo.ReadOnly = True
         ' 
         ' colStudent
         ' 
         colStudent.HeaderText = "STUDENT"
+        colStudent.MinimumWidth = 6
         colStudent.Name = "colStudent"
         colStudent.ReadOnly = True
         ' 
         ' colDocument
         ' 
         colDocument.HeaderText = "DOCUMENT"
+        colDocument.MinimumWidth = 6
         colDocument.Name = "colDocument"
         colDocument.ReadOnly = True
         ' 
         ' colStatus
         ' 
         colStatus.HeaderText = "STATUS"
+        colStatus.MinimumWidth = 6
         colStatus.Name = "colStatus"
         colStatus.ReadOnly = True
         ' 
@@ -314,9 +332,9 @@ Partial Class frmStaffDashboard
         lblRecentTitle.AutoSize = True
         lblRecentTitle.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         lblRecentTitle.ForeColor = Color.White
-        lblRecentTitle.Location = New Point(15, 18)
+        lblRecentTitle.Location = New Point(17, 24)
         lblRecentTitle.Name = "lblRecentTitle"
-        lblRecentTitle.Size = New Size(143, 20)
+        lblRecentTitle.Size = New Size(181, 25)
         lblRecentTitle.TabIndex = 0
         lblRecentTitle.Text = "My recent requests"
         ' 
@@ -328,9 +346,10 @@ Partial Class frmStaffDashboard
         btnCreateRequest.FlatStyle = FlatStyle.Flat
         btnCreateRequest.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
         btnCreateRequest.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        btnCreateRequest.Location = New Point(25, 205)
+        btnCreateRequest.Location = New Point(29, 273)
+        btnCreateRequest.Margin = New Padding(3, 4, 3, 4)
         btnCreateRequest.Name = "btnCreateRequest"
-        btnCreateRequest.Size = New Size(700, 50)
+        btnCreateRequest.Size = New Size(800, 67)
         btnCreateRequest.TabIndex = 5
         btnCreateRequest.Text = "+ Create New Document Request"
         btnCreateRequest.UseVisualStyleBackColor = False
@@ -340,9 +359,10 @@ Partial Class frmStaffDashboard
         pnlCard3.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         pnlCard3.Controls.Add(lblCard3Value)
         pnlCard3.Controls.Add(lblCard3Title)
-        pnlCard3.Location = New Point(505, 95)
+        pnlCard3.Location = New Point(577, 127)
+        pnlCard3.Margin = New Padding(3, 4, 3, 4)
         pnlCard3.Name = "pnlCard3"
-        pnlCard3.Size = New Size(220, 90)
+        pnlCard3.Size = New Size(251, 120)
         pnlCard3.TabIndex = 4
         ' 
         ' lblCard3Value
@@ -350,9 +370,9 @@ Partial Class frmStaffDashboard
         lblCard3Value.AutoSize = True
         lblCard3Value.Font = New Font("Segoe UI", 22.0F, FontStyle.Bold)
         lblCard3Value.ForeColor = Color.FromArgb(CByte(185), CByte(74), CByte(72))
-        lblCard3Value.Location = New Point(12, 40)
+        lblCard3Value.Location = New Point(14, 53)
         lblCard3Value.Name = "lblCard3Value"
-        lblCard3Value.Size = New Size(35, 41)
+        lblCard3Value.Size = New Size(43, 50)
         lblCard3Value.TabIndex = 1
         lblCard3Value.Text = "4"
         ' 
@@ -361,9 +381,9 @@ Partial Class frmStaffDashboard
         lblCard3Title.AutoSize = True
         lblCard3Title.Font = New Font("Segoe UI", 8.5F)
         lblCard3Title.ForeColor = Color.LightGray
-        lblCard3Title.Location = New Point(15, 18)
+        lblCard3Title.Location = New Point(17, 24)
         lblCard3Title.Name = "lblCard3Title"
-        lblCard3Title.Size = New Size(49, 15)
+        lblCard3Title.Size = New Size(62, 20)
         lblCard3Title.TabIndex = 0
         lblCard3Title.Text = "UNPAID"
         ' 
@@ -372,9 +392,10 @@ Partial Class frmStaffDashboard
         pnlCard2.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         pnlCard2.Controls.Add(lblCard2Value)
         pnlCard2.Controls.Add(lblCard2Title)
-        pnlCard2.Location = New Point(265, 95)
+        pnlCard2.Location = New Point(303, 127)
+        pnlCard2.Margin = New Padding(3, 4, 3, 4)
         pnlCard2.Name = "pnlCard2"
-        pnlCard2.Size = New Size(220, 90)
+        pnlCard2.Size = New Size(251, 120)
         pnlCard2.TabIndex = 3
         ' 
         ' lblCard2Value
@@ -382,9 +403,9 @@ Partial Class frmStaffDashboard
         lblCard2Value.AutoSize = True
         lblCard2Value.Font = New Font("Segoe UI", 22.0F, FontStyle.Bold)
         lblCard2Value.ForeColor = Color.FromArgb(CByte(90), CByte(168), CByte(224))
-        lblCard2Value.Location = New Point(12, 40)
+        lblCard2Value.Location = New Point(14, 53)
         lblCard2Value.Name = "lblCard2Value"
-        lblCard2Value.Size = New Size(35, 41)
+        lblCard2Value.Size = New Size(43, 50)
         lblCard2Value.TabIndex = 1
         lblCard2Value.Text = "6"
         ' 
@@ -393,9 +414,9 @@ Partial Class frmStaffDashboard
         lblCard2Title.AutoSize = True
         lblCard2Title.Font = New Font("Segoe UI", 8.5F)
         lblCard2Title.ForeColor = Color.LightGray
-        lblCard2Title.Location = New Point(15, 18)
+        lblCard2Title.Location = New Point(17, 24)
         lblCard2Title.Name = "lblCard2Title"
-        lblCard2Title.Size = New Size(110, 15)
+        lblCard2Title.Size = New Size(139, 20)
         lblCard2Title.TabIndex = 0
         lblCard2Title.Text = "TO RELEASE TODAY"
         ' 
@@ -404,9 +425,10 @@ Partial Class frmStaffDashboard
         pnlCard1.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         pnlCard1.Controls.Add(lblCard1Value)
         pnlCard1.Controls.Add(lblCard1Title)
-        pnlCard1.Location = New Point(25, 95)
+        pnlCard1.Location = New Point(29, 127)
+        pnlCard1.Margin = New Padding(3, 4, 3, 4)
         pnlCard1.Name = "pnlCard1"
-        pnlCard1.Size = New Size(220, 90)
+        pnlCard1.Size = New Size(251, 120)
         pnlCard1.TabIndex = 2
         ' 
         ' lblCard1Value
@@ -414,9 +436,9 @@ Partial Class frmStaffDashboard
         lblCard1Value.AutoSize = True
         lblCard1Value.Font = New Font("Segoe UI", 22.0F, FontStyle.Bold)
         lblCard1Value.ForeColor = Color.FromArgb(CByte(232), CByte(163), CByte(61))
-        lblCard1Value.Location = New Point(12, 40)
+        lblCard1Value.Location = New Point(14, 53)
         lblCard1Value.Name = "lblCard1Value"
-        lblCard1Value.Size = New Size(52, 41)
+        lblCard1Value.Size = New Size(64, 50)
         lblCard1Value.TabIndex = 1
         lblCard1Value.Text = "14"
         ' 
@@ -425,9 +447,9 @@ Partial Class frmStaffDashboard
         lblCard1Title.AutoSize = True
         lblCard1Title.Font = New Font("Segoe UI", 8.5F)
         lblCard1Title.ForeColor = Color.LightGray
-        lblCard1Title.Location = New Point(15, 18)
+        lblCard1Title.Location = New Point(17, 24)
         lblCard1Title.Name = "lblCard1Title"
-        lblCard1Title.Size = New Size(57, 15)
+        lblCard1Title.Size = New Size(72, 20)
         lblCard1Title.TabIndex = 0
         lblCard1Title.Text = "PENDING"
         ' 
@@ -436,9 +458,9 @@ Partial Class frmStaffDashboard
         lblWelcomeSub.AutoSize = True
         lblWelcomeSub.Font = New Font("Segoe UI", 10.0F)
         lblWelcomeSub.ForeColor = Color.LightGray
-        lblWelcomeSub.Location = New Point(25, 60)
+        lblWelcomeSub.Location = New Point(29, 80)
         lblWelcomeSub.Name = "lblWelcomeSub"
-        lblWelcomeSub.Size = New Size(132, 19)
+        lblWelcomeSub.Size = New Size(161, 23)
         lblWelcomeSub.TabIndex = 1
         lblWelcomeSub.Text = "Your requests today"
         ' 
@@ -447,19 +469,20 @@ Partial Class frmStaffDashboard
         lblWelcome.AutoSize = True
         lblWelcome.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
         lblWelcome.ForeColor = Color.White
-        lblWelcome.Location = New Point(25, 22)
+        lblWelcome.Location = New Point(29, 29)
         lblWelcome.Name = "lblWelcome"
-        lblWelcome.Size = New Size(185, 32)
+        lblWelcome.Size = New Size(231, 41)
         lblWelcome.TabIndex = 0
         lblWelcome.Text = "Welcome, Staff"
         ' 
         ' frmStaffDashboard
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(984, 600)
+        ClientSize = New Size(1125, 800)
         Controls.Add(pnlContent)
         Controls.Add(pnlSidebar)
+        Margin = New Padding(3, 4, 3, 4)
         Name = "frmStaffDashboard"
         Text = "Registrar Document Request System"
         WindowState = FormWindowState.Maximized

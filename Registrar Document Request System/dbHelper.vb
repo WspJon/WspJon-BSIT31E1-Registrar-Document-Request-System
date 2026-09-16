@@ -5,8 +5,8 @@ Public Class dbHelper
     ' set up the database with a specific password or database name.
     Private Shared server As String = "localhost"
     Private Shared user As String = "root"
-    Private Shared password As String = "" ' Put the MySQL password here if there is one
-    Private Shared database As String = "registrar_db" ' Change to the actual database name
+    Private Shared password As String = ""        ' default XAMPP: blangko, iwan mo na lang
+    Private Shared database As String = "registrar_db"
 
     ' The connection string that puts those variables together
     Private Shared connectionString As String = $"server={server};user id={user};password={password};database={database};"
