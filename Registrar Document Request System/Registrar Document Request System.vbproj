@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <RootNamespace>Registrar_Document_Request_System</RootNamespace>
-    <StartupObject>Sub Main</StartupObject>
+    <StartupObject>Registrar_Document_Request_System.My.MyApplication</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
   </PropertyGroup>
@@ -32,6 +32,18 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="frmCreateDocumentRequest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmNewRequest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmRequestList.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>
