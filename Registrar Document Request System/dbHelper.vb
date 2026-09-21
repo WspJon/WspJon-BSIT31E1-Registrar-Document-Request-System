@@ -1,9 +1,9 @@
-﻿Imports MySql.Data.MySqlClient
+Imports MySql.Data.MySqlClient
 
 Public Class dbHelper
     ' IMPORTANT: You will need to change these values later if your classmate 
     ' set up the database with a specific password or database name.
-    Private Shared server As String = "localhost"
+    Private Shared server As String = "127.0.0.1"
     Private Shared user As String = "root"
     Private Shared password As String = ""        ' default XAMPP: blangko, iwan mo na lang
     Private Shared database As String = "registrar_db"

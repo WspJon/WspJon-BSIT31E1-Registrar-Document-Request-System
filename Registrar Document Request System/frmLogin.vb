@@ -39,23 +39,7 @@ Public Class frmLogin
             Return
         End If
 
-        ' --- TEMPORARY BYPASS FOR TESTING WITHOUT DATABASE ---
-        If username = "test" And password = "123" Then
-            dbHelper.currentUserName = "Test User"
-            dbHelper.currentUserRole = selectedRole ' Use whatever role tab they clicked
-            MessageBox.Show("Using Temporary Testing Bypass!", "Test Mode", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Me.Hide()
-            
-            If selectedRole = "Administrator" Then
-                Dim adminDash As New frmAdminDashboard()
-                adminDash.Show()
-            Else
-                Dim staffDash As New frmStaffDashboard()
-                staffDash.Show()
-            End If
-            Return
-        End If
-        ' -----------------------------------------------------
+
 
         Try
             Using conn = dbHelper.GetConnection()
