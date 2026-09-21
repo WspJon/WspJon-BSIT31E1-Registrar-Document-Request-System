@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2026 at 10:14 AM
+-- Generation Time: Sep 21, 2026 at 07:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -121,6 +121,16 @@ CREATE TABLE `tblusers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `tblusers`
+--
+
+INSERT INTO `tblusers` (`UserID`, `Username`, `Password`, `FullName`, `Role`, `Status`) VALUES
+(1, 'ShoIcheeze', 'password123', 'Sho Uno Sabesaje', 'Registrar Staff', 'Active'),
+(2, 'JReales', 'password123', 'Jonnidel Reales', 'Registrar Staff', 'Active'),
+(3, 'Jcris', 'password123', 'Jancris Tiu', 'Registrar Staff', 'Active'),
+(4, 'JVillacorte', 'password123', 'Joshua Villacorte', 'Registrar Staff', 'Active');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -185,7 +195,7 @@ ALTER TABLE `tblrequestdetails`
 -- AUTO_INCREMENT for table `tblusers`
 --
 ALTER TABLE `tblusers`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
