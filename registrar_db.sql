@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2026 at 06:50 AM
+-- Generation Time: Sep 21, 2026 at 10:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,6 +34,17 @@ CREATE TABLE `tbldocuments` (
   `Fee` decimal(10,2) NOT NULL DEFAULT 0.00,
   `Status` varchar(20) NOT NULL DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbldocuments`
+--
+
+INSERT INTO `tbldocuments` (`DocumentID`, `DocumentName`, `Description`, `Fee`, `Status`) VALUES
+(1, 'Transcript of Records', 'Official record of grades and courses taken', 150.00, 'Active'),
+(2, 'Certificate of Enrollment', 'Proof that the student is currently enrolled', 50.00, 'Active'),
+(3, 'Certificate of Good Moral', 'Certifies good conduct while enrolled in the school', 100.00, 'Active'),
+(4, 'Certification', 'General certification issued by the registrar', 50.00, 'Active'),
+(5, 'Honorable Dismissal', 'Document for transfer to another institution', 100.00, 'Active');
 
 -- --------------------------------------------------------
 
@@ -156,7 +167,7 @@ ALTER TABLE `tblusers`
 -- AUTO_INCREMENT for table `tbldocuments`
 --
 ALTER TABLE `tbldocuments`
-  MODIFY `DocumentID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `DocumentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tblrequest`
