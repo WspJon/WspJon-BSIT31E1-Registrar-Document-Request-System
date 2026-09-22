@@ -68,9 +68,8 @@ Public Class frmUserAddEdit
                     End If
 
                     If hasNewPassword Then
-                        ' Hashing logic (Rule 5.6)
-                        Dim hashedPass As String = HashPassword(txtPassword.Text)
-                        cmd.Parameters.AddWithValue("@pass", hashedPass)
+                        ' Pass password as plain text
+                        cmd.Parameters.AddWithValue("@pass", txtPassword.Text)
                     End If
 
                     cmd.ExecuteNonQuery()
@@ -84,19 +83,6 @@ Public Class frmUserAddEdit
             MessageBox.Show("Database Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
-    ' SHA256 Hashing Implementation
-    Private Function HashPassword(password As String) As String
-        Using sha256 As SHA256 = SHA256.Create()
-            Dim bytes As Byte() = Encoding.UTF8.GetBytes(password)
-            Dim hashBytes As Byte() = sha256.ComputeHash(bytes)
-            Dim builder As New StringBuilder()
-            For i As Integer = 0 To hashBytes.Length - 1
-                builder.Append(hashBytes(i).ToString("x2"))
-            Next
-            Return builder.ToString()
-        End Using
-    End Function
 
     Private Sub frmUserAddEdit_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Not IsEditMode Then

@@ -50,9 +50,8 @@ Public Class frmLogin
                 Using cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@username", username)
                     
-                    ' Hash the password entered by the user before comparing it with the database (Rule 5.6)
-                    Dim hashedPassword As String = HashPassword(password)
-                    cmd.Parameters.AddWithValue("@password", hashedPassword)
+                    ' Pass the password as plain text
+                    cmd.Parameters.AddWithValue("@password", password)
                     
                     cmd.Parameters.AddWithValue("@role", selectedRole)
 
@@ -97,18 +96,5 @@ Public Class frmLogin
     Private Sub pnlLeft_Paint(sender As Object, e As PaintEventArgs) Handles pnlLeft.Paint
 
     End Sub
-
-    ' SHA256 Hashing Implementation (Rule 5.6)
-    Private Function HashPassword(password As String) As String
-        Using sha256 As System.Security.Cryptography.SHA256 = System.Security.Cryptography.SHA256.Create()
-            Dim bytes As Byte() = System.Text.Encoding.UTF8.GetBytes(password)
-            Dim hashBytes As Byte() = sha256.ComputeHash(bytes)
-            Dim builder As New System.Text.StringBuilder()
-            For i As Integer = 0 To hashBytes.Length - 1
-                builder.Append(hashBytes(i).ToString("x2"))
-            Next
-            Return builder.ToString()
-        End Using
-    End Function
 
 End Class
