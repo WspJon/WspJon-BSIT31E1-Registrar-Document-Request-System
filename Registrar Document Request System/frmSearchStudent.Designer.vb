@@ -17,11 +17,11 @@ Partial Class frmSearchStudent
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSearchStudent))
         Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSearchStudent))
         pnlSidebar = New Panel()
         pnlLogout = New Panel()
         btnLogout = New Button()
@@ -31,6 +31,9 @@ Partial Class frmSearchStudent
         btnNewRequest = New Button()
         btnDashboard = New Button()
         pnlLogoArea = New Panel()
+        pnlLogo = New Panel()
+        picLogo = New PictureBox()
+        lblLogo = New Label()
         pnlContent = New Panel()
         pnlTableCard = New Panel()
         pnlTableFooter = New Panel()
@@ -52,19 +55,16 @@ Partial Class frmSearchStudent
         lblSearchPrompt = New Label()
         lblSubtitle = New Label()
         lblTitle = New Label()
-        pnlLogo = New Panel()
-        picLogo = New PictureBox()
-        lblLogo = New Label()
         pnlSidebar.SuspendLayout()
         pnlLogout.SuspendLayout()
         pnlLogoArea.SuspendLayout()
+        pnlLogo.SuspendLayout()
+        CType(picLogo, ComponentModel.ISupportInitialize).BeginInit()
         pnlContent.SuspendLayout()
         pnlTableCard.SuspendLayout()
         pnlTableFooter.SuspendLayout()
         CType(dgvStudents, ComponentModel.ISupportInitialize).BeginInit()
         pnlSearchFilter.SuspendLayout()
-        pnlLogo.SuspendLayout()
-        CType(picLogo, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' pnlSidebar
@@ -210,6 +210,38 @@ Partial Class frmSearchStudent
         pnlLogoArea.Name = "pnlLogoArea"
         pnlLogoArea.Size = New Size(230, 85)
         pnlLogoArea.TabIndex = 0
+        ' 
+        ' pnlLogo
+        ' 
+        pnlLogo.Controls.Add(picLogo)
+        pnlLogo.Controls.Add(lblLogo)
+        pnlLogo.Dock = DockStyle.Top
+        pnlLogo.Location = New Point(0, 0)
+        pnlLogo.Name = "pnlLogo"
+        pnlLogo.Size = New Size(230, 60)
+        pnlLogo.TabIndex = 2
+        ' 
+        ' picLogo
+        ' 
+        picLogo.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        picLogo.Image = CType(resources.GetObject("picLogo.Image"), Image)
+        picLogo.Location = New Point(10, 12)
+        picLogo.Name = "picLogo"
+        picLogo.Size = New Size(42, 42)
+        picLogo.SizeMode = PictureBoxSizeMode.Zoom
+        picLogo.TabIndex = 0
+        picLogo.TabStop = False
+        ' 
+        ' lblLogo
+        ' 
+        lblLogo.AutoSize = True
+        lblLogo.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblLogo.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        lblLogo.Location = New Point(58, 25)
+        lblLogo.Name = "lblLogo"
+        lblLogo.Size = New Size(111, 17)
+        lblLogo.TabIndex = 0
+        lblLogo.Text = "Registrar System"
         ' 
         ' pnlContent
         ' 
@@ -424,17 +456,17 @@ Partial Class frmSearchStudent
         ' 
         ' btnReset
         ' 
-        btnReset.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
+        btnReset.BackColor = Color.Red
         btnReset.Cursor = Cursors.Hand
         btnReset.FlatAppearance.BorderColor = Color.FromArgb(CByte(45), CByte(68), CByte(125))
         btnReset.FlatStyle = FlatStyle.Flat
-        btnReset.Font = New Font("Segoe UI", 9F)
+        btnReset.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         btnReset.ForeColor = Color.White
         btnReset.Location = New Point(730, 14)
         btnReset.Name = "btnReset"
         btnReset.Size = New Size(65, 32)
         btnReset.TabIndex = 5
-        btnReset.Text = "Reset"
+        btnReset.Text = "Clear"
         btnReset.UseVisualStyleBackColor = False
         ' 
         ' cboStatusFilter
@@ -525,38 +557,6 @@ Partial Class frmSearchStudent
         lblTitle.TabIndex = 0
         lblTitle.Text = "Search Student"
         ' 
-        ' pnlLogo
-        ' 
-        pnlLogo.Controls.Add(picLogo)
-        pnlLogo.Controls.Add(lblLogo)
-        pnlLogo.Dock = DockStyle.Top
-        pnlLogo.Location = New Point(0, 0)
-        pnlLogo.Name = "pnlLogo"
-        pnlLogo.Size = New Size(230, 60)
-        pnlLogo.TabIndex = 2
-        ' 
-        ' picLogo
-        ' 
-        picLogo.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        picLogo.Image = CType(resources.GetObject("picLogo.Image"), Image)
-        picLogo.Location = New Point(10, 12)
-        picLogo.Name = "picLogo"
-        picLogo.Size = New Size(42, 42)
-        picLogo.SizeMode = PictureBoxSizeMode.Zoom
-        picLogo.TabIndex = 0
-        picLogo.TabStop = False
-        ' 
-        ' lblLogo
-        ' 
-        lblLogo.AutoSize = True
-        lblLogo.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblLogo.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        lblLogo.Location = New Point(58, 25)
-        lblLogo.Name = "lblLogo"
-        lblLogo.Size = New Size(111, 17)
-        lblLogo.TabIndex = 0
-        lblLogo.Text = "Registrar System"
-        ' 
         ' frmSearchStudent
         ' 
         AcceptButton = btnSearch
@@ -575,6 +575,9 @@ Partial Class frmSearchStudent
         pnlSidebar.ResumeLayout(False)
         pnlLogout.ResumeLayout(False)
         pnlLogoArea.ResumeLayout(False)
+        pnlLogo.ResumeLayout(False)
+        pnlLogo.PerformLayout()
+        CType(picLogo, ComponentModel.ISupportInitialize).EndInit()
         pnlContent.ResumeLayout(False)
         pnlContent.PerformLayout()
         pnlTableCard.ResumeLayout(False)
@@ -584,9 +587,6 @@ Partial Class frmSearchStudent
         CType(dgvStudents, ComponentModel.ISupportInitialize).EndInit()
         pnlSearchFilter.ResumeLayout(False)
         pnlSearchFilter.PerformLayout()
-        pnlLogo.ResumeLayout(False)
-        pnlLogo.PerformLayout()
-        CType(picLogo, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
 
     End Sub

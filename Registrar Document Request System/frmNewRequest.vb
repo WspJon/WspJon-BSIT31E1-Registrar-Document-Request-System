@@ -7,7 +7,8 @@ Public Class frmNewRequest
     Private Sub frmNewRequest_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtStudentNumber.Text = ""
         txtFullName.Text = ""
-        txtCourseYear.Text = ""
+        txtCourse.Text = ""
+        cboYearLevel.SelectedIndex = -1
         txtContactNumber.Text = ""
         txtAmountDue.Text = "0.00"
         txtCopies.Text = "1"
@@ -63,12 +64,26 @@ Public Class frmNewRequest
                     Using reader = cmd.ExecuteReader()
                         If reader.Read() Then
                             txtFullName.Text = reader("FirstName").ToString() & " " & reader("LastName").ToString()
-                            txtCourseYear.Text = reader("Course").ToString() & " - " & reader("YearLevel").ToString()
+                            txtCourse.Text = reader("Course").ToString()
+                            Dim yLevel As String = reader("YearLevel").ToString().Trim()
+                            Select Case yLevel
+                                Case "1", "1st Year", "1st year", "1st"
+                                    cboYearLevel.SelectedItem = "1st Year"
+                                Case "2", "2nd Year", "2nd year", "2nd"
+                                    cboYearLevel.SelectedItem = "2nd Year"
+                                Case "3", "3rd Year", "3rd year", "3rd"
+                                    cboYearLevel.SelectedItem = "3rd Year"
+                                Case "4", "4th Year", "4th year", "4th"
+                                    cboYearLevel.SelectedItem = "4th Year"
+                                Case Else
+                                    cboYearLevel.Text = yLevel
+                            End Select
                             txtContactNumber.Text = reader("ContactNo").ToString()
                         Else
                             MessageBox.Show("Student not found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             txtFullName.Text = ""
-                            txtCourseYear.Text = ""
+                            txtCourse.Text = ""
+                            cboYearLevel.SelectedIndex = -1
                             txtContactNumber.Text = ""
                         End If
                     End Using
@@ -170,7 +185,8 @@ Public Class frmNewRequest
                 ' Reset
                 txtStudentNumber.Text = ""
                 txtFullName.Text = ""
-                txtCourseYear.Text = ""
+                txtCourse.Text = ""
+                cboYearLevel.SelectedIndex = -1
                 txtContactNumber.Text = ""
                 txtCopies.Text = "1"
             End Using

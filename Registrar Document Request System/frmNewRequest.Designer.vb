@@ -26,6 +26,10 @@ Partial Class frmNewRequest
         btnRequestList = New Button()
         btnNewRequest = New Button()
         btnDashboard = New Button()
+        pnlLogoArea = New Panel()
+        pnlLogo = New Panel()
+        picLogo = New PictureBox()
+        lblLogo = New Label()
         pnlContent = New Panel()
         pnlActionButtons = New Panel()
         btnCancel = New Button()
@@ -50,9 +54,11 @@ Partial Class frmNewRequest
         pnlContactNumberBox = New Panel()
         txtContactNumber = New TextBox()
         lblContactNumber = New Label()
-        pnlCourseYearBox = New Panel()
-        txtCourseYear = New TextBox()
-        lblCourseYear = New Label()
+        pnlCourseBox = New Panel()
+        txtCourse = New TextBox()
+        lblCourse = New Label()
+        lblYearLevel = New Label()
+        cboYearLevel = New ComboBox()
         pnlFullNameBox = New Panel()
         txtFullName = New TextBox()
         lblFullName = New Label()
@@ -63,12 +69,11 @@ Partial Class frmNewRequest
         lblStudentInfoHeader = New Label()
         lblSubtitle = New Label()
         lblTitle = New Label()
-        pnlLogoArea = New Panel()
-        pnlLogo = New Panel()
-        picLogo = New PictureBox()
-        lblLogo = New Label()
         pnlSidebar.SuspendLayout()
         pnlLogout.SuspendLayout()
+        pnlLogoArea.SuspendLayout()
+        pnlLogo.SuspendLayout()
+        CType(picLogo, ComponentModel.ISupportInitialize).BeginInit()
         pnlContent.SuspendLayout()
         pnlActionButtons.SuspendLayout()
         pnlDocDetails.SuspendLayout()
@@ -76,12 +81,9 @@ Partial Class frmNewRequest
         pnlCopiesBox.SuspendLayout()
         pnlStudentInfo.SuspendLayout()
         pnlContactNumberBox.SuspendLayout()
-        pnlCourseYearBox.SuspendLayout()
+        pnlCourseBox.SuspendLayout()
         pnlFullNameBox.SuspendLayout()
         pnlStudentNumberBox.SuspendLayout()
-        pnlLogoArea.SuspendLayout()
-        pnlLogo.SuspendLayout()
-        CType(picLogo, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' pnlSidebar
@@ -217,6 +219,48 @@ Partial Class frmNewRequest
         btnDashboard.Text = "Dashboard"
         btnDashboard.TextAlign = ContentAlignment.MiddleLeft
         btnDashboard.UseVisualStyleBackColor = False
+        ' 
+        ' pnlLogoArea
+        ' 
+        pnlLogoArea.BackColor = Color.Transparent
+        pnlLogoArea.Controls.Add(pnlLogo)
+        pnlLogoArea.Dock = DockStyle.Top
+        pnlLogoArea.Location = New Point(0, 0)
+        pnlLogoArea.Name = "pnlLogoArea"
+        pnlLogoArea.Size = New Size(230, 85)
+        pnlLogoArea.TabIndex = 0
+        ' 
+        ' pnlLogo
+        ' 
+        pnlLogo.Controls.Add(picLogo)
+        pnlLogo.Controls.Add(lblLogo)
+        pnlLogo.Dock = DockStyle.Top
+        pnlLogo.Location = New Point(0, 0)
+        pnlLogo.Name = "pnlLogo"
+        pnlLogo.Size = New Size(230, 60)
+        pnlLogo.TabIndex = 3
+        ' 
+        ' picLogo
+        ' 
+        picLogo.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        picLogo.Image = CType(resources.GetObject("picLogo.Image"), Image)
+        picLogo.Location = New Point(10, 12)
+        picLogo.Name = "picLogo"
+        picLogo.Size = New Size(42, 42)
+        picLogo.SizeMode = PictureBoxSizeMode.Zoom
+        picLogo.TabIndex = 0
+        picLogo.TabStop = False
+        ' 
+        ' lblLogo
+        ' 
+        lblLogo.AutoSize = True
+        lblLogo.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblLogo.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        lblLogo.Location = New Point(58, 25)
+        lblLogo.Name = "lblLogo"
+        lblLogo.Size = New Size(111, 17)
+        lblLogo.TabIndex = 0
+        lblLogo.Text = "Registrar System"
         ' 
         ' pnlContent
         ' 
@@ -480,8 +524,10 @@ Partial Class frmNewRequest
         pnlStudentInfo.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         pnlStudentInfo.Controls.Add(pnlContactNumberBox)
         pnlStudentInfo.Controls.Add(lblContactNumber)
-        pnlStudentInfo.Controls.Add(pnlCourseYearBox)
-        pnlStudentInfo.Controls.Add(lblCourseYear)
+        pnlStudentInfo.Controls.Add(cboYearLevel)
+        pnlStudentInfo.Controls.Add(lblYearLevel)
+        pnlStudentInfo.Controls.Add(pnlCourseBox)
+        pnlStudentInfo.Controls.Add(lblCourse)
         pnlStudentInfo.Controls.Add(pnlFullNameBox)
         pnlStudentInfo.Controls.Add(lblFullName)
         pnlStudentInfo.Controls.Add(pnlStudentNumberBox)
@@ -525,38 +571,63 @@ Partial Class frmNewRequest
         lblContactNumber.TabIndex = 7
         lblContactNumber.Text = "Contact number"
         ' 
-        ' pnlCourseYearBox
+        ' pnlCourseBox
         ' 
-        pnlCourseYearBox.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
-        pnlCourseYearBox.BorderStyle = BorderStyle.FixedSingle
-        pnlCourseYearBox.Controls.Add(txtCourseYear)
-        pnlCourseYearBox.Location = New Point(25, 131)
-        pnlCourseYearBox.Name = "pnlCourseYearBox"
-        pnlCourseYearBox.Size = New Size(400, 32)
-        pnlCourseYearBox.TabIndex = 6
+        pnlCourseBox.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        pnlCourseBox.BorderStyle = BorderStyle.FixedSingle
+        pnlCourseBox.Controls.Add(txtCourse)
+        pnlCourseBox.Location = New Point(25, 131)
+        pnlCourseBox.Name = "pnlCourseBox"
+        pnlCourseBox.Size = New Size(220, 32)
+        pnlCourseBox.TabIndex = 5
         ' 
-        ' txtCourseYear
+        ' txtCourse
         ' 
-        txtCourseYear.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
-        txtCourseYear.BorderStyle = BorderStyle.None
-        txtCourseYear.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        txtCourseYear.ForeColor = Color.White
-        txtCourseYear.Location = New Point(8, 6)
-        txtCourseYear.Name = "txtCourseYear"
-        txtCourseYear.Size = New Size(380, 18)
-        txtCourseYear.TabIndex = 0
-        txtCourseYear.Text = "BSIT — 3rd year"
+        txtCourse.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        txtCourse.BorderStyle = BorderStyle.None
+        txtCourse.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        txtCourse.ForeColor = Color.White
+        txtCourse.Location = New Point(8, 6)
+        txtCourse.Name = "txtCourse"
+        txtCourse.Size = New Size(204, 18)
+        txtCourse.TabIndex = 0
+        txtCourse.Text = "BSIT"
         ' 
-        ' lblCourseYear
+        ' lblCourse
         ' 
-        lblCourseYear.AutoSize = True
-        lblCourseYear.Font = New Font("Segoe UI", 8.5F)
-        lblCourseYear.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        lblCourseYear.Location = New Point(25, 110)
-        lblCourseYear.Name = "lblCourseYear"
-        lblCourseYear.Size = New Size(92, 15)
-        lblCourseYear.TabIndex = 5
-        lblCourseYear.Text = "Course and year"
+        lblCourse.AutoSize = True
+        lblCourse.Font = New Font("Segoe UI", 8.5F)
+        lblCourse.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        lblCourse.Location = New Point(25, 110)
+        lblCourse.Name = "lblCourse"
+        lblCourse.Size = New Size(44, 15)
+        lblCourse.TabIndex = 4
+        lblCourse.Text = "Course"
+        ' 
+        ' lblYearLevel
+        ' 
+        lblYearLevel.AutoSize = True
+        lblYearLevel.Font = New Font("Segoe UI", 8.5F)
+        lblYearLevel.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        lblYearLevel.Location = New Point(260, 110)
+        lblYearLevel.Name = "lblYearLevel"
+        lblYearLevel.Size = New Size(29, 15)
+        lblYearLevel.TabIndex = 6
+        lblYearLevel.Text = "Year"
+        ' 
+        ' cboYearLevel
+        ' 
+        cboYearLevel.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        cboYearLevel.DropDownStyle = ComboBoxStyle.DropDownList
+        cboYearLevel.FlatStyle = FlatStyle.Flat
+        cboYearLevel.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        cboYearLevel.ForeColor = Color.White
+        cboYearLevel.FormattingEnabled = True
+        cboYearLevel.Items.AddRange(New Object() {"1st Year", "2nd Year", "3rd Year", "4th Year"})
+        cboYearLevel.Location = New Point(260, 131)
+        cboYearLevel.Name = "cboYearLevel"
+        cboYearLevel.Size = New Size(165, 25)
+        cboYearLevel.TabIndex = 7
         ' 
         ' pnlFullNameBox
         ' 
@@ -673,48 +744,6 @@ Partial Class frmNewRequest
         lblTitle.TabIndex = 0
         lblTitle.Text = "New document request"
         ' 
-        ' pnlLogoArea
-        ' 
-        pnlLogoArea.BackColor = Color.Transparent
-        pnlLogoArea.Controls.Add(pnlLogo)
-        pnlLogoArea.Dock = DockStyle.Top
-        pnlLogoArea.Location = New Point(0, 0)
-        pnlLogoArea.Name = "pnlLogoArea"
-        pnlLogoArea.Size = New Size(230, 85)
-        pnlLogoArea.TabIndex = 0
-        ' 
-        ' pnlLogo
-        ' 
-        pnlLogo.Controls.Add(picLogo)
-        pnlLogo.Controls.Add(lblLogo)
-        pnlLogo.Dock = DockStyle.Top
-        pnlLogo.Location = New Point(0, 0)
-        pnlLogo.Name = "pnlLogo"
-        pnlLogo.Size = New Size(230, 60)
-        pnlLogo.TabIndex = 3
-        ' 
-        ' picLogo
-        ' 
-        picLogo.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        picLogo.Image = CType(resources.GetObject("picLogo.Image"), Image)
-        picLogo.Location = New Point(10, 12)
-        picLogo.Name = "picLogo"
-        picLogo.Size = New Size(42, 42)
-        picLogo.SizeMode = PictureBoxSizeMode.Zoom
-        picLogo.TabIndex = 0
-        picLogo.TabStop = False
-        ' 
-        ' lblLogo
-        ' 
-        lblLogo.AutoSize = True
-        lblLogo.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblLogo.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        lblLogo.Location = New Point(58, 25)
-        lblLogo.Name = "lblLogo"
-        lblLogo.Size = New Size(111, 17)
-        lblLogo.TabIndex = 0
-        lblLogo.Text = "Registrar System"
-        ' 
         ' frmNewRequest
         ' 
         AcceptButton = btnSubmitRequest
@@ -733,6 +762,10 @@ Partial Class frmNewRequest
         WindowState = FormWindowState.Maximized
         pnlSidebar.ResumeLayout(False)
         pnlLogout.ResumeLayout(False)
+        pnlLogoArea.ResumeLayout(False)
+        pnlLogo.ResumeLayout(False)
+        pnlLogo.PerformLayout()
+        CType(picLogo, ComponentModel.ISupportInitialize).EndInit()
         pnlContent.ResumeLayout(False)
         pnlContent.PerformLayout()
         pnlActionButtons.ResumeLayout(False)
@@ -746,16 +779,12 @@ Partial Class frmNewRequest
         pnlStudentInfo.PerformLayout()
         pnlContactNumberBox.ResumeLayout(False)
         pnlContactNumberBox.PerformLayout()
-        pnlCourseYearBox.ResumeLayout(False)
-        pnlCourseYearBox.PerformLayout()
+        pnlCourseBox.ResumeLayout(False)
+        pnlCourseBox.PerformLayout()
         pnlFullNameBox.ResumeLayout(False)
         pnlFullNameBox.PerformLayout()
         pnlStudentNumberBox.ResumeLayout(False)
         pnlStudentNumberBox.PerformLayout()
-        pnlLogoArea.ResumeLayout(False)
-        pnlLogo.ResumeLayout(False)
-        pnlLogo.PerformLayout()
-        CType(picLogo, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
 
     End Sub
@@ -780,9 +809,11 @@ Partial Class frmNewRequest
     Friend WithEvents lblFullName As System.Windows.Forms.Label
     Friend WithEvents pnlFullNameBox As System.Windows.Forms.Panel
     Friend WithEvents txtFullName As System.Windows.Forms.TextBox
-    Friend WithEvents lblCourseYear As System.Windows.Forms.Label
-    Friend WithEvents pnlCourseYearBox As System.Windows.Forms.Panel
-    Friend WithEvents txtCourseYear As System.Windows.Forms.TextBox
+    Friend WithEvents lblCourse As System.Windows.Forms.Label
+    Friend WithEvents pnlCourseBox As System.Windows.Forms.Panel
+    Friend WithEvents txtCourse As System.Windows.Forms.TextBox
+    Friend WithEvents lblYearLevel As System.Windows.Forms.Label
+    Friend WithEvents cboYearLevel As System.Windows.Forms.ComboBox
     Friend WithEvents lblContactNumber As System.Windows.Forms.Label
     Friend WithEvents pnlContactNumberBox As System.Windows.Forms.Panel
     Friend WithEvents txtContactNumber As System.Windows.Forms.TextBox
