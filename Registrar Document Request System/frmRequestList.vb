@@ -1,6 +1,11 @@
-Imports MySql.Data.MySqlClient
+﻿Imports MySql.Data.MySqlClient
+Imports System.Drawing
 
 Public Class frmRequestList
+    Private currentPage As Integer = 1
+    Private pageSize As Integer = 10
+    Private totalRecords As Integer = 0
+
     Private Sub frmRequestList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cboDateFilter.Items.Add("All Dates")
         cboDateFilter.Items.Add("Today")
@@ -43,6 +48,45 @@ Public Class frmRequestList
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
+                Dim whereClause As String = ""
+                
+                If txtSearch.Text.Trim() <> "" Then
+                    whereClause &= " AND (r.RequestNo LIKE @search OR s.StudentID LIKE @search OR s.FirstName LIKE @search OR s.LastName LIKE @search) "
+                End If
+
+                If cboStatusFilter.SelectedIndex > 0 Then
+                    whereClause &= " AND r.Status = @status "
+                End If
+
+                If cboDateFilter.SelectedIndex = 1 Then
+                    whereClause &= " AND DATE(r.RequestDate) = CURDATE() "
+                ElseIf cboDateFilter.SelectedIndex = 2 Then
+                    whereClause &= " AND YEARWEEK(r.RequestDate, 1) = YEARWEEK(CURDATE(), 1) "
+                ElseIf cboDateFilter.SelectedIndex = 3 Then
+                    whereClause &= " AND MONTH(r.RequestDate) = MONTH(CURDATE()) AND YEAR(r.RequestDate) = YEAR(CURDATE()) "
+                End If
+                
+                Dim havingClause As String = ""
+                If cboDocumentFilter.SelectedIndex > 0 Then
+                    havingClause &= " HAVING Documents LIKE @doc "
+                End If
+
+                Dim countQuery As String = "SELECT COUNT(*) FROM (SELECT r.RequestID, GROUP_CONCAT(d.DocumentName SEPARATOR ', ') AS Documents FROM tblrequest r JOIN tblstudents s ON r.StudentID = s.StudentID LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & ") AS tempCount"
+                Using cmdCount As New MySqlCommand(countQuery, conn)
+                    If txtSearch.Text.Trim() <> "" Then cmdCount.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
+                    If cboStatusFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
+                    If cboDocumentFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@doc", "%" & cboDocumentFilter.SelectedItem.ToString() & "%")
+                    
+                    totalRecords = Convert.ToInt32(cmdCount.ExecuteScalar())
+                End Using
+
+                Dim totalPages As Integer = Math.Ceiling(totalRecords / pageSize)
+                If currentPage < 1 Then currentPage = 1
+                If currentPage > totalPages AndAlso totalPages > 0 Then currentPage = totalPages
+                
+                Dim offset As Integer = (currentPage - 1) * pageSize
+                If offset < 0 Then offset = 0
+
                 Dim query As String = "
                     SELECT 
                         r.RequestID,
@@ -55,42 +99,14 @@ Public Class frmRequestList
                     JOIN tblstudents s ON r.StudentID = s.StudentID
                     LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID
                     LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID
-                    WHERE 1=1 "
+                    WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & " ORDER BY r.RequestDate DESC LIMIT @limit OFFSET @offset"
                 
-                If txtSearch.Text.Trim() <> "" Then
-                    query &= " AND (r.RequestNo LIKE @search OR s.StudentID LIKE @search OR s.FirstName LIKE @search OR s.LastName LIKE @search) "
-                End If
-
-                If cboStatusFilter.SelectedIndex > 0 Then
-                    query &= " AND r.Status = @status "
-                End If
-
-                If cboDateFilter.SelectedIndex = 1 Then
-                    query &= " AND DATE(r.RequestDate) = CURDATE() "
-                ElseIf cboDateFilter.SelectedIndex = 2 Then
-                    query &= " AND YEARWEEK(r.RequestDate, 1) = YEARWEEK(CURDATE(), 1) "
-                ElseIf cboDateFilter.SelectedIndex = 3 Then
-                    query &= " AND MONTH(r.RequestDate) = MONTH(CURDATE()) AND YEAR(r.RequestDate) = YEAR(CURDATE()) "
-                End If
-                
-                query &= " GROUP BY r.RequestID "
-
-                If cboDocumentFilter.SelectedIndex > 0 Then
-                    query &= " HAVING Documents LIKE @doc "
-                End If
-
-                query &= " ORDER BY r.RequestDate DESC"
-
                 Using cmd As New MySqlCommand(query, conn)
-                    If txtSearch.Text.Trim() <> "" Then
-                        cmd.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
-                    End If
-                    If cboStatusFilter.SelectedIndex > 0 Then
-                        cmd.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
-                    End If
-                    If cboDocumentFilter.SelectedIndex > 0 Then
-                        cmd.Parameters.AddWithValue("@doc", "%" & cboDocumentFilter.SelectedItem.ToString() & "%")
-                    End If
+                    If txtSearch.Text.Trim() <> "" Then cmd.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
+                    If cboStatusFilter.SelectedIndex > 0 Then cmd.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
+                    If cboDocumentFilter.SelectedIndex > 0 Then cmd.Parameters.AddWithValue("@doc", "%" & cboDocumentFilter.SelectedItem.ToString() & "%")
+                    cmd.Parameters.AddWithValue("@limit", pageSize)
+                    cmd.Parameters.AddWithValue("@offset", offset)
 
                     Dim adapter As New MySqlDataAdapter(cmd)
                     Dim dt As New DataTable()
@@ -103,7 +119,6 @@ Public Class frmRequestList
                     colPayment.DataPropertyName = "PaymentStatus"
                     colStatus.DataPropertyName = "Status"
                     
-                    ' Add invisible RequestID column if not exists
                     If Not dgvRequests.Columns.Contains("colRequestID") Then
                         Dim colID As New DataGridViewTextBoxColumn()
                         colID.Name = "colRequestID"
@@ -114,24 +129,81 @@ Public Class frmRequestList
 
                     dgvRequests.DataSource = dt
                 End Using
+                
+                UpdatePaginationUI(totalPages)
             End Using
         Catch ex As Exception
         End Try
     End Sub
 
+    Private Sub UpdatePaginationUI(totalPages As Integer)
+        If totalRecords = 0 Then
+            lblPagination.Text = "Showing 0 records"
+            btnPage1.Visible = False
+            btnPage2.Visible = False
+            btnPrev.Enabled = False
+            btnNext.Enabled = False
+            Return
+        End If
+
+        Dim startRec As Integer = ((currentPage - 1) * pageSize) + 1
+        Dim endRec As Integer = startRec + pageSize - 1
+        If endRec > totalRecords Then endRec = totalRecords
+        
+        lblPagination.Text = "Showing " & startRec.ToString() & " to " & endRec.ToString() & " of " & totalRecords.ToString() & " records"
+        
+        btnPrev.Enabled = (currentPage > 1)
+        btnNext.Enabled = (currentPage < totalPages)
+
+        btnPage1.Visible = True
+        btnPage1.Text = currentPage.ToString()
+        btnPage1.BackColor = Color.FromArgb(245, 197, 24)
+        btnPage1.ForeColor = Color.FromArgb(15, 31, 76)
+        
+        If currentPage < totalPages Then
+            btnPage2.Visible = True
+            btnPage2.Text = (currentPage + 1).ToString()
+            btnPage2.BackColor = Color.FromArgb(26, 46, 99)
+            btnPage2.ForeColor = Color.White
+        Else
+            btnPage2.Visible = False
+        End If
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As EventArgs) Handles btnPrev.Click
+        If currentPage > 1 Then
+            currentPage -= 1
+            LoadRequests()
+        End If
+    End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
+        currentPage += 1
+        LoadRequests()
+    End Sub
+
+    Private Sub btnPage2_Click(sender As Object, e As EventArgs) Handles btnPage2.Click
+        currentPage += 1
+        LoadRequests()
+    End Sub
+
     Private Sub cboDateFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDateFilter.SelectedIndexChanged
+        currentPage = 1
         LoadRequests()
     End Sub
 
     Private Sub cboDocumentFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDocumentFilter.SelectedIndexChanged
+        currentPage = 1
         LoadRequests()
     End Sub
 
     Private Sub cboStatusFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboStatusFilter.SelectedIndexChanged
+        currentPage = 1
         LoadRequests()
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        currentPage = 1
         LoadRequests()
     End Sub
 
@@ -185,7 +257,6 @@ Public Class frmRequestList
         frm.Controls.Add(btnSave)
         frm.Controls.Add(btnClose)
 
-        ' Pre-fill OR details if already paid
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
@@ -253,10 +324,6 @@ Public Class frmRequestList
         Dim frm As New frmSearchStudent()
         frm.Show()
         Me.Close()
-    End Sub
-
-    Private Sub btnRequestList_Click(sender As Object, e As EventArgs) Handles btnRequestList.Click
-
     End Sub
 
     Private Sub btnReports_Click(sender As Object, e As EventArgs) Handles btnReports.Click
