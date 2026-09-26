@@ -54,11 +54,11 @@ Partial Class frmNewRequest
         pnlContactNumberBox = New Panel()
         txtContactNumber = New TextBox()
         lblContactNumber = New Label()
+        cboYearLevel = New ComboBox()
+        lblYearLevel = New Label()
         pnlCourseBox = New Panel()
         txtCourse = New TextBox()
         lblCourse = New Label()
-        lblYearLevel = New Label()
-        cboYearLevel = New ComboBox()
         pnlFullNameBox = New Panel()
         txtFullName = New TextBox()
         lblFullName = New Label()
@@ -571,6 +571,31 @@ Partial Class frmNewRequest
         lblContactNumber.TabIndex = 7
         lblContactNumber.Text = "Contact number"
         ' 
+        ' cboYearLevel
+        ' 
+        cboYearLevel.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        cboYearLevel.DropDownStyle = ComboBoxStyle.DropDownList
+        cboYearLevel.FlatStyle = FlatStyle.Flat
+        cboYearLevel.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        cboYearLevel.ForeColor = Color.White
+        cboYearLevel.FormattingEnabled = True
+        cboYearLevel.Items.AddRange(New Object() {"1st Year", "2nd Year", "3rd Year", "4th Year"})
+        cboYearLevel.Location = New Point(260, 131)
+        cboYearLevel.Name = "cboYearLevel"
+        cboYearLevel.Size = New Size(165, 25)
+        cboYearLevel.TabIndex = 7
+        ' 
+        ' lblYearLevel
+        ' 
+        lblYearLevel.AutoSize = True
+        lblYearLevel.Font = New Font("Segoe UI", 8.5F)
+        lblYearLevel.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        lblYearLevel.Location = New Point(260, 110)
+        lblYearLevel.Name = "lblYearLevel"
+        lblYearLevel.Size = New Size(29, 15)
+        lblYearLevel.TabIndex = 6
+        lblYearLevel.Text = "Year"
+        ' 
         ' pnlCourseBox
         ' 
         pnlCourseBox.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
@@ -603,31 +628,6 @@ Partial Class frmNewRequest
         lblCourse.Size = New Size(44, 15)
         lblCourse.TabIndex = 4
         lblCourse.Text = "Course"
-        ' 
-        ' lblYearLevel
-        ' 
-        lblYearLevel.AutoSize = True
-        lblYearLevel.Font = New Font("Segoe UI", 8.5F)
-        lblYearLevel.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        lblYearLevel.Location = New Point(260, 110)
-        lblYearLevel.Name = "lblYearLevel"
-        lblYearLevel.Size = New Size(29, 15)
-        lblYearLevel.TabIndex = 6
-        lblYearLevel.Text = "Year"
-        ' 
-        ' cboYearLevel
-        ' 
-        cboYearLevel.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
-        cboYearLevel.DropDownStyle = ComboBoxStyle.DropDownList
-        cboYearLevel.FlatStyle = FlatStyle.Flat
-        cboYearLevel.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        cboYearLevel.ForeColor = Color.White
-        cboYearLevel.FormattingEnabled = True
-        cboYearLevel.Items.AddRange(New Object() {"1st Year", "2nd Year", "3rd Year", "4th Year"})
-        cboYearLevel.Location = New Point(260, 131)
-        cboYearLevel.Name = "cboYearLevel"
-        cboYearLevel.Size = New Size(165, 25)
-        cboYearLevel.TabIndex = 7
         ' 
         ' pnlFullNameBox
         ' 

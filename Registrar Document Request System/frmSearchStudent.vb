@@ -26,7 +26,7 @@ Public Class frmSearchStudent
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
-                
+
                 Dim whereClause As String = " WHERE 1=1"
                 Dim search As String = txtSearch.Text.Trim()
                 If Not String.IsNullOrEmpty(search) Then
@@ -46,14 +46,14 @@ Public Class frmSearchStudent
                     If Not String.IsNullOrEmpty(search) Then cmdCount.Parameters.AddWithValue("@search", "%" & search & "%")
                     If cboCourseFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@course", cboCourseFilter.SelectedItem.ToString())
                     If cboStatusFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
-                    
+
                     totalRecords = Convert.ToInt32(cmdCount.ExecuteScalar())
                 End Using
 
                 Dim totalPages As Integer = Math.Ceiling(totalRecords / pageSize)
                 If currentPage < 1 Then currentPage = 1
                 If currentPage > totalPages AndAlso totalPages > 0 Then currentPage = totalPages
-                
+
                 Dim offset As Integer = (currentPage - 1) * pageSize
                 If offset < 0 Then offset = 0
 
@@ -72,7 +72,7 @@ Public Class frmSearchStudent
                     dgvStudents.AutoGenerateColumns = True
                     dgvStudents.DataSource = dt
                 End Using
-                
+
                 UpdatePaginationUI(totalPages)
             End Using
         Catch ex As Exception
@@ -93,10 +93,10 @@ Public Class frmSearchStudent
         Dim startRec As Integer = ((currentPage - 1) * pageSize) + 1
         Dim endRec As Integer = startRec + pageSize - 1
         If endRec > totalRecords Then endRec = totalRecords
-        
+
         lblPagination.Text = "Showing " & startRec.ToString() & " to " & endRec.ToString() & " of " & totalRecords.ToString() & " records"
         lblResultInfo.Text = totalRecords.ToString() & " results found"
-        
+
         btnPrev.Enabled = (currentPage > 1)
         btnNext.Enabled = (currentPage < totalPages)
 
@@ -104,7 +104,7 @@ Public Class frmSearchStudent
         btnPage1.Text = currentPage.ToString()
         btnPage1.BackColor = Color.FromArgb(245, 197, 24)
         btnPage1.ForeColor = Color.FromArgb(15, 31, 76)
-        
+
         If currentPage < totalPages Then
             btnPage2.Visible = True
             btnPage2.Text = (currentPage + 1).ToString()
@@ -136,7 +136,7 @@ Public Class frmSearchStudent
         currentPage = 1
         LoadStudents()
     End Sub
-    
+
     Private Sub cboCourseFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboCourseFilter.SelectedIndexChanged
         currentPage = 1
         LoadStudents()
@@ -188,4 +188,7 @@ Public Class frmSearchStudent
         Me.Close()
     End Sub
 
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+
+    End Sub
 End Class

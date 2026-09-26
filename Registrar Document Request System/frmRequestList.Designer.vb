@@ -17,14 +17,14 @@ Partial Class frmRequestList
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle8 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRequestList))
+        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As DataGridViewCellStyle = New DataGridViewCellStyle()
         pnlSidebar = New Panel()
         pnlLogout = New Panel()
         btnLogout = New Button()
@@ -34,6 +34,9 @@ Partial Class frmRequestList
         btnNewRequest = New Button()
         btnDashboard = New Button()
         pnlLogoArea = New Panel()
+        pnlLogo = New Panel()
+        picLogo = New PictureBox()
+        lblLogo = New Label()
         pnlContent = New Panel()
         btnHeaderOptions = New Button()
         pnlTableCard = New Panel()
@@ -60,20 +63,17 @@ Partial Class frmRequestList
         txtSearch = New TextBox()
         lblSubtitle = New Label()
         lblTitle = New Label()
-        picLogo = New PictureBox()
-        lblLogo = New Label()
-        pnlLogo = New Panel()
         pnlSidebar.SuspendLayout()
         pnlLogout.SuspendLayout()
         pnlLogoArea.SuspendLayout()
+        pnlLogo.SuspendLayout()
+        CType(picLogo, ComponentModel.ISupportInitialize).BeginInit()
         pnlContent.SuspendLayout()
         pnlTableCard.SuspendLayout()
         CType(dgvRequests, ComponentModel.ISupportInitialize).BeginInit()
         pnlTableFooter.SuspendLayout()
         pnlSearchFilter.SuspendLayout()
         pnlSearchBox.SuspendLayout()
-        CType(picLogo, ComponentModel.ISupportInitialize).BeginInit()
-        pnlLogo.SuspendLayout()
         SuspendLayout()
         ' 
         ' pnlSidebar
@@ -109,7 +109,7 @@ Partial Class frmRequestList
         btnLogout.Dock = DockStyle.Fill
         btnLogout.FlatAppearance.BorderSize = 0
         btnLogout.FlatStyle = FlatStyle.Flat
-        btnLogout.Font = New Font("Segoe UI", 10.0F)
+        btnLogout.Font = New Font("Segoe UI", 10F)
         btnLogout.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnLogout.Location = New Point(0, 0)
         btnLogout.Name = "btnLogout"
@@ -127,7 +127,7 @@ Partial Class frmRequestList
         btnReports.Dock = DockStyle.Top
         btnReports.FlatAppearance.BorderSize = 0
         btnReports.FlatStyle = FlatStyle.Flat
-        btnReports.Font = New Font("Segoe UI", 10.0F)
+        btnReports.Font = New Font("Segoe UI", 10F)
         btnReports.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnReports.Location = New Point(0, 325)
         btnReports.Name = "btnReports"
@@ -145,7 +145,7 @@ Partial Class frmRequestList
         btnSearchStudent.Dock = DockStyle.Top
         btnSearchStudent.FlatAppearance.BorderSize = 0
         btnSearchStudent.FlatStyle = FlatStyle.Flat
-        btnSearchStudent.Font = New Font("Segoe UI", 10.0F)
+        btnSearchStudent.Font = New Font("Segoe UI", 10F)
         btnSearchStudent.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnSearchStudent.Location = New Point(0, 265)
         btnSearchStudent.Name = "btnSearchStudent"
@@ -163,7 +163,7 @@ Partial Class frmRequestList
         btnRequestList.Dock = DockStyle.Top
         btnRequestList.FlatAppearance.BorderSize = 0
         btnRequestList.FlatStyle = FlatStyle.Flat
-        btnRequestList.Font = New Font("Segoe UI", 10.0F)
+        btnRequestList.Font = New Font("Segoe UI", 10F)
         btnRequestList.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnRequestList.Location = New Point(0, 205)
         btnRequestList.Name = "btnRequestList"
@@ -181,7 +181,7 @@ Partial Class frmRequestList
         btnNewRequest.Dock = DockStyle.Top
         btnNewRequest.FlatAppearance.BorderSize = 0
         btnNewRequest.FlatStyle = FlatStyle.Flat
-        btnNewRequest.Font = New Font("Segoe UI", 10.0F)
+        btnNewRequest.Font = New Font("Segoe UI", 10F)
         btnNewRequest.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnNewRequest.Location = New Point(0, 145)
         btnNewRequest.Name = "btnNewRequest"
@@ -199,7 +199,7 @@ Partial Class frmRequestList
         btnDashboard.Dock = DockStyle.Top
         btnDashboard.FlatAppearance.BorderSize = 0
         btnDashboard.FlatStyle = FlatStyle.Flat
-        btnDashboard.Font = New Font("Segoe UI", 10.0F)
+        btnDashboard.Font = New Font("Segoe UI", 10F)
         btnDashboard.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnDashboard.Location = New Point(0, 85)
         btnDashboard.Name = "btnDashboard"
@@ -219,6 +219,38 @@ Partial Class frmRequestList
         pnlLogoArea.Name = "pnlLogoArea"
         pnlLogoArea.Size = New Size(230, 85)
         pnlLogoArea.TabIndex = 0
+        ' 
+        ' pnlLogo
+        ' 
+        pnlLogo.Controls.Add(picLogo)
+        pnlLogo.Controls.Add(lblLogo)
+        pnlLogo.Dock = DockStyle.Top
+        pnlLogo.Location = New Point(0, 0)
+        pnlLogo.Name = "pnlLogo"
+        pnlLogo.Size = New Size(230, 60)
+        pnlLogo.TabIndex = 5
+        ' 
+        ' picLogo
+        ' 
+        picLogo.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        picLogo.Image = CType(resources.GetObject("picLogo.Image"), Image)
+        picLogo.Location = New Point(10, 12)
+        picLogo.Name = "picLogo"
+        picLogo.Size = New Size(42, 42)
+        picLogo.SizeMode = PictureBoxSizeMode.Zoom
+        picLogo.TabIndex = 0
+        picLogo.TabStop = False
+        ' 
+        ' lblLogo
+        ' 
+        lblLogo.AutoSize = True
+        lblLogo.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblLogo.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        lblLogo.Location = New Point(58, 25)
+        lblLogo.Name = "lblLogo"
+        lblLogo.Size = New Size(111, 17)
+        lblLogo.TabIndex = 0
+        lblLogo.Text = "Registrar System"
         ' 
         ' pnlContent
         ' 
@@ -241,7 +273,7 @@ Partial Class frmRequestList
         btnHeaderOptions.Cursor = Cursors.Hand
         btnHeaderOptions.FlatAppearance.BorderSize = 0
         btnHeaderOptions.FlatStyle = FlatStyle.Flat
-        btnHeaderOptions.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnHeaderOptions.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnHeaderOptions.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
         btnHeaderOptions.Location = New Point(904, 20)
         btnHeaderOptions.Name = "btnHeaderOptions"
@@ -266,36 +298,36 @@ Partial Class frmRequestList
         dgvRequests.AllowUserToAddRows = False
         dgvRequests.AllowUserToDeleteRows = False
         dgvRequests.AllowUserToResizeRows = False
-        DataGridViewCellStyle8.BackColor = Color.FromArgb(CByte(21), CByte(38), CByte(84))
-        DataGridViewCellStyle8.Font = New Font("Segoe UI", 9.5F)
-        DataGridViewCellStyle8.ForeColor = Color.White
-        DataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
-        DataGridViewCellStyle8.SelectionForeColor = Color.White
-        dgvRequests.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(21), CByte(38), CByte(84))
+        DataGridViewCellStyle1.Font = New Font("Segoe UI", 9.5F)
+        DataGridViewCellStyle1.ForeColor = Color.White
+        DataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
+        DataGridViewCellStyle1.SelectionForeColor = Color.White
+        dgvRequests.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         dgvRequests.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         dgvRequests.BackgroundColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         dgvRequests.BorderStyle = BorderStyle.None
         dgvRequests.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
         dgvRequests.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
-        DataGridViewCellStyle9.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        DataGridViewCellStyle9.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        DataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
-        DataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        DataGridViewCellStyle9.WrapMode = DataGridViewTriState.False
-        dgvRequests.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
+        DataGridViewCellStyle2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        DataGridViewCellStyle2.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        DataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
+        DataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        DataGridViewCellStyle2.WrapMode = DataGridViewTriState.False
+        dgvRequests.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         dgvRequests.ColumnHeadersHeight = 42
         dgvRequests.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         dgvRequests.Columns.AddRange(New DataGridViewColumn() {colRequestNo, colStudent, colDocument, colPayment, colStatus, colAction})
-        DataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle14.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
-        DataGridViewCellStyle14.Font = New Font("Segoe UI", 9.5F)
-        DataGridViewCellStyle14.ForeColor = Color.White
-        DataGridViewCellStyle14.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
-        DataGridViewCellStyle14.SelectionForeColor = Color.White
-        DataGridViewCellStyle14.WrapMode = DataGridViewTriState.False
-        dgvRequests.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
+        DataGridViewCellStyle7.Font = New Font("Segoe UI", 9.5F)
+        DataGridViewCellStyle7.ForeColor = Color.White
+        DataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
+        DataGridViewCellStyle7.SelectionForeColor = Color.White
+        DataGridViewCellStyle7.WrapMode = DataGridViewTriState.False
+        dgvRequests.DefaultCellStyle = DataGridViewCellStyle7
         dgvRequests.EnableHeadersVisualStyles = False
         dgvRequests.GridColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
         dgvRequests.Location = New Point(16, 12)
@@ -310,8 +342,8 @@ Partial Class frmRequestList
         ' 
         ' colRequestNo
         ' 
-        DataGridViewCellStyle10.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
-        colRequestNo.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        colRequestNo.DefaultCellStyle = DataGridViewCellStyle3
         colRequestNo.HeaderText = "REQUEST NO."
         colRequestNo.Name = "colRequestNo"
         colRequestNo.ReadOnly = True
@@ -334,8 +366,8 @@ Partial Class frmRequestList
         ' 
         ' colPayment
         ' 
-        DataGridViewCellStyle11.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
-        colPayment.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle4.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        colPayment.DefaultCellStyle = DataGridViewCellStyle4
         colPayment.HeaderText = "PAYMENT"
         colPayment.Name = "colPayment"
         colPayment.ReadOnly = True
@@ -343,9 +375,9 @@ Partial Class frmRequestList
         ' 
         ' colStatus
         ' 
-        DataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle12.Font = New Font("Segoe UI", 8.5F, FontStyle.Bold)
-        colStatus.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.Font = New Font("Segoe UI", 8.5F, FontStyle.Bold)
+        colStatus.DefaultCellStyle = DataGridViewCellStyle5
         colStatus.HeaderText = "STATUS"
         colStatus.Name = "colStatus"
         colStatus.ReadOnly = True
@@ -353,11 +385,11 @@ Partial Class frmRequestList
         ' 
         ' colAction
         ' 
-        DataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle13.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
-        DataGridViewCellStyle13.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        DataGridViewCellStyle13.NullValue = "..."
-        colAction.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        DataGridViewCellStyle6.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        DataGridViewCellStyle6.NullValue = "..."
+        colAction.DefaultCellStyle = DataGridViewCellStyle6
         colAction.HeaderText = "ACTION"
         colAction.Name = "colAction"
         colAction.ReadOnly = True
@@ -390,7 +422,7 @@ Partial Class frmRequestList
         ' lblPagination
         ' 
         lblPagination.AutoSize = True
-        lblPagination.Font = New Font("Segoe UI", 9.0F)
+        lblPagination.Font = New Font("Segoe UI", 9F)
         lblPagination.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
         lblPagination.Location = New Point(20, 18)
         lblPagination.Name = "lblPagination"
@@ -548,7 +580,6 @@ Partial Class frmRequestList
         txtSearch.Name = "txtSearch"
         txtSearch.Size = New Size(280, 17)
         txtSearch.TabIndex = 1
-        txtSearch.Text = "Search request no. or student"
         ' 
         ' lblSubtitle
         ' 
@@ -564,7 +595,7 @@ Partial Class frmRequestList
         ' lblTitle
         ' 
         lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
+        lblTitle.Font = New Font("Segoe UI", 18F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
         lblTitle.Location = New Point(30, 22)
         lblTitle.Name = "lblTitle"
@@ -572,47 +603,15 @@ Partial Class frmRequestList
         lblTitle.TabIndex = 0
         lblTitle.Text = "Request list"
         ' 
-        ' picLogo
-        ' 
-        picLogo.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        picLogo.Image = CType(resources.GetObject("picLogo.Image"), Image)
-        picLogo.Location = New Point(10, 12)
-        picLogo.Name = "picLogo"
-        picLogo.Size = New Size(42, 42)
-        picLogo.SizeMode = PictureBoxSizeMode.Zoom
-        picLogo.TabIndex = 0
-        picLogo.TabStop = False
-        ' 
-        ' lblLogo
-        ' 
-        lblLogo.AutoSize = True
-        lblLogo.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblLogo.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        lblLogo.Location = New Point(58, 25)
-        lblLogo.Name = "lblLogo"
-        lblLogo.Size = New Size(111, 17)
-        lblLogo.TabIndex = 0
-        lblLogo.Text = "Registrar System"
-        ' 
-        ' pnlLogo
-        ' 
-        pnlLogo.Controls.Add(picLogo)
-        pnlLogo.Controls.Add(lblLogo)
-        pnlLogo.Dock = DockStyle.Top
-        pnlLogo.Location = New Point(0, 0)
-        pnlLogo.Name = "pnlLogo"
-        pnlLogo.Size = New Size(230, 60)
-        pnlLogo.TabIndex = 5
-        ' 
         ' frmRequestList
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         ClientSize = New Size(1200, 800)
         Controls.Add(pnlContent)
         Controls.Add(pnlSidebar)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         Name = "frmRequestList"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Request List - Registrar Document Request System"
@@ -620,6 +619,9 @@ Partial Class frmRequestList
         pnlSidebar.ResumeLayout(False)
         pnlLogout.ResumeLayout(False)
         pnlLogoArea.ResumeLayout(False)
+        pnlLogo.ResumeLayout(False)
+        pnlLogo.PerformLayout()
+        CType(picLogo, ComponentModel.ISupportInitialize).EndInit()
         pnlContent.ResumeLayout(False)
         pnlContent.PerformLayout()
         pnlTableCard.ResumeLayout(False)
@@ -629,9 +631,6 @@ Partial Class frmRequestList
         pnlSearchFilter.ResumeLayout(False)
         pnlSearchBox.ResumeLayout(False)
         pnlSearchBox.PerformLayout()
-        CType(picLogo, ComponentModel.ISupportInitialize).EndInit()
-        pnlLogo.ResumeLayout(False)
-        pnlLogo.PerformLayout()
         ResumeLayout(False)
     End Sub
 

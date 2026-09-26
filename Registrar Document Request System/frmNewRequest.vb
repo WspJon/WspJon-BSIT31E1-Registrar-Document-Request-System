@@ -1,7 +1,7 @@
 Imports MySql.Data.MySqlClient
 
 Public Class frmNewRequest
-    
+
     Private documentFees As New Dictionary(Of Integer, Decimal)()
 
     Private Sub frmNewRequest_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -13,7 +13,7 @@ Public Class frmNewRequest
         txtAmountDue.Text = "0.00"
         txtCopies.Text = "1"
         cboPaymentStatus.SelectedIndex = 0
-        
+
         LoadDocuments()
     End Sub
 
@@ -30,17 +30,17 @@ Public Class frmNewRequest
                             Dim id As Integer = Convert.ToInt32(reader("DocumentID"))
                             Dim name As String = reader("DocumentName").ToString()
                             Dim fee As Decimal = Convert.ToDecimal(reader("Fee"))
-                            
+
                             cboDocumentType.Items.Add(New With {.Text = name, .Value = id})
                             documentFees.Add(id, fee)
                         End While
                     End Using
                 End Using
             End Using
-            
+
             cboDocumentType.DisplayMember = "Text"
             cboDocumentType.ValueMember = "Value"
-            
+
             If cboDocumentType.Items.Count > 0 Then
                 cboDocumentType.SelectedIndex = 0
             End If
@@ -54,7 +54,7 @@ Public Class frmNewRequest
             MessageBox.Show("Please enter a Student ID to search.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        
+
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
@@ -100,18 +100,26 @@ Public Class frmNewRequest
             Dim docID As Integer = selectedDoc.Value
             If documentFees.ContainsKey(docID) Then
                 Dim fee As Decimal = documentFees(docID)
-                Dim copies As Integer = 1
-                Integer.TryParse(txtCopies.Text, copies)
-                If copies < 1 Then copies = 1
-                
-                Dim total As Decimal = fee * copies
-                txtAmountDue.Text = total.ToString("F2")
+                Dim copies As Integer = 0
+
+                If Integer.TryParse(txtCopies.Text.Trim(), copies) AndAlso copies > 0 Then
+                    Dim total As Decimal = fee * copies
+                    txtAmountDue.Text = total.ToString("F2")
+                Else
+                    txtAmountDue.Text = "0.00"
+                End If
             End If
         End If
     End Sub
 
     Private Sub cboDocumentType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDocumentType.SelectedIndexChanged
         CalculateAmount()
+    End Sub
+
+    Private Sub txtCopies_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtCopies.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
     End Sub
 
     Private Sub txtCopies_TextChanged(sender As Object, e As EventArgs) Handles txtCopies.TextChanged
@@ -123,18 +131,29 @@ Public Class frmNewRequest
             MessageBox.Show("Please search and select a student first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
-        
-        Dim copies As Integer = 1
-        Integer.TryParse(txtCopies.Text, copies)
-        
+
+        Dim copies As Integer = 0
+        If Not Integer.TryParse(txtCopies.Text.Trim(), copies) OrElse copies <= 0 Then
+            MessageBox.Show("Please enter a valid number of copies (must be at least 1).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtCopies.Focus()
+            txtCopies.SelectAll()
+            Return
+        End If
+
+        If copies > 50 Then
+            MessageBox.Show("You cannot request more than 50 copies at once.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            txtCopies.Focus()
+            txtCopies.SelectAll()
+            Return
+        End If
+
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
-                
-                ' Generate Request No: REQ-yyyy-xxxxx
+
                 Dim yearStr As String = DateTime.Now.Year.ToString()
                 Dim requestNo As String = "REQ-" & yearStr & "-00001"
-                
+
                 Dim qLast As String = "SELECT RequestNo FROM tblrequest WHERE RequestNo LIKE @prefix ORDER BY RequestID DESC LIMIT 1"
                 Using cmdLast As New MySqlCommand(qLast, conn)
                     cmdLast.Parameters.AddWithValue("@prefix", "REQ-" & yearStr & "-%")
@@ -150,8 +169,7 @@ Public Class frmNewRequest
                         End If
                     End If
                 End Using
-                
-                ' Insert into tblrequest
+
                 Dim qInsertReq As String = "INSERT INTO tblrequest (RequestNo, StudentID, RequestDate, TotalAmount, PaymentStatus, Status, CreatedBy) VALUES (@reqno, @studentid, @reqdate, @total, @paystatus, 'Pending', @createdby)"
                 Dim newRequestID As Integer = 0
                 Using cmdInsert As New MySqlCommand(qInsertReq, conn)
@@ -162,16 +180,15 @@ Public Class frmNewRequest
                     cmdInsert.Parameters.AddWithValue("@paystatus", cboPaymentStatus.SelectedItem.ToString())
                     cmdInsert.Parameters.AddWithValue("@createdby", dbHelper.currentUserID)
                     cmdInsert.ExecuteNonQuery()
-                    
+
                     newRequestID = Convert.ToInt32(cmdInsert.LastInsertedId)
                 End Using
-                
-                ' Insert into tblrequestdetails
+
                 Dim qInsertDet As String = "INSERT INTO tblrequestdetails (RequestID, DocumentID, Quantity, Amount, SubTotal) VALUES (@reqid, @docid, @qty, @amt, @subtotal)"
                 Using cmdDet As New MySqlCommand(qInsertDet, conn)
                     Dim docID As Integer = cboDocumentType.SelectedItem.Value
                     Dim fee As Decimal = documentFees(docID)
-                    
+
                     cmdDet.Parameters.AddWithValue("@reqid", newRequestID)
                     cmdDet.Parameters.AddWithValue("@docid", docID)
                     cmdDet.Parameters.AddWithValue("@qty", copies)
@@ -179,10 +196,9 @@ Public Class frmNewRequest
                     cmdDet.Parameters.AddWithValue("@subtotal", fee * copies)
                     cmdDet.ExecuteNonQuery()
                 End Using
-                
+
                 MessageBox.Show("Document request created successfully!" & vbCrLf & "Request Number: " & requestNo, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                
-                ' Reset
+
                 txtStudentNumber.Text = ""
                 txtFullName.Text = ""
                 txtCourse.Text = ""
@@ -198,7 +214,7 @@ Public Class frmNewRequest
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Me.Close()
     End Sub
-    
+
     Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
         Dim frm As New frmStaffDashboard()
         frm.Show()
@@ -230,5 +246,9 @@ Public Class frmNewRequest
         Dim login As New frmLogin()
         login.Show()
         Me.Close()
+    End Sub
+
+    Private Sub pnlContent_Paint(sender As Object, e As PaintEventArgs) Handles pnlContent.Paint
+
     End Sub
 End Class
