@@ -1,5 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.Drawing
+Imports System.Text.RegularExpressions
 
 Public Class frmRequestList
     Private currentPage As Integer = 1
@@ -41,6 +42,7 @@ Public Class frmRequestList
                 cboDocumentFilter.SelectedIndex = 0
             End Using
         Catch ex As Exception
+            MessageBox.Show("Error loading documents filter: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -49,7 +51,7 @@ Public Class frmRequestList
             Using conn = dbHelper.GetConnection()
                 conn.Open()
                 Dim whereClause As String = ""
-                
+
                 If txtSearch.Text.Trim() <> "" Then
                     whereClause &= " AND (r.RequestNo LIKE @search OR s.StudentID LIKE @search OR s.FirstName LIKE @search OR s.LastName LIKE @search) "
                 End If
@@ -65,7 +67,7 @@ Public Class frmRequestList
                 ElseIf cboDateFilter.SelectedIndex = 3 Then
                     whereClause &= " AND MONTH(r.RequestDate) = MONTH(CURDATE()) AND YEAR(r.RequestDate) = YEAR(CURDATE()) "
                 End If
-                
+
                 Dim havingClause As String = ""
                 If cboDocumentFilter.SelectedIndex > 0 Then
                     havingClause &= " HAVING Documents LIKE @doc "
@@ -76,14 +78,14 @@ Public Class frmRequestList
                     If txtSearch.Text.Trim() <> "" Then cmdCount.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
                     If cboStatusFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
                     If cboDocumentFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@doc", "%" & cboDocumentFilter.SelectedItem.ToString() & "%")
-                    
+
                     totalRecords = Convert.ToInt32(cmdCount.ExecuteScalar())
                 End Using
 
                 Dim totalPages As Integer = Math.Ceiling(totalRecords / pageSize)
                 If currentPage < 1 Then currentPage = 1
                 If currentPage > totalPages AndAlso totalPages > 0 Then currentPage = totalPages
-                
+
                 Dim offset As Integer = (currentPage - 1) * pageSize
                 If offset < 0 Then offset = 0
 
@@ -100,7 +102,7 @@ Public Class frmRequestList
                     LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID
                     LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID
                     WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & " ORDER BY r.RequestDate DESC LIMIT @limit OFFSET @offset"
-                
+
                 Using cmd As New MySqlCommand(query, conn)
                     If txtSearch.Text.Trim() <> "" Then cmd.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
                     If cboStatusFilter.SelectedIndex > 0 Then cmd.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
@@ -118,7 +120,7 @@ Public Class frmRequestList
                     colDocument.DataPropertyName = "Documents"
                     colPayment.DataPropertyName = "PaymentStatus"
                     colStatus.DataPropertyName = "Status"
-                    
+
                     If Not dgvRequests.Columns.Contains("colRequestID") Then
                         Dim colID As New DataGridViewTextBoxColumn()
                         colID.Name = "colRequestID"
@@ -129,10 +131,11 @@ Public Class frmRequestList
 
                     dgvRequests.DataSource = dt
                 End Using
-                
+
                 UpdatePaginationUI(totalPages)
             End Using
         Catch ex As Exception
+            MessageBox.Show("Error loading requests: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -149,9 +152,9 @@ Public Class frmRequestList
         Dim startRec As Integer = ((currentPage - 1) * pageSize) + 1
         Dim endRec As Integer = startRec + pageSize - 1
         If endRec > totalRecords Then endRec = totalRecords
-        
+
         lblPagination.Text = "Showing " & startRec.ToString() & " to " & endRec.ToString() & " of " & totalRecords.ToString() & " records"
-        
+
         btnPrev.Enabled = (currentPage > 1)
         btnNext.Enabled = (currentPage < totalPages)
 
@@ -159,7 +162,7 @@ Public Class frmRequestList
         btnPage1.Text = currentPage.ToString()
         btnPage1.BackColor = Color.FromArgb(245, 197, 24)
         btnPage1.ForeColor = Color.FromArgb(15, 31, 76)
-        
+
         If currentPage < totalPages Then
             btnPage2.Visible = True
             btnPage2.Text = (currentPage + 1).ToString()
@@ -232,7 +235,7 @@ Public Class frmRequestList
         cboPay.Items.AddRange(New String() {"Unpaid", "Paid"})
         cboPay.SelectedItem = currentPay
 
-        Dim lblOR As New Label() With {.Text = "OR Number (if paid):", .Location = New Drawing.Point(20, 70), .AutoSize = True}
+        Dim lblOR As New Label() With {.Text = "OR Number (if paid) ex. 0000-00:", .Location = New Drawing.Point(20, 70), .AutoSize = True}
         Dim txtOR As New TextBox() With {.Location = New Drawing.Point(20, 90), .Width = 290}
 
         Dim lblORDate As New Label() With {.Text = "OR Date (if paid):", .Location = New Drawing.Point(20, 120), .AutoSize = True}
@@ -271,39 +274,72 @@ Public Class frmRequestList
                 End Using
             End Using
         Catch ex As Exception
+            MessageBox.Show("Error fetching request details: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
         AddHandler btnClose.Click, Sub(s, e) frm.Close()
         AddHandler btnSave.Click, Sub(s, e)
-            Try
-                Using conn = dbHelper.GetConnection()
-                    conn.Open()
-                    Dim qUpdate As String = "UPDATE tblrequest SET PaymentStatus=@pay, Status=@status"
-                    If cboPay.SelectedItem.ToString() = "Paid" Then
-                        qUpdate &= ", ORNo=@or, ORDate=@ordate"
-                    Else
-                        qUpdate &= ", ORNo=NULL, ORDate=NULL"
-                    End If
-                    qUpdate &= " WHERE RequestID=@id"
-                    
-                    Using cmd As New MySqlCommand(qUpdate, conn)
-                        cmd.Parameters.AddWithValue("@pay", cboPay.SelectedItem.ToString())
-                        cmd.Parameters.AddWithValue("@status", cboStatus.SelectedItem.ToString())
-                        cmd.Parameters.AddWithValue("@id", reqID)
-                        If cboPay.SelectedItem.ToString() = "Paid" Then
-                            cmd.Parameters.AddWithValue("@or", txtOR.Text.Trim())
-                            cmd.Parameters.AddWithValue("@ordate", dtpORDate.Value.Date)
-                        End If
-                        cmd.ExecuteNonQuery()
-                    End Using
-                End Using
-                MessageBox.Show("Request updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                frm.Close()
-                LoadRequests()
-            Catch ex As Exception
-                MessageBox.Show("Error updating request.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End Try
-        End Sub
+                                      Try
+                                          Dim isPaid As Boolean = (cboPay.SelectedItem.ToString() = "Paid")
+                                          Dim inputOR As String = txtOR.Text.Trim()
+
+                                          If isPaid Then
+                                              ' 1. VALIDATION FOR FORMAT: 4 DIGITS - 2 DIGITS (e.g. 0001-26 o 0000-26)
+                                              If Not Regex.IsMatch(inputOR, "^\d{4}-\d{2}$") Then
+                                                  MessageBox.Show("Invalid OR Number format. It must follow the format '0000-26' (4 digits, hyphen, 2 digits).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                                  txtOR.Focus()
+                                                  Exit Sub
+                                              End If
+
+                                              ' 2. VALIDATION FOR UNIQUENESS: Check if OR Number already exists in other requests
+                                              Using connCheck = dbHelper.GetConnection()
+                                                  connCheck.Open()
+                                                  Dim checkQuery As String = "SELECT COUNT(*) FROM tblrequest WHERE ORNo = @or AND RequestID <> @id"
+                                                  Using cmdCheck As New MySqlCommand(checkQuery, connCheck)
+                                                      cmdCheck.Parameters.AddWithValue("@or", inputOR)
+                                                      cmdCheck.Parameters.AddWithValue("@id", reqID)
+                                                      Dim count As Integer = Convert.ToInt32(cmdCheck.ExecuteScalar())
+
+                                                      If count > 0 Then
+                                                          MessageBox.Show("This OR Number is already used by another request. OR Number must be unique.", "Duplicate OR Number", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                                          txtOR.Focus()
+                                                          Exit Sub
+                                                      End If
+                                                  End Using
+                                              End Using
+                                          End If
+
+                                          ' Database Update Operation
+                                          Using conn = dbHelper.GetConnection()
+                                              conn.Open()
+                                              Dim qUpdate As String = "UPDATE tblrequest SET PaymentStatus=@pay, Status=@status"
+                                              If isPaid Then
+                                                  qUpdate &= ", ORNo=@or, ORDate=@ordate"
+                                              Else
+                                                  qUpdate &= ", ORNo=NULL, ORDate=NULL"
+                                              End If
+                                              qUpdate &= " WHERE RequestID=@id"
+
+                                              Using cmd As New MySqlCommand(qUpdate, conn)
+                                                  cmd.Parameters.AddWithValue("@pay", cboPay.SelectedItem.ToString())
+                                                  cmd.Parameters.AddWithValue("@status", cboStatus.SelectedItem.ToString())
+                                                  cmd.Parameters.AddWithValue("@id", reqID)
+                                                  If isPaid Then
+                                                      cmd.Parameters.AddWithValue("@or", inputOR)
+                                                      cmd.Parameters.AddWithValue("@ordate", dtpORDate.Value.ToString("yyyy-MM-dd"))
+                                                  End If
+                                                  cmd.ExecuteNonQuery()
+                                              End Using
+                                          End Using
+
+                                          MessageBox.Show("Request updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                          frm.Close()
+                                          LoadRequests()
+
+                                      Catch ex As Exception
+                                          MessageBox.Show("Error updating request: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                      End Try
+                                  End Sub
 
         frm.ShowDialog()
     End Sub
@@ -339,5 +375,9 @@ Public Class frmRequestList
         Dim login As New frmLogin()
         login.Show()
         Me.Close()
+    End Sub
+
+    Private Sub pnlTableCard_Paint(sender As Object, e As PaintEventArgs) Handles pnlTableCard.Paint
+
     End Sub
 End Class

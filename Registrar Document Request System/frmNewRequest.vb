@@ -1,20 +1,38 @@
 Imports MySql.Data.MySqlClient
+Imports System.Drawing
 
 Public Class frmNewRequest
 
     Private documentFees As New Dictionary(Of Integer, Decimal)()
 
     Private Sub frmNewRequest_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ClearForm()
+        LoadDocuments()
+    End Sub
+
+    ' Helper method para i-reset ang form at i-unlock ang lahat ng fields
+    Private Sub ClearForm()
         txtStudentNumber.Text = ""
         txtFullName.Text = ""
         txtCourse.Text = ""
         cboYearLevel.SelectedIndex = -1
         txtContactNumber.Text = ""
+
+        ' I-unlock lahat para makapag-search uli
+        SetStudentFieldsLock(False)
+
         txtAmountDue.Text = "0.00"
         txtCopies.Text = "1"
         cboPaymentStatus.SelectedIndex = 0
+    End Sub
 
-        LoadDocuments()
+    ' Helper method para i-lock o i-unlock ang Student Number, Full Name, Course, Year Level, at Contact Number
+    Private Sub SetStudentFieldsLock(isLocked As Boolean)
+        txtStudentNumber.ReadOnly = isLocked
+        txtFullName.ReadOnly = isLocked
+        txtCourse.ReadOnly = isLocked
+        cboYearLevel.Enabled = Not isLocked
+        txtContactNumber.ReadOnly = isLocked
     End Sub
 
     Private Sub LoadDocuments()
@@ -50,6 +68,16 @@ Public Class frmNewRequest
     End Sub
 
     Private Sub btnSearchStudentNumber_Click(sender As Object, e As EventArgs) Handles btnSearchStudentNumber.Click
+        ' Kapag naka-lock na ang Student Number at pinindot uli ang search button
+        If txtStudentNumber.ReadOnly Then
+            Dim changeResult = MessageBox.Show("Do you want to search for another student?", "Change Student", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If changeResult = DialogResult.Yes Then
+                ClearForm()
+                txtStudentNumber.Focus()
+            End If
+            Return
+        End If
+
         If String.IsNullOrWhiteSpace(txtStudentNumber.Text) Then
             MessageBox.Show("Please enter a Student ID to search.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
@@ -63,6 +91,7 @@ Public Class frmNewRequest
                     cmd.Parameters.AddWithValue("@id", txtStudentNumber.Text.Trim())
                     Using reader = cmd.ExecuteReader()
                         If reader.Read() Then
+                            ' ILALAGAY ANG DATANG NA-SEARCH
                             txtFullName.Text = reader("FirstName").ToString() & " " & reader("LastName").ToString()
                             txtCourse.Text = reader("Course").ToString()
                             Dim yLevel As String = reader("YearLevel").ToString().Trim()
@@ -79,12 +108,17 @@ Public Class frmNewRequest
                                     cboYearLevel.Text = yLevel
                             End Select
                             txtContactNumber.Text = reader("ContactNo").ToString()
+
+                            ' LITERAL NA LA-LOCKAN LAHAT (STUDENT NUMBER, FULL NAME, COURSE, YEAR LEVEL, AT CONTACT NUMBER)
+                            SetStudentFieldsLock(True)
+
                         Else
                             MessageBox.Show("Student not found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             txtFullName.Text = ""
                             txtCourse.Text = ""
                             cboYearLevel.SelectedIndex = -1
                             txtContactNumber.Text = ""
+                            SetStudentFieldsLock(False)
                         End If
                     End Using
                 End Using
@@ -147,6 +181,12 @@ Public Class frmNewRequest
             Return
         End If
 
+        ' CONFIRMATION MESSAGE BOX (YES / NO)
+        Dim confirmResult As DialogResult = MessageBox.Show("Are you sure you want to submit request?", "Confirm Submission", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If confirmResult <> DialogResult.Yes Then
+            Return
+        End If
+
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
@@ -199,12 +239,9 @@ Public Class frmNewRequest
 
                 MessageBox.Show("Document request created successfully!" & vbCrLf & "Request Number: " & requestNo, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                txtStudentNumber.Text = ""
-                txtFullName.Text = ""
-                txtCourse.Text = ""
-                cboYearLevel.SelectedIndex = -1
-                txtContactNumber.Text = ""
-                txtCopies.Text = "1"
+                ' I-reset ang buong form at i-unlock para sa susunod na transaction
+                ClearForm()
+
             End Using
         Catch ex As Exception
             MessageBox.Show("Error creating request: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
