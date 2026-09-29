@@ -239,7 +239,7 @@ Partial Class frmSearchStudent
         lblLogo.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         lblLogo.Location = New Point(58, 25)
         lblLogo.Name = "lblLogo"
-        lblLogo.Size = New Size(111, 17)
+        lblLogo.Size = New Size(146, 23)
         lblLogo.TabIndex = 0
         lblLogo.Text = "Registrar System"
         ' 
@@ -290,7 +290,7 @@ Partial Class frmSearchStudent
         lblPagination.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
         lblPagination.Location = New Point(20, 16)
         lblPagination.Name = "lblPagination"
-        lblPagination.Size = New Size(156, 15)
+        lblPagination.Size = New Size(199, 20)
         lblPagination.TabIndex = 0
         lblPagination.Text = "Showing 1 to 5 of 24 records"
         ' 
@@ -400,6 +400,7 @@ Partial Class frmSearchStudent
         dgvStudents.Name = "dgvStudents"
         dgvStudents.ReadOnly = True
         dgvStudents.RowHeadersVisible = False
+        dgvStudents.RowHeadersWidth = 51
         dgvStudents.RowTemplate.Height = 42
         dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         dgvStudents.Size = New Size(870, 480)
@@ -413,6 +414,7 @@ Partial Class frmSearchStudent
         DataGridViewCellStyle3.NullValue = "..."
         colAction.DefaultCellStyle = DataGridViewCellStyle3
         colAction.HeaderText = "ACTION"
+        colAction.MinimumWidth = 6
         colAction.Name = "colAction"
         colAction.ReadOnly = True
         colAction.Width = 80
@@ -424,7 +426,7 @@ Partial Class frmSearchStudent
         lblResultInfo.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
         lblResultInfo.Location = New Point(170, 21)
         lblResultInfo.Name = "lblResultInfo"
-        lblResultInfo.Size = New Size(208, 15)
+        lblResultInfo.Size = New Size(264, 20)
         lblResultInfo.TabIndex = 1
         lblResultInfo.Text = "Showing all registered student profiles"
         ' 
@@ -435,7 +437,7 @@ Partial Class frmSearchStudent
         lblTableTitle.ForeColor = Color.White
         lblTableTitle.Location = New Point(20, 17)
         lblTableTitle.Name = "lblTableTitle"
-        lblTableTitle.Size = New Size(134, 21)
+        lblTableTitle.Size = New Size(167, 28)
         lblTableTitle.TabIndex = 0
         lblTableTitle.Text = "Student Records"
         ' 
@@ -480,7 +482,7 @@ Partial Class frmSearchStudent
         cboStatusFilter.Items.AddRange(New Object() {"All Status", "Enrolled", "Graduated", "Undergraduate", "Inactive"})
         cboStatusFilter.Location = New Point(595, 17)
         cboStatusFilter.Name = "cboStatusFilter"
-        cboStatusFilter.Size = New Size(125, 25)
+        cboStatusFilter.Size = New Size(125, 29)
         cboStatusFilter.TabIndex = 4
         ' 
         ' cboCourseFilter
@@ -494,7 +496,7 @@ Partial Class frmSearchStudent
         cboCourseFilter.Items.AddRange(New Object() {"All Courses", "BSIT", "BSCS", "BSIS", "BSEd"})
         cboCourseFilter.Location = New Point(460, 17)
         cboCourseFilter.Name = "cboCourseFilter"
-        cboCourseFilter.Size = New Size(125, 25)
+        cboCourseFilter.Size = New Size(125, 29)
         cboCourseFilter.TabIndex = 3
         ' 
         ' btnSearch
@@ -520,8 +522,8 @@ Partial Class frmSearchStudent
         txtSearch.ForeColor = Color.White
         txtSearch.Location = New Point(75, 16)
         txtSearch.Name = "txtSearch"
-        txtSearch.PlaceholderText = "Search student number, name..."
-        txtSearch.Size = New Size(280, 26)
+        txtSearch.PlaceholderText = "Search by student number, name..."
+        txtSearch.Size = New Size(280, 31)
         txtSearch.TabIndex = 1
         ' 
         ' lblSearchPrompt
@@ -529,9 +531,9 @@ Partial Class frmSearchStudent
         lblSearchPrompt.AutoSize = True
         lblSearchPrompt.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblSearchPrompt.ForeColor = Color.FromArgb(CByte(245), CByte(197), CByte(24))
-        lblSearchPrompt.Location = New Point(15, 21)
+        lblSearchPrompt.Location = New Point(3, 21)
         lblSearchPrompt.Name = "lblSearchPrompt"
-        lblSearchPrompt.Size = New Size(55, 15)
+        lblSearchPrompt.Size = New Size(70, 20)
         lblSearchPrompt.TabIndex = 0
         lblSearchPrompt.Text = "SEARCH:"
         ' 
@@ -542,7 +544,7 @@ Partial Class frmSearchStudent
         lblSubtitle.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
         lblSubtitle.Location = New Point(30, 62)
         lblSubtitle.Name = "lblSubtitle"
-        lblSubtitle.Size = New Size(376, 17)
+        lblSubtitle.Size = New Size(445, 21)
         lblSubtitle.TabIndex = 1
         lblSubtitle.Text = "Search and view student records, enrollment status, and details"
         ' 
@@ -553,14 +555,14 @@ Partial Class frmSearchStudent
         lblTitle.ForeColor = Color.White
         lblTitle.Location = New Point(30, 25)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(184, 32)
+        lblTitle.Size = New Size(230, 41)
         lblTitle.TabIndex = 0
         lblTitle.Text = "Search Student"
         ' 
         ' frmSearchStudent
         ' 
         AcceptButton = btnSearch
-        AutoScaleDimensions = New SizeF(7F, 17F)
+        AutoScaleDimensions = New SizeF(9F, 21F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         ClientSize = New Size(1200, 800)

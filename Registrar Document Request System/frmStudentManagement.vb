@@ -1,12 +1,22 @@
 Imports MySql.Data.MySqlClient
+Imports System.Windows.Forms
+Imports System.Runtime.InteropServices
 
 Public Class frmStudentManagement
 
+    <DllImport("user32.dll", CharSet:=CharSet.Auto)>
+    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As Integer, ByVal lParam As String) As IntPtr
+    End Function
+
+    Private Const EM_SETCUEBANNER As Integer = &H1501
+
     Private Sub frmStudentManagement_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Set default filter
         If cboCourseFilter.Items.Count > 0 Then
             cboCourseFilter.SelectedIndex = 0
         End If
+
+        SendMessage(txtSearch.Handle, EM_SETCUEBANNER, 0, "Search...")
+
         LoadStudents()
     End Sub
 
@@ -14,9 +24,9 @@ Public Class frmStudentManagement
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
-                ' Note: Classmate's prompt said "Soft delete only (Status = 'Inactive')"
                 Dim query As String = "SELECT StudentID, CONCAT(FirstName, ' ', LastName) AS Name, Course, YearLevel, Status FROM tblstudents WHERE Status != 'Deleted'"
-                
+
+                ' LAST NAME, FIRST NAME, AT STUDENT ID LANG ANG PWEDENG MA-SEARCH
                 If Not String.IsNullOrWhiteSpace(searchTerm) Then
                     query &= " AND (StudentID LIKE @search OR LastName LIKE @search OR FirstName LIKE @search)"
                 End If
@@ -47,21 +57,34 @@ Public Class frmStudentManagement
                 End Using
             End Using
         Catch ex As Exception
-            ' Ignore error if database isn't ready
         End Try
     End Sub
 
+    Private Function GetSelectedCourse() As String
+        If cboCourseFilter.SelectedItem IsNot Nothing Then
+            Return cboCourseFilter.SelectedItem.ToString()
+        End If
+        Return "All Courses"
+    End Function
+
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
-        LoadStudents(txtSearch.Text.Trim(), cboCourseFilter.SelectedItem.ToString())
+        LoadStudents(txtSearch.Text.Trim(), GetSelectedCourse())
     End Sub
 
     Private Sub btnAddStudent_Click(sender As Object, e As EventArgs) Handles btnAddStudent.Click
         Dim frm As New frmStudentAddEdit()
         frm.IsEditMode = False
         If frm.ShowDialog() = DialogResult.OK Then
-            ' Refresh the table if a new student was added successfully
-            LoadStudents(txtSearch.Text.Trim(), cboCourseFilter.SelectedItem.ToString())
+            LoadStudents(txtSearch.Text.Trim(), GetSelectedCourse())
         End If
+    End Sub
+
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        LoadStudents(txtSearch.Text.Trim(), GetSelectedCourse())
+    End Sub
+
+    Private Sub cboCourseFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboCourseFilter.SelectedIndexChanged
+        LoadStudents(txtSearch.Text.Trim(), GetSelectedCourse())
     End Sub
 
 End Class

@@ -17,219 +17,225 @@ Partial Class frmDocumentManagement
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.pnlMainCard = New System.Windows.Forms.Panel()
-        Me.dgvDocuments = New System.Windows.Forms.DataGridView()
-        Me.colDocName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colDescription = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colFee = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colStatus = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colActions = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.pnlSearchFilter = New System.Windows.Forms.Panel()
-        Me.btnSearch = New System.Windows.Forms.Button()
-        Me.txtSearch = New System.Windows.Forms.TextBox()
-        Me.pnlHeader = New System.Windows.Forms.Panel()
-        Me.btnAddDocumentType = New System.Windows.Forms.Button()
-        Me.lblTitle = New System.Windows.Forms.Label()
-        Me.pnlMainCard.SuspendLayout()
-        CType(Me.dgvDocuments, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.pnlSearchFilter.SuspendLayout()
-        Me.pnlHeader.SuspendLayout()
-        Me.SuspendLayout()
-        '
-        'pnlMainCard
-        '
-        Me.pnlMainCard.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlMainCard.BackColor = System.Drawing.Color.White
-        Me.pnlMainCard.Controls.Add(Me.dgvDocuments)
-        Me.pnlMainCard.Controls.Add(Me.pnlSearchFilter)
-        Me.pnlMainCard.Controls.Add(Me.pnlHeader)
-        Me.pnlMainCard.Location = New System.Drawing.Point(30, 25)
-        Me.pnlMainCard.Name = "pnlMainCard"
-        Me.pnlMainCard.Size = New System.Drawing.Size(860, 520)
-        Me.pnlMainCard.TabIndex = 0
-        '
-        'dgvDocuments
-        '
-        Me.dgvDocuments.AllowUserToAddRows = False
-        Me.dgvDocuments.AllowUserToDeleteRows = False
-        Me.dgvDocuments.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dgvDocuments.BackgroundColor = System.Drawing.Color.White
-        Me.dgvDocuments.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.dgvDocuments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
-        Me.dgvDocuments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvDocuments.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvDocuments.ColumnHeadersHeight = 38
-        Me.dgvDocuments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        Me.dgvDocuments.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colDocName, Me.colDescription, Me.colFee, Me.colStatus, Me.colActions})
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(43, 43, 43)
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(240, 244, 255)
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvDocuments.DefaultCellStyle = DataGridViewCellStyle2
-        Me.dgvDocuments.EnableHeadersVisualStyles = False
-        Me.dgvDocuments.GridColor = System.Drawing.Color.FromArgb(235, 235, 235)
-        Me.dgvDocuments.Location = New System.Drawing.Point(25, 125)
-        Me.dgvDocuments.Name = "dgvDocuments"
-        Me.dgvDocuments.ReadOnly = True
-        Me.dgvDocuments.RowHeadersVisible = False
-        Me.dgvDocuments.RowTemplate.Height = 42
-        Me.dgvDocuments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvDocuments.Size = New System.Drawing.Size(810, 365)
-        Me.dgvDocuments.TabIndex = 2
-        '
-        'colDocName
-        '
-        Me.colDocName.HeaderText = "DOCUMENT NAME"
-        Me.colDocName.Name = "colDocName"
-        Me.colDocName.ReadOnly = True
-        Me.colDocName.Width = 240
-        '
-        'colDescription
-        '
-        Me.colDescription.HeaderText = "DESCRIPTION"
-        Me.colDescription.Name = "colDescription"
-        Me.colDescription.ReadOnly = True
-        Me.colDescription.Width = 260
-        '
-        'colFee
-        '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.colFee.DefaultCellStyle = DataGridViewCellStyle3
-        Me.colFee.HeaderText = "FEE"
-        Me.colFee.Name = "colFee"
-        Me.colFee.ReadOnly = True
-        Me.colFee.Width = 100
-        '
-        'colStatus
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.colStatus.DefaultCellStyle = DataGridViewCellStyle4
-        Me.colStatus.HeaderText = "STATUS"
-        Me.colStatus.Name = "colStatus"
-        Me.colStatus.ReadOnly = True
-        Me.colStatus.Width = 100
-        '
-        'colActions
-        '
-        Me.colActions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.colActions.HeaderText = "ACTIONS"
-        Me.colActions.Name = "colActions"
-        Me.colActions.ReadOnly = True
-        '
-        'pnlSearchFilter
-        '
-        Me.pnlSearchFilter.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlSearchFilter.BackColor = System.Drawing.Color.White
-        Me.pnlSearchFilter.Controls.Add(Me.btnSearch)
-        Me.pnlSearchFilter.Controls.Add(Me.txtSearch)
-        Me.pnlSearchFilter.Location = New System.Drawing.Point(25, 68)
-        Me.pnlSearchFilter.Name = "pnlSearchFilter"
-        Me.pnlSearchFilter.Size = New System.Drawing.Size(810, 42)
-        Me.pnlSearchFilter.TabIndex = 1
-        '
-        'btnSearch
-        '
-        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSearch.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnSearch.FlatAppearance.BorderSize = 0
-        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSearch.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Bold)
-        Me.btnSearch.ForeColor = System.Drawing.Color.White
-        Me.btnSearch.Location = New System.Drawing.Point(710, 5)
-        Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(100, 32)
-        Me.btnSearch.TabIndex = 1
-        Me.btnSearch.Text = "Search"
-        Me.btnSearch.UseVisualStyleBackColor = False
-        '
-        'txtSearch
-        '
-        Me.txtSearch.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtSearch.Font = New System.Drawing.Font("Segoe UI", 10.5!)
-        Me.txtSearch.ForeColor = System.Drawing.Color.FromArgb(43, 43, 43)
-        Me.txtSearch.Location = New System.Drawing.Point(0, 8)
-        Me.txtSearch.Name = "txtSearch"
-        Me.txtSearch.Size = New System.Drawing.Size(695, 26)
-        Me.txtSearch.TabIndex = 0
-        '
-        'pnlHeader
-        '
-        Me.pnlHeader.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.pnlHeader.Controls.Add(Me.btnAddDocumentType)
-        Me.pnlHeader.Controls.Add(Me.lblTitle)
-        Me.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnlHeader.Location = New System.Drawing.Point(0, 0)
-        Me.pnlHeader.Name = "pnlHeader"
-        Me.pnlHeader.Size = New System.Drawing.Size(860, 52)
-        Me.pnlHeader.TabIndex = 0
-        '
-        'btnAddDocumentType
-        '
-        Me.btnAddDocumentType.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAddDocumentType.BackColor = System.Drawing.Color.FromArgb(245, 197, 24)
-        Me.btnAddDocumentType.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnAddDocumentType.FlatAppearance.BorderSize = 0
-        Me.btnAddDocumentType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnAddDocumentType.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Bold)
-        Me.btnAddDocumentType.ForeColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.btnAddDocumentType.Location = New System.Drawing.Point(675, 10)
-        Me.btnAddDocumentType.Name = "btnAddDocumentType"
-        Me.btnAddDocumentType.Size = New System.Drawing.Size(170, 32)
-        Me.btnAddDocumentType.TabIndex = 1
-        Me.btnAddDocumentType.Text = "+ Add Document Type"
-        Me.btnAddDocumentType.UseVisualStyleBackColor = False
-        '
-        'lblTitle
-        '
-        Me.lblTitle.AutoSize = True
-        Me.lblTitle.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.lblTitle.ForeColor = System.Drawing.Color.White
-        Me.lblTitle.Location = New System.Drawing.Point(20, 15)
-        Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(185, 21)
-        Me.lblTitle.TabIndex = 0
-        Me.lblTitle.Text = "Document Management"
-        '
-        'frmDocumentManagement
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(245, 246, 248)
-        Me.ClientSize = New System.Drawing.Size(920, 570)
-        Me.Controls.Add(Me.pnlMainCard)
-        Me.Name = "frmDocumentManagement"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Document Management"
-        Me.pnlMainCard.ResumeLayout(False)
-        CType(Me.dgvDocuments, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.pnlSearchFilter.ResumeLayout(False)
-        Me.pnlSearchFilter.PerformLayout()
-        Me.pnlHeader.ResumeLayout(False)
-        Me.pnlHeader.PerformLayout()
-        Me.ResumeLayout(False)
+        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        pnlMainCard = New Panel()
+        dgvDocuments = New DataGridView()
+        colDocName = New DataGridViewTextBoxColumn()
+        colDescription = New DataGridViewTextBoxColumn()
+        colFee = New DataGridViewTextBoxColumn()
+        colStatus = New DataGridViewTextBoxColumn()
+        colActions = New DataGridViewTextBoxColumn()
+        pnlSearchFilter = New Panel()
+        btnSearch = New Button()
+        txtSearch = New TextBox()
+        pnlHeader = New Panel()
+        btnAddDocumentType = New Button()
+        lblTitle = New Label()
+        pnlMainCard.SuspendLayout()
+        CType(dgvDocuments, ComponentModel.ISupportInitialize).BeginInit()
+        pnlSearchFilter.SuspendLayout()
+        pnlHeader.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' pnlMainCard
+        ' 
+        pnlMainCard.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        pnlMainCard.BackColor = Color.White
+        pnlMainCard.Controls.Add(dgvDocuments)
+        pnlMainCard.Controls.Add(pnlSearchFilter)
+        pnlMainCard.Controls.Add(pnlHeader)
+        pnlMainCard.Location = New Point(34, 33)
+        pnlMainCard.Margin = New Padding(3, 4, 3, 4)
+        pnlMainCard.Name = "pnlMainCard"
+        pnlMainCard.Size = New Size(983, 693)
+        pnlMainCard.TabIndex = 0
+        ' 
+        ' dgvDocuments
+        ' 
+        dgvDocuments.AllowUserToAddRows = False
+        dgvDocuments.AllowUserToDeleteRows = False
+        dgvDocuments.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgvDocuments.BackgroundColor = Color.White
+        dgvDocuments.BorderStyle = BorderStyle.None
+        dgvDocuments.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
+        dgvDocuments.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
+        DataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        DataGridViewCellStyle1.ForeColor = Color.White
+        DataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle1.SelectionForeColor = Color.White
+        DataGridViewCellStyle1.WrapMode = DataGridViewTriState.True
+        dgvDocuments.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        dgvDocuments.ColumnHeadersHeight = 38
+        dgvDocuments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        dgvDocuments.Columns.AddRange(New DataGridViewColumn() {colDocName, colDescription, colFee, colStatus, colActions})
+        DataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = Color.White
+        DataGridViewCellStyle4.Font = New Font("Segoe UI", 9.5F)
+        DataGridViewCellStyle4.ForeColor = Color.FromArgb(CByte(43), CByte(43), CByte(43))
+        DataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(CByte(240), CByte(244), CByte(255))
+        DataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle4.WrapMode = DataGridViewTriState.False
+        dgvDocuments.DefaultCellStyle = DataGridViewCellStyle4
+        dgvDocuments.EnableHeadersVisualStyles = False
+        dgvDocuments.GridColor = Color.FromArgb(CByte(235), CByte(235), CByte(235))
+        dgvDocuments.Location = New Point(29, 167)
+        dgvDocuments.Margin = New Padding(3, 4, 3, 4)
+        dgvDocuments.Name = "dgvDocuments"
+        dgvDocuments.ReadOnly = True
+        dgvDocuments.RowHeadersVisible = False
+        dgvDocuments.RowHeadersWidth = 51
+        dgvDocuments.RowTemplate.Height = 42
+        dgvDocuments.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvDocuments.Size = New Size(926, 487)
+        dgvDocuments.TabIndex = 2
+        ' 
+        ' colDocName
+        ' 
+        colDocName.HeaderText = "DOCUMENT NAME"
+        colDocName.MinimumWidth = 6
+        colDocName.Name = "colDocName"
+        colDocName.ReadOnly = True
+        colDocName.Width = 240
+        ' 
+        ' colDescription
+        ' 
+        colDescription.HeaderText = "DESCRIPTION"
+        colDescription.MinimumWidth = 6
+        colDescription.Name = "colDescription"
+        colDescription.ReadOnly = True
+        colDescription.Width = 260
+        ' 
+        ' colFee
+        ' 
+        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight
+        colFee.DefaultCellStyle = DataGridViewCellStyle2
+        colFee.HeaderText = "FEE"
+        colFee.MinimumWidth = 6
+        colFee.Name = "colFee"
+        colFee.ReadOnly = True
+        ' 
+        ' colStatus
+        ' 
+        DataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        colStatus.DefaultCellStyle = DataGridViewCellStyle3
+        colStatus.HeaderText = "STATUS"
+        colStatus.MinimumWidth = 6
+        colStatus.Name = "colStatus"
+        colStatus.ReadOnly = True
+        ' 
+        ' colActions
+        ' 
+        colActions.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        colActions.HeaderText = "ACTIONS"
+        colActions.MinimumWidth = 6
+        colActions.Name = "colActions"
+        colActions.ReadOnly = True
+        ' 
+        ' pnlSearchFilter
+        ' 
+        pnlSearchFilter.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        pnlSearchFilter.BackColor = Color.White
+        pnlSearchFilter.Controls.Add(btnSearch)
+        pnlSearchFilter.Controls.Add(txtSearch)
+        pnlSearchFilter.Location = New Point(29, 91)
+        pnlSearchFilter.Margin = New Padding(3, 4, 3, 4)
+        pnlSearchFilter.Name = "pnlSearchFilter"
+        pnlSearchFilter.Size = New Size(926, 56)
+        pnlSearchFilter.TabIndex = 1
+        ' 
+        ' btnSearch
+        ' 
+        btnSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btnSearch.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        btnSearch.Cursor = Cursors.Hand
+        btnSearch.FlatAppearance.BorderSize = 0
+        btnSearch.FlatStyle = FlatStyle.Flat
+        btnSearch.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        btnSearch.ForeColor = Color.White
+        btnSearch.Location = New Point(811, 7)
+        btnSearch.Margin = New Padding(3, 4, 3, 4)
+        btnSearch.Name = "btnSearch"
+        btnSearch.Size = New Size(114, 43)
+        btnSearch.TabIndex = 1
+        btnSearch.Text = "Search"
+        btnSearch.UseVisualStyleBackColor = False
+        ' 
+        ' txtSearch
+        ' 
+        txtSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        txtSearch.BorderStyle = BorderStyle.FixedSingle
+        txtSearch.Font = New Font("Segoe UI", 10.5F)
+        txtSearch.ForeColor = Color.FromArgb(CByte(43), CByte(43), CByte(43))
+        txtSearch.Location = New Point(0, 11)
+        txtSearch.Margin = New Padding(3, 4, 3, 4)
+        txtSearch.Name = "txtSearch"
+        txtSearch.Size = New Size(794, 31)
+        txtSearch.TabIndex = 0
+        ' 
+        ' pnlHeader
+        ' 
+        pnlHeader.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        pnlHeader.Controls.Add(btnAddDocumentType)
+        pnlHeader.Controls.Add(lblTitle)
+        pnlHeader.Dock = DockStyle.Top
+        pnlHeader.Location = New Point(0, 0)
+        pnlHeader.Margin = New Padding(3, 4, 3, 4)
+        pnlHeader.Name = "pnlHeader"
+        pnlHeader.Size = New Size(983, 69)
+        pnlHeader.TabIndex = 0
+        ' 
+        ' btnAddDocumentType
+        ' 
+        btnAddDocumentType.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btnAddDocumentType.BackColor = Color.FromArgb(CByte(245), CByte(197), CByte(24))
+        btnAddDocumentType.Cursor = Cursors.Hand
+        btnAddDocumentType.FlatAppearance.BorderSize = 0
+        btnAddDocumentType.FlatStyle = FlatStyle.Flat
+        btnAddDocumentType.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        btnAddDocumentType.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        btnAddDocumentType.Location = New Point(771, 13)
+        btnAddDocumentType.Margin = New Padding(3, 4, 3, 4)
+        btnAddDocumentType.Name = "btnAddDocumentType"
+        btnAddDocumentType.Size = New Size(194, 43)
+        btnAddDocumentType.TabIndex = 1
+        btnAddDocumentType.Text = "+ Add Document Type"
+        btnAddDocumentType.UseVisualStyleBackColor = False
+        ' 
+        ' lblTitle
+        ' 
+        lblTitle.AutoSize = True
+        lblTitle.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        lblTitle.ForeColor = Color.White
+        lblTitle.Location = New Point(23, 20)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(241, 28)
+        lblTitle.TabIndex = 0
+        lblTitle.Text = "Document Management"
+        ' 
+        ' frmDocumentManagement
+        ' 
+        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleMode = AutoScaleMode.Font
+        BackColor = Color.FromArgb(CByte(245), CByte(246), CByte(248))
+        ClientSize = New Size(1051, 760)
+        Controls.Add(pnlMainCard)
+        Margin = New Padding(3, 4, 3, 4)
+        Name = "frmDocumentManagement"
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "Document Management"
+        pnlMainCard.ResumeLayout(False)
+        CType(dgvDocuments, ComponentModel.ISupportInitialize).EndInit()
+        pnlSearchFilter.ResumeLayout(False)
+        pnlSearchFilter.PerformLayout()
+        pnlHeader.ResumeLayout(False)
+        pnlHeader.PerformLayout()
+        ResumeLayout(False)
 
     End Sub
 

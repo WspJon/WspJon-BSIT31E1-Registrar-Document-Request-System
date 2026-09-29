@@ -52,7 +52,7 @@ Public Class frmStudentAddEdit
         txtFirstName.Text = txtFirstName.Text.Trim()
         txtMiddleName.Text = txtMiddleName.Text.Trim()
         txtLastName.Text = txtLastName.Text.Trim()
-        txtSection.Text = txtSection.Text.Trim()
+        cboSection.Text = cboSection.Text.Trim()
         txtContactNo.Text = txtContactNo.Text.Trim()
 
         If String.IsNullOrWhiteSpace(txtStudentID.Text) Then
@@ -109,12 +109,12 @@ Public Class frmStudentAddEdit
             Return
         End If
 
-        If String.IsNullOrWhiteSpace(txtSection.Text) Then
+        If String.IsNullOrWhiteSpace(cboSection.Text) Then
             MessageBox.Show("Please enter the Section.",
                             "Validation Error",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning)
-            txtSection.Focus()
+            cboSection.Focus()
             Return
         End If
 
@@ -174,12 +174,12 @@ Public Class frmStudentAddEdit
             Return
         End If
 
-        If Not Regex.IsMatch(txtSection.Text, "^[A-Za-z0-9-]+$") Then
+        If Not Regex.IsMatch(cboSection.Text, "^[A-Za-z0-9-]+$") Then
             MessageBox.Show("Section can only contain letters, numbers, and hyphens.",
                             "Invalid Section",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning)
-            txtSection.Focus()
+            cboSection.Focus()
             Return
         End If
 
@@ -317,7 +317,7 @@ Public Class frmStudentAddEdit
                     cmd.Parameters.AddWithValue("@mname", txtMiddleName.Text.Trim())
                     cmd.Parameters.AddWithValue("@course", cboCourse.SelectedItem.ToString())
                     cmd.Parameters.AddWithValue("@year", cboYearLevel.SelectedItem.ToString())
-                    cmd.Parameters.AddWithValue("@section", txtSection.Text.Trim())
+                    cmd.Parameters.AddWithValue("@section", cboSection.Text.Trim())
                     cmd.Parameters.AddWithValue("@contact", txtContactNo.Text.Trim())
                     cmd.Parameters.AddWithValue("@status",
                                                If(cboStatus.SelectedIndex = -1,
@@ -428,7 +428,7 @@ Public Class frmStudentAddEdit
 
     End Sub
 
-    Private Sub txtSection_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtSection.KeyPress
+    Private Sub txtSection_KeyPress(sender As Object, e As KeyPressEventArgs)
 
         If Not Char.IsControl(e.KeyChar) AndAlso
            Not Char.IsLetterOrDigit(e.KeyChar) AndAlso
@@ -438,4 +438,7 @@ Public Class frmStudentAddEdit
 
     End Sub
 
+    Private Sub cboSection_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboSection.SelectedIndexChanged
+
+    End Sub
 End Class
