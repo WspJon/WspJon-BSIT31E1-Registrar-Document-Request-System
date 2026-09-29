@@ -131,7 +131,8 @@ Public Class frmAdminDashboard
         dbHelper.currentUserID = 0
         dbHelper.currentUserName = ""
         dbHelper.currentUserRole = ""
-        
+        frmLogin.txtUsername.Clear()
+        frmLogin.txtPassword.Clear()
         Me.Close()
         frmLogin.Show()
     End Sub

@@ -46,20 +46,20 @@ Public Class frmLogin
                 conn.Open()
                 ' Parameterized query to prevent SQL injection and check role
                 Dim query As String = "SELECT UserID, FullName, Role, Status FROM tblusers WHERE Username = @username AND Password = @password AND Role = @role"
-                
+
                 Using cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@username", username)
-                    
+
                     ' Pass the password as plain text
                     cmd.Parameters.AddWithValue("@password", password)
-                    
+
                     cmd.Parameters.AddWithValue("@role", selectedRole)
 
                     Using reader = cmd.ExecuteReader()
                         If reader.Read() Then
                             ' User found! Check if active
                             Dim status As String = reader("Status").ToString()
-                            
+
                             If status = "Inactive" Then
                                 MessageBox.Show("This account has been deactivated. Please contact an administrator.", "Account Inactive", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                 Return
@@ -97,4 +97,7 @@ Public Class frmLogin
 
     End Sub
 
+    Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

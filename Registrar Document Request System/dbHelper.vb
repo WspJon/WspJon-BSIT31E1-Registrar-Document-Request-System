@@ -6,7 +6,7 @@ Public Class dbHelper
     Private Shared server As String = "127.0.0.1"
     Private Shared user As String = "root"
     Private Shared password As String = ""        ' default XAMPP: blangko, iwan mo na lang
-    Private Shared database As String = "registrar_db"
+    Private Shared database As String = "registrar_dbnew"
 
     ' The connection string that puts those variables together
     Private Shared connectionString As String = $"server={server};user id={user};password={password};database={database};"
