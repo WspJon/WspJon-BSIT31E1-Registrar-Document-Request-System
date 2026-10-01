@@ -8,16 +8,27 @@ Public Class frmSearchStudent
     Private totalRecords As Integer = 0
 
     Private Sub frmSearchStudent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' 1. Updated course options to match BSIT, CTHM, BSCRIM
+        cboCourseFilter.Items.Clear()
         cboCourseFilter.Items.Add("All Courses")
         cboCourseFilter.Items.Add("BSIT")
-        cboCourseFilter.Items.Add("BSCS")
-        cboCourseFilter.Items.Add("BSIS")
+        cboCourseFilter.Items.Add("CTHM")
+        cboCourseFilter.Items.Add("BSCRIM")
         cboCourseFilter.SelectedIndex = 0
 
+        cboStatusFilter.Items.Clear()
         cboStatusFilter.Items.Add("All Status")
         cboStatusFilter.Items.Add("Active")
         cboStatusFilter.Items.Add("Inactive")
         cboStatusFilter.SelectedIndex = 0
+
+        ' 2. Lock or preset the Course Filter if the logged-in staff is assigned to a specific course
+        If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(dbHelper.userCourseAssigned) AndAlso dbHelper.userCourseAssigned <> "ALL" Then
+            If cboCourseFilter.Items.Contains(dbHelper.userCourseAssigned) Then
+                cboCourseFilter.SelectedItem = dbHelper.userCourseAssigned
+                cboCourseFilter.Enabled = False ' Disable dropdown so staff cannot change course
+            End If
+        End If
 
         LoadStudents()
     End Sub
@@ -29,27 +40,40 @@ Public Class frmSearchStudent
 
                 Dim whereClause As String = " WHERE 1=1"
                 Dim search As String = txtSearch.Text.Trim()
+
+                ' DEPARTMENT / ASSIGNED COURSE FILTER
+                If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(dbHelper.userCourseAssigned) AndAlso dbHelper.userCourseAssigned <> "ALL" Then
+                    whereClause &= " AND Course = @assignedCourse"
+                ElseIf cboCourseFilter.SelectedIndex > 0 Then
+                    whereClause &= " AND Course = @course"
+                End If
+
+                ' SEARCH FILTER
                 If Not String.IsNullOrEmpty(search) Then
                     whereClause &= " AND (StudentID LIKE @search OR FirstName LIKE @search OR LastName LIKE @search)"
                 End If
 
-                If cboCourseFilter.SelectedIndex > 0 Then
-                    whereClause &= " AND Course = @course"
-                End If
-
+                ' STATUS FILTER
                 If cboStatusFilter.SelectedIndex > 0 Then
                     whereClause &= " AND Status = @status"
                 End If
 
+                ' COUNT TOTAL RECORDS
                 Dim countQuery As String = "SELECT COUNT(*) FROM tblstudents" & whereClause
                 Using cmdCount As New MySqlCommand(countQuery, conn)
+                    If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(dbHelper.userCourseAssigned) AndAlso dbHelper.userCourseAssigned <> "ALL" Then
+                        cmdCount.Parameters.AddWithValue("@assignedCourse", dbHelper.userCourseAssigned)
+                    ElseIf cboCourseFilter.SelectedIndex > 0 Then
+                        cmdCount.Parameters.AddWithValue("@course", cboCourseFilter.SelectedItem.ToString())
+                    End If
+
                     If Not String.IsNullOrEmpty(search) Then cmdCount.Parameters.AddWithValue("@search", "%" & search & "%")
-                    If cboCourseFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@course", cboCourseFilter.SelectedItem.ToString())
                     If cboStatusFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
 
                     totalRecords = Convert.ToInt32(cmdCount.ExecuteScalar())
                 End Using
 
+                ' PAGINATION LOGIC
                 Dim totalPages As Integer = Math.Ceiling(totalRecords / pageSize)
                 If currentPage < 1 Then currentPage = 1
                 If currentPage > totalPages AndAlso totalPages > 0 Then currentPage = totalPages
@@ -57,10 +81,16 @@ Public Class frmSearchStudent
                 Dim offset As Integer = (currentPage - 1) * pageSize
                 If offset < 0 Then offset = 0
 
+                ' FETCH FILTERED DATA
                 Dim query As String = "SELECT StudentID, CONCAT(FirstName, ' ', LastName) AS FullName, Course, YearLevel, ContactNo, Status FROM tblstudents" & whereClause & " LIMIT @limit OFFSET @offset"
                 Using cmd As New MySqlCommand(query, conn)
+                    If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(dbHelper.userCourseAssigned) AndAlso dbHelper.userCourseAssigned <> "ALL" Then
+                        cmd.Parameters.AddWithValue("@assignedCourse", dbHelper.userCourseAssigned)
+                    ElseIf cboCourseFilter.SelectedIndex > 0 Then
+                        cmd.Parameters.AddWithValue("@course", cboCourseFilter.SelectedItem.ToString())
+                    End If
+
                     If Not String.IsNullOrEmpty(search) Then cmd.Parameters.AddWithValue("@search", "%" & search & "%")
-                    If cboCourseFilter.SelectedIndex > 0 Then cmd.Parameters.AddWithValue("@course", cboCourseFilter.SelectedItem.ToString())
                     If cboStatusFilter.SelectedIndex > 0 Then cmd.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
                     cmd.Parameters.AddWithValue("@limit", pageSize)
                     cmd.Parameters.AddWithValue("@offset", offset)
@@ -76,6 +106,7 @@ Public Class frmSearchStudent
                 UpdatePaginationUI(totalPages)
             End Using
         Catch ex As Exception
+            MessageBox.Show("Error loading students: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -149,7 +180,12 @@ Public Class frmSearchStudent
 
     Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
         txtSearch.Text = ""
-        cboCourseFilter.SelectedIndex = 0
+
+        ' Only reset course combo if not locked to staff assigned course
+        If dbHelper.currentUserRole = "Administrator" OrElse String.IsNullOrEmpty(dbHelper.userCourseAssigned) OrElse dbHelper.userCourseAssigned = "ALL" Then
+            cboCourseFilter.SelectedIndex = 0
+        End If
+
         cboStatusFilter.SelectedIndex = 0
         currentPage = 1
         LoadStudents()
@@ -183,12 +219,18 @@ Public Class frmSearchStudent
         dbHelper.currentUserID = 0
         dbHelper.currentUserName = ""
         dbHelper.currentUserRole = ""
+        dbHelper.userCourseAssigned = ""
         Dim login As New frmLogin()
         login.Show()
         Me.Close()
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        currentPage = 1
+        LoadStudents()
+    End Sub
+
+    Private Sub dgvStudents_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvStudents.CellContentClick
 
     End Sub
 End Class

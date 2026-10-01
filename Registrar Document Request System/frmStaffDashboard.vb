@@ -8,28 +8,68 @@ Public Class frmStaffDashboard
         LoadRecentRequests()
     End Sub
 
+    ' Helper Method para makuha ang CourseAssigned ng kasalukuyang Staff
+    Private Function GetStaffCourseAssigned(conn As MySqlConnection) As String
+        Dim course As String = ""
+        If dbHelper.currentUserRole <> "Administrator" Then
+            Dim query As String = "SELECT TRIM(CourseAssigned) FROM tblusers WHERE UserID = @staffID"
+            Using cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@staffID", dbHelper.currentUserID)
+                Dim result = cmd.ExecuteScalar()
+                If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                    course = result.ToString().Trim()
+                End If
+            End Using
+        End If
+        Return course
+    End Function
+
     Private Sub LoadDashboardStats()
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
-                
-                Dim q1 As String = "SELECT COUNT(*) FROM tblrequest WHERE Status = 'Pending'"
+
+                Dim staffCourse As String = GetStaffCourseAssigned(conn)
+                Dim courseFilter As String = ""
+
+                ' Role-based filter condition sa SQL
+                If dbHelper.currentUserRole <> "Administrator" Then
+                    If String.IsNullOrEmpty(staffCourse) Then
+                        courseFilter = " AND 1=0 " ' Kung walang course, 0 ang lalabas
+                    Else
+                        courseFilter = " AND UPPER(TRIM(s.Course)) = UPPER(TRIM(@staffCourse)) "
+                    End If
+                End If
+
+                ' 1. Pending Requests Count
+                Dim q1 As String = "SELECT COUNT(*) FROM tblrequest r JOIN tblstudents s ON r.StudentID = s.StudentID WHERE r.Status = 'Pending'" & courseFilter
                 Using cmd1 As New MySqlCommand(q1, conn)
+                    If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(staffCourse) Then
+                        cmd1.Parameters.AddWithValue("@staffCourse", staffCourse)
+                    End If
                     lblCard1Value.Text = cmd1.ExecuteScalar().ToString()
                 End Using
 
-                Dim q2 As String = "SELECT COUNT(*) FROM tblrequest WHERE Status = 'Ready for Release'"
+                ' 2. Ready for Release Count
+                Dim q2 As String = "SELECT COUNT(*) FROM tblrequest r JOIN tblstudents s ON r.StudentID = s.StudentID WHERE r.Status = 'Ready for Release'" & courseFilter
                 Using cmd2 As New MySqlCommand(q2, conn)
+                    If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(staffCourse) Then
+                        cmd2.Parameters.AddWithValue("@staffCourse", staffCourse)
+                    End If
                     lblCard2Value.Text = cmd2.ExecuteScalar().ToString()
                 End Using
 
-                Dim q3 As String = "SELECT COUNT(*) FROM tblrequest WHERE Status = 'Released' AND DATE(RequestDate) = CURDATE()"
+                ' 3. Released Today Count
+                Dim q3 As String = "SELECT COUNT(*) FROM tblrequest r JOIN tblstudents s ON r.StudentID = s.StudentID WHERE r.Status = 'Released' AND DATE(r.RequestDate) = CURDATE()" & courseFilter
                 Using cmd3 As New MySqlCommand(q3, conn)
+                    If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(staffCourse) Then
+                        cmd3.Parameters.AddWithValue("@staffCourse", staffCourse)
+                    End If
                     lblCard3Value.Text = cmd3.ExecuteScalar().ToString()
                 End Using
             End Using
         Catch ex As Exception
-            
+            MessageBox.Show("Error loading dashboard stats: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -37,6 +77,19 @@ Public Class frmStaffDashboard
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
+
+                Dim staffCourse As String = GetStaffCourseAssigned(conn)
+                Dim whereClause As String = ""
+
+                ' Role-based filter para sa DataGridView
+                If dbHelper.currentUserRole <> "Administrator" Then
+                    If String.IsNullOrEmpty(staffCourse) Then
+                        whereClause = " WHERE 1=0 "
+                    Else
+                        whereClause = " WHERE UPPER(TRIM(s.Course)) = UPPER(TRIM(@staffCourse)) "
+                    End If
+                End If
+
                 Dim query As String = "
                     SELECT 
                         r.RequestNo, 
@@ -47,14 +100,19 @@ Public Class frmStaffDashboard
                     JOIN tblstudents s ON r.StudentID = s.StudentID
                     LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID
                     LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID
+                    " & whereClause & "
                     GROUP BY r.RequestID
                     ORDER BY r.RequestDate DESC LIMIT 10"
-                
+
                 Using cmd As New MySqlCommand(query, conn)
+                    If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(staffCourse) Then
+                        cmd.Parameters.AddWithValue("@staffCourse", staffCourse)
+                    End If
+
                     Dim adapter As New MySqlDataAdapter(cmd)
                     Dim dt As New DataTable()
                     adapter.Fill(dt)
-                    
+
                     dgvRecent.AutoGenerateColumns = False
                     colRequestNo.DataPropertyName = "RequestNo"
                     colStudent.DataPropertyName = "StudentName"
@@ -64,7 +122,7 @@ Public Class frmStaffDashboard
                 End Using
             End Using
         Catch ex As Exception
-            
+            MessageBox.Show("Error loading recent requests: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -74,7 +132,7 @@ Public Class frmStaffDashboard
                 ctrl.Visible = False
             End If
         Next
-        
+
         For i As Integer = pnlContent.Controls.Count - 1 To 0 Step -1
             Dim ctrl As Control = pnlContent.Controls(i)
             If TypeOf ctrl Is Form Then
@@ -85,7 +143,7 @@ Public Class frmStaffDashboard
 
         frm.TopLevel = False
         frm.FormBorderStyle = FormBorderStyle.None
-        
+
         Dim childSidebar As Control = frm.Controls("pnlSidebar")
         If childSidebar IsNot Nothing Then
             childSidebar.Visible = False
@@ -121,11 +179,11 @@ Public Class frmStaffDashboard
                 ctrl.Dispose()
             End If
         Next
-        
+
         For Each ctrl As Control In pnlContent.Controls
             ctrl.Visible = True
         Next
-        
+
         LoadDashboardStats()
         LoadRecentRequests()
     End Sub
@@ -137,5 +195,9 @@ Public Class frmStaffDashboard
         Dim login As New frmLogin()
         login.Show()
         Me.Close()
+    End Sub
+
+    Private Sub pnlContent_Paint(sender As Object, e As PaintEventArgs) Handles pnlContent.Paint
+
     End Sub
 End Class

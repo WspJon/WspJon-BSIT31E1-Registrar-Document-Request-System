@@ -582,7 +582,7 @@ Partial Class frmRequestList
         ' 
         ' pnlSearchBox
         ' 
-        pnlSearchBox.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        pnlSearchBox.BackColor = Color.White
         pnlSearchBox.Controls.Add(lblSearchIcon)
         pnlSearchBox.Controls.Add(txtSearch)
         pnlSearchBox.Location = New Point(0, 4)
@@ -608,7 +608,7 @@ Partial Class frmRequestList
         txtSearch.BorderStyle = BorderStyle.None
         txtSearch.Font = New Font("Segoe UI", 9.5F)
         txtSearch.ForeColor = Color.FromArgb(CByte(131), CByte(175), CByte(214))
-        txtSearch.Location = New Point(37, 8)
+        txtSearch.Location = New Point(38, 9)
         txtSearch.Margin = New Padding(3, 4, 3, 4)
         txtSearch.Name = "txtSearch"
         txtSearch.Size = New Size(320, 22)

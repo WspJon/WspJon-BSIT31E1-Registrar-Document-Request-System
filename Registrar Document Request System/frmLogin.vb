@@ -1,3 +1,5 @@
+Imports MySql.Data.MySqlClient
+
 Public Class frmLogin
 
     ' Stores the currently selected role
@@ -27,8 +29,7 @@ Public Class frmLogin
     End Sub
 
     ' ──────────────────────────────────────────────
-    ' LOGIN BUTTON — placeholder for auth logic
-    ' (the person doing functions will fill this in)
+    ' LOGIN BUTTON — authentication logic with CourseAssigned
     ' ──────────────────────────────────────────────
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Dim username As String = txtUsername.Text.Trim()
@@ -39,20 +40,15 @@ Public Class frmLogin
             Return
         End If
 
-
-
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
-                ' Parameterized query to prevent SQL injection and check role
-                Dim query As String = "SELECT UserID, FullName, Role, Status FROM tblusers WHERE Username = @username AND Password = @password AND Role = @role"
+                ' Query modified to include CourseAssigned
+                Dim query As String = "SELECT UserID, FullName, Role, Status, CourseAssigned FROM tblusers WHERE Username = @username AND Password = @password AND Role = @role"
 
-                Using cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conn)
+                Using cmd As New MySqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@username", username)
-
-                    ' Pass the password as plain text
                     cmd.Parameters.AddWithValue("@password", password)
-
                     cmd.Parameters.AddWithValue("@role", selectedRole)
 
                     Using reader = cmd.ExecuteReader()
@@ -65,10 +61,17 @@ Public Class frmLogin
                                 Return
                             End If
 
-                            ' Store user details globally in our dbHelper
+                            ' Store user details globally in dbHelper
                             dbHelper.currentUserID = Convert.ToInt32(reader("UserID"))
                             dbHelper.currentUserName = reader("FullName").ToString()
                             dbHelper.currentUserRole = reader("Role").ToString()
+
+                            ' Fetch CourseAssigned (BSIT, CTHM, BSCRIM, or ALL)
+                            If Not DBNull.Value.Equals(reader("CourseAssigned")) Then
+                                dbHelper.userCourseAssigned = reader("CourseAssigned").ToString()
+                            Else
+                                dbHelper.userCourseAssigned = "ALL"
+                            End If
 
                             MessageBox.Show($"Welcome, {dbHelper.currentUserName}!", "Login Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -98,6 +101,10 @@ Public Class frmLogin
     End Sub
 
     Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub pnlRight_Paint(sender As Object, e As PaintEventArgs) Handles pnlRight.Paint
 
     End Sub
 End Class

@@ -86,9 +86,20 @@ Public Class frmNewRequest
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
+
+                ' QUERY NA MAY ROLE-BASED COURSE RESTRICTION
                 Dim query As String = "SELECT FirstName, LastName, Course, YearLevel, ContactNo FROM tblstudents WHERE StudentID = @id"
+
+                If dbHelper.currentUserRole <> "Administrator" Then
+                    query &= " AND Course = (SELECT CourseAssigned FROM tblusers WHERE UserID = @staffUserID)"
+                End If
+
                 Using cmd As New MySqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@id", txtStudentNumber.Text.Trim())
+                    If dbHelper.currentUserRole <> "Administrator" Then
+                        cmd.Parameters.AddWithValue("@staffUserID", dbHelper.currentUserID)
+                    End If
+
                     Using reader = cmd.ExecuteReader()
                         If reader.Read() Then
                             ' ILALAGAY ANG DATANG NA-SEARCH
@@ -113,7 +124,7 @@ Public Class frmNewRequest
                             SetStudentFieldsLock(True)
 
                         Else
-                            MessageBox.Show("Student not found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            MessageBox.Show("Student not found or not under your assigned department/course.", "Not Found / Unauthorized", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                             txtFullName.Text = ""
                             txtCourse.Text = ""
                             cboYearLevel.SelectedIndex = -1
@@ -124,7 +135,7 @@ Public Class frmNewRequest
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("Error searching student.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error searching student: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -187,15 +198,19 @@ Public Class frmNewRequest
             Return
         End If
 
-        Try
-            Using conn = dbHelper.GetConnection()
-                conn.Open()
+        Using conn = dbHelper.GetConnection()
+            conn.Open()
 
+            ' 1. SIMULAN ANG DATABASE TRANSACTION
+            Dim trans As MySqlTransaction = conn.BeginTransaction()
+
+            Try
                 Dim yearStr As String = DateTime.Now.Year.ToString()
                 Dim requestNo As String = "REQ-" & yearStr & "-00001"
 
+                ' KUNIN ANG HULING REQUEST NO SA LOOB NG TRANSACTION
                 Dim qLast As String = "SELECT RequestNo FROM tblrequest WHERE RequestNo LIKE @prefix ORDER BY RequestID DESC LIMIT 1"
-                Using cmdLast As New MySqlCommand(qLast, conn)
+                Using cmdLast As New MySqlCommand(qLast, conn, trans)
                     cmdLast.Parameters.AddWithValue("@prefix", "REQ-" & yearStr & "-%")
                     Dim lastReq = cmdLast.ExecuteScalar()
                     If lastReq IsNot Nothing AndAlso Not DBNull.Value.Equals(lastReq) Then
@@ -210,9 +225,10 @@ Public Class frmNewRequest
                     End If
                 End Using
 
+                ' 2. INSERT SA tblrequest
                 Dim qInsertReq As String = "INSERT INTO tblrequest (RequestNo, StudentID, RequestDate, TotalAmount, PaymentStatus, Status, CreatedBy) VALUES (@reqno, @studentid, @reqdate, @total, @paystatus, 'Pending', @createdby)"
                 Dim newRequestID As Integer = 0
-                Using cmdInsert As New MySqlCommand(qInsertReq, conn)
+                Using cmdInsert As New MySqlCommand(qInsertReq, conn, trans)
                     cmdInsert.Parameters.AddWithValue("@reqno", requestNo)
                     cmdInsert.Parameters.AddWithValue("@studentid", txtStudentNumber.Text.Trim())
                     cmdInsert.Parameters.AddWithValue("@reqdate", DateTime.Now)
@@ -224,8 +240,9 @@ Public Class frmNewRequest
                     newRequestID = Convert.ToInt32(cmdInsert.LastInsertedId)
                 End Using
 
+                ' 3. INSERT SA tblrequestdetails
                 Dim qInsertDet As String = "INSERT INTO tblrequestdetails (RequestID, DocumentID, Quantity, Amount, SubTotal) VALUES (@reqid, @docid, @qty, @amt, @subtotal)"
-                Using cmdDet As New MySqlCommand(qInsertDet, conn)
+                Using cmdDet As New MySqlCommand(qInsertDet, conn, trans)
                     Dim docID As Integer = cboDocumentType.SelectedItem.Value
                     Dim fee As Decimal = documentFees(docID)
 
@@ -237,15 +254,20 @@ Public Class frmNewRequest
                     cmdDet.ExecuteNonQuery()
                 End Using
 
+                ' 4. COMMIT: KAPAG WALANG NAG-ERROR, PERMANENTENG I-SAVE LAHAT
+                trans.Commit()
+
                 MessageBox.Show("Document request created successfully!" & vbCrLf & "Request Number: " & requestNo, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 ' I-reset ang buong form at i-unlock para sa susunod na transaction
                 ClearForm()
 
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error creating request: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+            Catch ex As Exception
+                ' 5. ROLLBACK: KAPAG MAY NAGKA-ERROR, KANSELAHIN ANG LAHAT NG BAGONG INSERTED DATA
+                trans.Rollback()
+                MessageBox.Show("Transaction failed. Request was not created to prevent orphaned data. Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click

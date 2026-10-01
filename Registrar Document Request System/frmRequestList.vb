@@ -33,6 +33,7 @@ Public Class frmRequestList
                 Dim query As String = "SELECT DocumentName FROM tbldocuments"
                 Using cmd As New MySqlCommand(query, conn)
                     Using reader = cmd.ExecuteReader()
+                        cboDocumentFilter.Items.Clear()
                         cboDocumentFilter.Items.Add("All Documents")
                         While reader.Read()
                             cboDocumentFilter.Items.Add(reader("DocumentName").ToString())
@@ -50,7 +51,28 @@ Public Class frmRequestList
         Try
             Using conn = dbHelper.GetConnection()
                 conn.Open()
+
+                Dim staffCourseAssigned As String = ""
+                If dbHelper.currentUserRole <> "Administrator" Then
+                    Dim getStaffCourseQuery As String = "SELECT TRIM(CourseAssigned) FROM tblusers WHERE UserID = @staffID"
+                    Using cmdStaff As New MySqlCommand(getStaffCourseQuery, conn)
+                        cmdStaff.Parameters.AddWithValue("@staffID", dbHelper.currentUserID)
+                        Dim result = cmdStaff.ExecuteScalar()
+                        If result IsNot Nothing AndAlso Not DBNull.Value.Equals(result) Then
+                            staffCourseAssigned = result.ToString().Trim()
+                        End If
+                    End Using
+                End If
+
                 Dim whereClause As String = ""
+
+                If dbHelper.currentUserRole <> "Administrator" Then
+                    If String.IsNullOrEmpty(staffCourseAssigned) Then
+                        whereClause &= " AND 1=0 "
+                    Else
+                        whereClause &= " AND UPPER(TRIM(s.Course)) = UPPER(TRIM(@staffCourse)) "
+                    End If
+                End If
 
                 If txtSearch.Text.Trim() <> "" Then
                     whereClause &= " AND (r.RequestNo LIKE @search OR s.StudentID LIKE @search OR s.FirstName LIKE @search OR s.LastName LIKE @search) "
@@ -73,8 +95,17 @@ Public Class frmRequestList
                     havingClause &= " HAVING Documents LIKE @doc "
                 End If
 
-                Dim countQuery As String = "SELECT COUNT(*) FROM (SELECT r.RequestID, GROUP_CONCAT(d.DocumentName SEPARATOR ', ') AS Documents FROM tblrequest r JOIN tblstudents s ON r.StudentID = s.StudentID LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & ") AS tempCount"
+                Dim countQuery As String = "SELECT COUNT(*) FROM (SELECT r.RequestID, GROUP_CONCAT(d.DocumentName SEPARATOR ', ') AS Documents " &
+                                           "FROM tblrequest r " &
+                                           "JOIN tblstudents s ON r.StudentID = s.StudentID " &
+                                           "LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID " &
+                                           "LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID " &
+                                           "WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & ") AS tempCount"
+
                 Using cmdCount As New MySqlCommand(countQuery, conn)
+                    If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(staffCourseAssigned) Then
+                        cmdCount.Parameters.AddWithValue("@staffCourse", staffCourseAssigned)
+                    End If
                     If txtSearch.Text.Trim() <> "" Then cmdCount.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
                     If cboStatusFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
                     If cboDocumentFilter.SelectedIndex > 0 Then cmdCount.Parameters.AddWithValue("@doc", "%" & cboDocumentFilter.SelectedItem.ToString() & "%")
@@ -96,14 +127,19 @@ Public Class frmRequestList
                         CONCAT(s.FirstName, ' ', s.LastName) AS StudentName, 
                         GROUP_CONCAT(d.DocumentName SEPARATOR ', ') AS Documents,
                         r.PaymentStatus,
-                        r.Status
+                        r.Status,
+                        IFNULL(u.Fullname, 'N/A') AS ProcessedByStaff
                     FROM tblrequest r
                     JOIN tblstudents s ON r.StudentID = s.StudentID
                     LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID
                     LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID
+                    LEFT JOIN tblusers u ON r.ProcessedBy = u.UserID
                     WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & " ORDER BY r.RequestDate DESC LIMIT @limit OFFSET @offset"
 
                 Using cmd As New MySqlCommand(query, conn)
+                    If dbHelper.currentUserRole <> "Administrator" AndAlso Not String.IsNullOrEmpty(staffCourseAssigned) Then
+                        cmd.Parameters.AddWithValue("@staffCourse", staffCourseAssigned)
+                    End If
                     If txtSearch.Text.Trim() <> "" Then cmd.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
                     If cboStatusFilter.SelectedIndex > 0 Then cmd.Parameters.AddWithValue("@status", cboStatusFilter.SelectedItem.ToString())
                     If cboDocumentFilter.SelectedIndex > 0 Then cmd.Parameters.AddWithValue("@doc", "%" & cboDocumentFilter.SelectedItem.ToString() & "%")
@@ -120,6 +156,10 @@ Public Class frmRequestList
                     colDocument.DataPropertyName = "Documents"
                     colPayment.DataPropertyName = "PaymentStatus"
                     colStatus.DataPropertyName = "Status"
+
+                    If dgvRequests.Columns.Contains("colProcessedBy") Then
+                        dgvRequests.Columns("colProcessedBy").DataPropertyName = "ProcessedByStaff"
+                    End If
 
                     If Not dgvRequests.Columns.Contains("colRequestID") Then
                         Dim colID As New DataGridViewTextBoxColumn()
@@ -235,7 +275,7 @@ Public Class frmRequestList
         cboPay.Items.AddRange(New String() {"Unpaid", "Paid"})
         cboPay.SelectedItem = currentPay
 
-        Dim lblOR As New Label() With {.Text = "OR Number (if paid) ex. 0000-00:", .Location = New Drawing.Point(20, 70), .AutoSize = True}
+        Dim lblOR As New Label() With {.Text = "OR Number (if paid) ex. 0000-26:", .Location = New Drawing.Point(20, 70), .AutoSize = True}
         Dim txtOR As New TextBox() With {.Location = New Drawing.Point(20, 90), .Width = 290}
 
         Dim lblORDate As New Label() With {.Text = "OR Date (if paid):", .Location = New Drawing.Point(20, 120), .AutoSize = True}
@@ -277,21 +317,46 @@ Public Class frmRequestList
             MessageBox.Show("Error fetching request details: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
+        Dim ToggleORControls = Sub()
+                                   Dim isPaid As Boolean = (cboPay.SelectedItem.ToString() = "Paid")
+                                   txtOR.Enabled = isPaid
+                                   dtpORDate.Enabled = isPaid
+                                   If Not isPaid Then txtOR.Clear()
+                               End Sub
+
+        ToggleORControls()
+        AddHandler cboPay.SelectedIndexChanged, Sub(s, e) ToggleORControls()
         AddHandler btnClose.Click, Sub(s, e) frm.Close()
+
         AddHandler btnSave.Click, Sub(s, e)
                                       Try
-                                          Dim isPaid As Boolean = (cboPay.SelectedItem.ToString() = "Paid")
+                                          Dim selectedPay As String = cboPay.SelectedItem.ToString()
+                                          Dim selectedStatus As String = cboStatus.SelectedItem.ToString()
+                                          Dim isPaid As Boolean = (selectedPay = "Paid")
                                           Dim inputOR As String = txtOR.Text.Trim()
 
+                                          ' 1. BAWAL ICANCEL KAPAG PAID (NO REFUND POLICY)
+                                          If (isPaid OrElse currentPay = "Paid") AndAlso selectedStatus = "Cancelled" Then
+                                              MessageBox.Show("Cannot set status to 'Cancelled' because payment is already marked as Paid (No Refund policy). Only Unpaid requests can be cancelled.", "Action Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                              cboStatus.SelectedItem = currentStatus
+                                              Exit Sub
+                                          End If
+
+                                          ' 2. BAWAL MAG-PROCESS / PREPARE / RELEASE KAPAG UNPAID
+                                          If Not isPaid AndAlso (selectedStatus = "Processing" OrElse selectedStatus = "Ready for Release" OrElse selectedStatus = "Released") Then
+                                              MessageBox.Show("Cannot process, prepare for release, or release documents while payment is UNPAID. Please set payment status to 'Paid' and enter a valid OR Number first.", "Payment Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                              cboPay.Focus()
+                                              Exit Sub
+                                          End If
+
+                                          ' 3. OR NUMBER FORMAT AT DUPLICATE CHECKING KAPAG PAID
                                           If isPaid Then
-                                              ' 1. VALIDATION FOR FORMAT: 4 DIGITS - 2 DIGITS (e.g. 0001-26 o 0000-26)
                                               If Not Regex.IsMatch(inputOR, "^\d{4}-\d{2}$") Then
                                                   MessageBox.Show("Invalid OR Number format. It must follow the format '0000-26' (4 digits, hyphen, 2 digits).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                                   txtOR.Focus()
                                                   Exit Sub
                                               End If
 
-                                              ' 2. VALIDATION FOR UNIQUENESS: Check if OR Number already exists in other requests
                                               Using connCheck = dbHelper.GetConnection()
                                                   connCheck.Open()
                                                   Dim checkQuery As String = "SELECT COUNT(*) FROM tblrequest WHERE ORNo = @or AND RequestID <> @id"
@@ -301,7 +366,7 @@ Public Class frmRequestList
                                                       Dim count As Integer = Convert.ToInt32(cmdCheck.ExecuteScalar())
 
                                                       If count > 0 Then
-                                                          MessageBox.Show("This OR Number is already used by another request. OR Number must be unique.", "Duplicate OR Number", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                                          MessageBox.Show("This OR Number is already used by another request.", "Duplicate OR Number", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                                           txtOR.Focus()
                                                           Exit Sub
                                                       End If
@@ -309,25 +374,31 @@ Public Class frmRequestList
                                               End Using
                                           End If
 
-                                          ' Database Update Operation
+                                          ' 4. UPDATE SA DATABASE WITH AUDIT TRAIL
                                           Using conn = dbHelper.GetConnection()
                                               conn.Open()
+
                                               Dim qUpdate As String = "UPDATE tblrequest SET PaymentStatus=@pay, Status=@status"
+
                                               If isPaid Then
-                                                  qUpdate &= ", ORNo=@or, ORDate=@ordate"
+                                                  qUpdate &= ", ORNo=@or, ORDate=@ordate, ProcessedBy=@processedBy, DateProcessed=NOW()"
                                               Else
-                                                  qUpdate &= ", ORNo=NULL, ORDate=NULL"
+                                                  qUpdate &= ", ORNo=NULL, ORDate=NULL, ProcessedBy=NULL, DateProcessed=NULL"
                                               End If
+
                                               qUpdate &= " WHERE RequestID=@id"
 
                                               Using cmd As New MySqlCommand(qUpdate, conn)
-                                                  cmd.Parameters.AddWithValue("@pay", cboPay.SelectedItem.ToString())
-                                                  cmd.Parameters.AddWithValue("@status", cboStatus.SelectedItem.ToString())
+                                                  cmd.Parameters.AddWithValue("@pay", selectedPay)
+                                                  cmd.Parameters.AddWithValue("@status", selectedStatus)
                                                   cmd.Parameters.AddWithValue("@id", reqID)
+
                                                   If isPaid Then
                                                       cmd.Parameters.AddWithValue("@or", inputOR)
                                                       cmd.Parameters.AddWithValue("@ordate", dtpORDate.Value.ToString("yyyy-MM-dd"))
+                                                      cmd.Parameters.AddWithValue("@processedBy", dbHelper.currentUserID)
                                                   End If
+
                                                   cmd.ExecuteNonQuery()
                                               End Using
                                           End Using
@@ -378,6 +449,10 @@ Public Class frmRequestList
     End Sub
 
     Private Sub pnlTableCard_Paint(sender As Object, e As PaintEventArgs) Handles pnlTableCard.Paint
+
+    End Sub
+
+    Private Sub pnlContent_Paint(sender As Object, e As PaintEventArgs) Handles pnlContent.Paint
 
     End Sub
 End Class
