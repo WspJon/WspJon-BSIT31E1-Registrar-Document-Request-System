@@ -374,6 +374,28 @@ Public Class frmRequestList
                                               End Using
                                           End If
 
+
+
+                                          Using connCheckStatus = dbHelper.GetConnection()
+                                              connCheckStatus.Open()
+                                              Dim checkStatusQuery As String = "SELECT PaymentStatus, Status FROM tblrequest WHERE RequestID = @id"
+                                              Using cmdCheckStatus As New MySqlCommand(checkStatusQuery, connCheckStatus)
+                                                  cmdCheckStatus.Parameters.AddWithValue("@id", reqID)
+                                                  Using reader = cmdCheckStatus.ExecuteReader()
+                                                      If reader.Read() Then
+                                                          Dim dbPayStatus As String = reader("PaymentStatus").ToString()
+                                                          Dim dbStatus As String = reader("Status").ToString()
+
+
+                                                          If dbPayStatus <> currentPay OrElse dbStatus <> currentStatus Then
+                                                              MessageBox.Show("Na-update na ng ibang user ang request na ito habang binabuksan mo. I-close ito at mag-refresh muna bago mag-edit ulit.", "Data Changed by Another User", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                                              Exit Sub
+                                                          End If
+                                                      End If
+                                                  End Using
+                                              End Using
+                                          End Using
+                                          ' ====================================================================
                                           ' 4. UPDATE SA DATABASE WITH AUDIT TRAIL
                                           Using conn = dbHelper.GetConnection()
                                               conn.Open()

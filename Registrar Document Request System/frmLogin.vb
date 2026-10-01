@@ -107,4 +107,14 @@ Public Class frmLogin
     Private Sub pnlRight_Paint(sender As Object, e As PaintEventArgs) Handles pnlRight.Paint
 
     End Sub
+
+    Private Sub chkShowPassword_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPassword.CheckedChanged
+        If chkShowPassword.Checked = True Then
+
+            txtPassword.PasswordChar = ControlChars.NullChar
+        Else
+
+            txtPassword.PasswordChar = "•"c
+        End If
+    End Sub
 End Class
