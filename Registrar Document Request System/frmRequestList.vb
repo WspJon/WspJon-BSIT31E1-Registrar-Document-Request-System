@@ -120,6 +120,7 @@ Public Class frmRequestList
                 Dim offset As Integer = (currentPage - 1) * pageSize
                 If offset < 0 Then offset = 0
 
+                ' Direktang kinukuha r.ProcessedBy dahil Full Name na ang nakasave dito
                 Dim query As String = "
                     SELECT 
                         r.RequestID,
@@ -128,12 +129,11 @@ Public Class frmRequestList
                         GROUP_CONCAT(d.DocumentName SEPARATOR ', ') AS Documents,
                         r.PaymentStatus,
                         r.Status,
-                        IFNULL(u.Fullname, 'N/A') AS ProcessedByStaff
+                        IFNULL(r.ProcessedBy, 'N/A') AS ProcessedByStaff
                     FROM tblrequest r
                     JOIN tblstudents s ON r.StudentID = s.StudentID
                     LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID
                     LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID
-                    LEFT JOIN tblusers u ON r.ProcessedBy = u.UserID
                     WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & " ORDER BY r.RequestDate DESC LIMIT @limit OFFSET @offset"
 
                 Using cmd As New MySqlCommand(query, conn)
@@ -335,21 +335,18 @@ Public Class frmRequestList
                                           Dim isPaid As Boolean = (selectedPay = "Paid")
                                           Dim inputOR As String = txtOR.Text.Trim()
 
-                                          ' 1. BAWAL ICANCEL KAPAG PAID (NO REFUND POLICY)
                                           If (isPaid OrElse currentPay = "Paid") AndAlso selectedStatus = "Cancelled" Then
                                               MessageBox.Show("Cannot set status to 'Cancelled' because payment is already marked as Paid (No Refund policy). Only Unpaid requests can be cancelled.", "Action Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                               cboStatus.SelectedItem = currentStatus
                                               Exit Sub
                                           End If
 
-                                          ' 2. BAWAL MAG-PROCESS / PREPARE / RELEASE KAPAG UNPAID
                                           If Not isPaid AndAlso (selectedStatus = "Processing" OrElse selectedStatus = "Ready for Release" OrElse selectedStatus = "Released") Then
                                               MessageBox.Show("Cannot process, prepare for release, or release documents while payment is UNPAID. Please set payment status to 'Paid' and enter a valid OR Number first.", "Payment Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                               cboPay.Focus()
                                               Exit Sub
                                           End If
 
-                                          ' 3. OR NUMBER FORMAT AT DUPLICATE CHECKING KAPAG PAID
                                           If isPaid Then
                                               If Not Regex.IsMatch(inputOR, "^\d{4}-\d{2}$") Then
                                                   MessageBox.Show("Invalid OR Number format. It must follow the format '0000-26' (4 digits, hyphen, 2 digits).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -374,8 +371,6 @@ Public Class frmRequestList
                                               End Using
                                           End If
 
-
-
                                           Using connCheckStatus = dbHelper.GetConnection()
                                               connCheckStatus.Open()
                                               Dim checkStatusQuery As String = "SELECT PaymentStatus, Status FROM tblrequest WHERE RequestID = @id"
@@ -386,7 +381,6 @@ Public Class frmRequestList
                                                           Dim dbPayStatus As String = reader("PaymentStatus").ToString()
                                                           Dim dbStatus As String = reader("Status").ToString()
 
-
                                                           If dbPayStatus <> currentPay OrElse dbStatus <> currentStatus Then
                                                               MessageBox.Show("Na-update na ng ibang user ang request na ito habang binabuksan mo. I-close ito at mag-refresh muna bago mag-edit ulit.", "Data Changed by Another User", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                                               Exit Sub
@@ -395,8 +389,7 @@ Public Class frmRequestList
                                                   End Using
                                               End Using
                                           End Using
-                                          ' ====================================================================
-                                          ' 4. UPDATE SA DATABASE WITH AUDIT TRAIL
+
                                           Using conn = dbHelper.GetConnection()
                                               conn.Open()
 
@@ -418,7 +411,9 @@ Public Class frmRequestList
                                                   If isPaid Then
                                                       cmd.Parameters.AddWithValue("@or", inputOR)
                                                       cmd.Parameters.AddWithValue("@ordate", dtpORDate.Value.ToString("yyyy-MM-dd"))
-                                                      cmd.Parameters.AddWithValue("@processedBy", dbHelper.currentUserID)
+
+                                                      ' FULL NAME NA ANG IPAPASOK SA DATABASE:
+                                                      cmd.Parameters.AddWithValue("@processedBy", dbHelper.currentUserName)
                                                   End If
 
                                                   cmd.ExecuteNonQuery()
