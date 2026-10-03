@@ -18,13 +18,13 @@ Partial Class frmRequestList
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRequestList))
-        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As DataGridViewCellStyle = New DataGridViewCellStyle()
         pnlSidebar = New Panel()
         pnlLogout = New Panel()
         btnLogout = New Button()
@@ -312,36 +312,36 @@ Partial Class frmRequestList
         dgvRequests.AllowUserToAddRows = False
         dgvRequests.AllowUserToDeleteRows = False
         dgvRequests.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(21), CByte(38), CByte(84))
-        DataGridViewCellStyle1.Font = New Font("Segoe UI", 9.5F)
-        DataGridViewCellStyle1.ForeColor = Color.White
-        DataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
-        DataGridViewCellStyle1.SelectionForeColor = Color.White
-        dgvRequests.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle15.BackColor = Color.FromArgb(CByte(21), CByte(38), CByte(84))
+        DataGridViewCellStyle15.Font = New Font("Segoe UI", 9.5F)
+        DataGridViewCellStyle15.ForeColor = Color.White
+        DataGridViewCellStyle15.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
+        DataGridViewCellStyle15.SelectionForeColor = Color.White
+        dgvRequests.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle15
         dgvRequests.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         dgvRequests.BackgroundColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         dgvRequests.BorderStyle = BorderStyle.None
         dgvRequests.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
         dgvRequests.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
-        DataGridViewCellStyle2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        DataGridViewCellStyle2.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        DataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
-        DataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        DataGridViewCellStyle2.WrapMode = DataGridViewTriState.False
-        dgvRequests.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle16.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
+        DataGridViewCellStyle16.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        DataGridViewCellStyle16.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        DataGridViewCellStyle16.SelectionBackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
+        DataGridViewCellStyle16.SelectionForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        DataGridViewCellStyle16.WrapMode = DataGridViewTriState.False
+        dgvRequests.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle16
         dgvRequests.ColumnHeadersHeight = 42
         dgvRequests.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         dgvRequests.Columns.AddRange(New DataGridViewColumn() {colRequestNo, colStudent, colDocument, colPayment, colStatus, colAction})
-        DataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
-        DataGridViewCellStyle7.Font = New Font("Segoe UI", 9.5F)
-        DataGridViewCellStyle7.ForeColor = Color.White
-        DataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
-        DataGridViewCellStyle7.SelectionForeColor = Color.White
-        DataGridViewCellStyle7.WrapMode = DataGridViewTriState.False
-        dgvRequests.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle21.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
+        DataGridViewCellStyle21.Font = New Font("Segoe UI", 9.5F)
+        DataGridViewCellStyle21.ForeColor = Color.White
+        DataGridViewCellStyle21.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
+        DataGridViewCellStyle21.SelectionForeColor = Color.White
+        DataGridViewCellStyle21.WrapMode = DataGridViewTriState.False
+        dgvRequests.DefaultCellStyle = DataGridViewCellStyle21
         dgvRequests.EnableHeadersVisualStyles = False
         dgvRequests.GridColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
         dgvRequests.Location = New Point(18, 16)
@@ -358,8 +358,8 @@ Partial Class frmRequestList
         ' 
         ' colRequestNo
         ' 
-        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
-        colRequestNo.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle17.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        colRequestNo.DefaultCellStyle = DataGridViewCellStyle17
         colRequestNo.HeaderText = "REQUEST NO."
         colRequestNo.MinimumWidth = 6
         colRequestNo.Name = "colRequestNo"
@@ -384,8 +384,8 @@ Partial Class frmRequestList
         ' 
         ' colPayment
         ' 
-        DataGridViewCellStyle4.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
-        colPayment.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle18.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+        colPayment.DefaultCellStyle = DataGridViewCellStyle18
         colPayment.HeaderText = "PAYMENT"
         colPayment.MinimumWidth = 6
         colPayment.Name = "colPayment"
@@ -394,9 +394,9 @@ Partial Class frmRequestList
         ' 
         ' colStatus
         ' 
-        DataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle5.Font = New Font("Segoe UI", 8.5F, FontStyle.Bold)
-        colStatus.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle19.Font = New Font("Segoe UI", 8.5F, FontStyle.Bold)
+        colStatus.DefaultCellStyle = DataGridViewCellStyle19
         colStatus.HeaderText = "STATUS"
         colStatus.MinimumWidth = 6
         colStatus.Name = "colStatus"
@@ -405,11 +405,11 @@ Partial Class frmRequestList
         ' 
         ' colAction
         ' 
-        DataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        DataGridViewCellStyle6.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        DataGridViewCellStyle6.NullValue = "..."
-        colAction.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle20.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        DataGridViewCellStyle20.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
+        DataGridViewCellStyle20.NullValue = "..."
+        colAction.DefaultCellStyle = DataGridViewCellStyle20
         colAction.HeaderText = "ACTION"
         colAction.MinimumWidth = 6
         colAction.Name = "colAction"
