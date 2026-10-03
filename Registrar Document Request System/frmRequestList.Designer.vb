@@ -537,7 +537,7 @@ Partial Class frmRequestList
         ' 
         ' cboDateFilter
         ' 
-        cboDateFilter.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        cboDateFilter.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         cboDateFilter.DropDownStyle = ComboBoxStyle.DropDownList
         cboDateFilter.FlatStyle = FlatStyle.Flat
         cboDateFilter.Font = New Font("Segoe UI", 9.5F)
@@ -552,7 +552,7 @@ Partial Class frmRequestList
         ' 
         ' cboDocumentFilter
         ' 
-        cboDocumentFilter.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        cboDocumentFilter.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         cboDocumentFilter.DropDownStyle = ComboBoxStyle.DropDownList
         cboDocumentFilter.FlatStyle = FlatStyle.Flat
         cboDocumentFilter.Font = New Font("Segoe UI", 9.5F)
@@ -567,7 +567,7 @@ Partial Class frmRequestList
         ' 
         ' cboStatusFilter
         ' 
-        cboStatusFilter.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        cboStatusFilter.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         cboStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList
         cboStatusFilter.FlatStyle = FlatStyle.Flat
         cboStatusFilter.Font = New Font("Segoe UI", 9.5F)
@@ -582,7 +582,7 @@ Partial Class frmRequestList
         ' 
         ' pnlSearchBox
         ' 
-        pnlSearchBox.BackColor = Color.White
+        pnlSearchBox.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
         pnlSearchBox.Controls.Add(lblSearchIcon)
         pnlSearchBox.Controls.Add(txtSearch)
         pnlSearchBox.Location = New Point(0, 4)
@@ -604,7 +604,7 @@ Partial Class frmRequestList
         ' 
         ' txtSearch
         ' 
-        txtSearch.BackColor = Color.FromArgb(CByte(22), CByte(32), CByte(74))
+        txtSearch.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         txtSearch.BorderStyle = BorderStyle.None
         txtSearch.Font = New Font("Segoe UI", 9.5F)
         txtSearch.ForeColor = Color.FromArgb(CByte(131), CByte(175), CByte(214))

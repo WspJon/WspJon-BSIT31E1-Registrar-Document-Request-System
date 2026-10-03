@@ -369,7 +369,7 @@ Partial Class frmSearchStudent
         DataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
         DataGridViewCellStyle1.SelectionForeColor = Color.White
         dgvStudents.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        dgvStudents.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgvStudents.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         dgvStudents.BackgroundColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         dgvStudents.BorderStyle = BorderStyle.None
         dgvStudents.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
@@ -393,9 +393,10 @@ Partial Class frmSearchStudent
         DataGridViewCellStyle4.SelectionForeColor = Color.White
         DataGridViewCellStyle4.WrapMode = DataGridViewTriState.False
         dgvStudents.DefaultCellStyle = DataGridViewCellStyle4
+        dgvStudents.Dock = DockStyle.Fill
         dgvStudents.EnableHeadersVisualStyles = False
         dgvStudents.GridColor = Color.FromArgb(CByte(39), CByte(60), CByte(117))
-        dgvStudents.Location = New Point(20, 55)
+        dgvStudents.Location = New Point(0, 0)
         dgvStudents.MultiSelect = False
         dgvStudents.Name = "dgvStudents"
         dgvStudents.ReadOnly = True
@@ -403,7 +404,7 @@ Partial Class frmSearchStudent
         dgvStudents.RowHeadersWidth = 51
         dgvStudents.RowTemplate.Height = 42
         dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvStudents.Size = New Size(870, 480)
+        dgvStudents.Size = New Size(910, 600)
         dgvStudents.TabIndex = 2
         ' 
         ' colAction
@@ -417,7 +418,6 @@ Partial Class frmSearchStudent
         colAction.MinimumWidth = 6
         colAction.Name = "colAction"
         colAction.ReadOnly = True
-        colAction.Width = 80
         ' 
         ' lblResultInfo
         ' 
