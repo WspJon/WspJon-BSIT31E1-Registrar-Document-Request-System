@@ -275,7 +275,7 @@ Public Class frmRequestList
         cboPay.Items.AddRange(New String() {"Unpaid", "Paid"})
         cboPay.SelectedItem = currentPay
 
-        Dim lblOR As New Label() With {.Text = "OR Number (if paid) ex. 0000-26:", .Location = New Drawing.Point(20, 70), .AutoSize = True}
+        Dim lblOR As New Label() With {.Text = "OR Number (if paid) ex. 0000-00:", .Location = New Drawing.Point(20, 70), .AutoSize = True}
         Dim txtOR As New TextBox() With {.Location = New Drawing.Point(20, 90), .Width = 290}
 
         Dim lblORDate As New Label() With {.Text = "OR Date (if paid):", .Location = New Drawing.Point(20, 120), .AutoSize = True}

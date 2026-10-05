@@ -466,7 +466,7 @@ Partial Class frmSearchStudent
         btnReset.ForeColor = Color.White
         btnReset.Location = New Point(730, 14)
         btnReset.Name = "btnReset"
-        btnReset.Size = New Size(65, 32)
+        btnReset.Size = New Size(75, 34)
         btnReset.TabIndex = 5
         btnReset.Text = "Clear"
         btnReset.UseVisualStyleBackColor = False
