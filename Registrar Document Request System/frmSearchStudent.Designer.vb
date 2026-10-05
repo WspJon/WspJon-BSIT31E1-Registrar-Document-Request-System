@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmSearchStudent
     Inherits System.Windows.Forms.Form
 
@@ -43,7 +43,6 @@ Partial Class frmSearchStudent
         btnPage2 = New Button()
         btnNext = New Button()
         dgvStudents = New DataGridView()
-        colAction = New DataGridViewTextBoxColumn()
         lblResultInfo = New Label()
         lblTableTitle = New Label()
         pnlSearchFilter = New Panel()
@@ -384,8 +383,7 @@ Partial Class frmSearchStudent
         dgvStudents.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         dgvStudents.ColumnHeadersHeight = 40
         dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        dgvStudents.Columns.AddRange(New DataGridViewColumn() {colAction})
-        DataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft
+                DataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle4.BackColor = Color.FromArgb(CByte(26), CByte(46), CByte(99))
         DataGridViewCellStyle4.Font = New Font("Segoe UI", 9.5F)
         DataGridViewCellStyle4.ForeColor = Color.White
@@ -406,18 +404,6 @@ Partial Class frmSearchStudent
         dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         dgvStudents.Size = New Size(910, 600)
         dgvStudents.TabIndex = 2
-        ' 
-        ' colAction
-        ' 
-        DataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
-        DataGridViewCellStyle3.ForeColor = Color.FromArgb(CByte(160), CByte(174), CByte(192))
-        DataGridViewCellStyle3.NullValue = "..."
-        colAction.DefaultCellStyle = DataGridViewCellStyle3
-        colAction.HeaderText = "ACTION"
-        colAction.MinimumWidth = 6
-        colAction.Name = "colAction"
-        colAction.ReadOnly = True
         ' 
         ' lblResultInfo
         ' 
@@ -622,7 +608,6 @@ Partial Class frmSearchStudent
     Friend WithEvents colYearLevel As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colContactNo As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colStatus As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colAction As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents pnlTableFooter As System.Windows.Forms.Panel
     Friend WithEvents lblPagination As System.Windows.Forms.Label
     Friend WithEvents btnPrev As System.Windows.Forms.Button
