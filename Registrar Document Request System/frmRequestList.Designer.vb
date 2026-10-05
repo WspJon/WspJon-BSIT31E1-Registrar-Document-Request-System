@@ -612,6 +612,7 @@ Partial Class frmRequestList
         txtSearch.Margin = New Padding(3, 4, 3, 4)
         txtSearch.Name = "txtSearch"
         txtSearch.Size = New Size(320, 22)
+        txtSearch.PlaceholderText = "Search by request no, student name..."
         txtSearch.TabIndex = 1
         ' 
         ' lblSubtitle
