@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmStudentManagement
     Inherits System.Windows.Forms.Form
 
@@ -143,7 +143,8 @@ Partial Class frmStudentManagement
         ' 
         ' colActions
         ' 
-        colActions.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        colActions.AutoSizeMode = DataGridViewAutoSizeColumnMode.None
+        colActions.Width = 125
         colActions.HeaderText = "ACTIONS"
         colActions.MinimumWidth = 6
         colActions.Name = "colActions"
