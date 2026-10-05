@@ -129,10 +129,9 @@ Public Class frmRequestList
                         GROUP_CONCAT(d.DocumentName SEPARATOR ', ') AS Documents,
                         r.PaymentStatus,
                         r.Status,
-                        IFNULL(u.FullName, 'N/A') AS ProcessedByStaff
+                        IFNULL(r.ProcessedBy, 'N/A') AS ProcessedByStaff
                     FROM tblrequest r
                     JOIN tblstudents s ON r.StudentID = s.StudentID
-                    LEFT JOIN tblusers u ON r.ProcessedBy = u.UserID
                     LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID
                     LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID
                     WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & " ORDER BY r.RequestDate DESC LIMIT @limit OFFSET @offset"
@@ -276,7 +275,7 @@ Public Class frmRequestList
         cboPay.Items.AddRange(New String() {"Unpaid", "Paid"})
         cboPay.SelectedItem = currentPay
 
-        Dim lblOR As New Label() With {.Text = "OR Number (if paid) ex. 0000-00:", .Location = New Drawing.Point(20, 70), .AutoSize = True}
+        Dim lblOR As New Label() With {.Text = "OR Number (if paid) ex. 0000-26:", .Location = New Drawing.Point(20, 70), .AutoSize = True}
         Dim txtOR As New TextBox() With {.Location = New Drawing.Point(20, 90), .Width = 290}
 
         Dim lblORDate As New Label() With {.Text = "OR Date (if paid):", .Location = New Drawing.Point(20, 120), .AutoSize = True}

@@ -88,7 +88,7 @@ Public Class frmNewRequest
                 conn.Open()
 
                 ' QUERY NA MAY ROLE-BASED COURSE RESTRICTION
-                Dim query As String = "SELECT FirstName, LastName, Course, YearLevel, ContactNo, Status FROM tblstudents WHERE StudentID = @id"
+                Dim query As String = "SELECT FirstName, LastName, Course, YearLevel, ContactNo FROM tblstudents WHERE StudentID = @id"
 
                 If dbHelper.currentUserRole <> "Administrator" Then
                     query &= " AND Course = (SELECT CourseAssigned FROM tblusers WHERE UserID = @staffUserID)"
@@ -102,10 +102,6 @@ Public Class frmNewRequest
 
                     Using reader = cmd.ExecuteReader()
                         If reader.Read() Then
-                            If reader("Status").ToString().Equals("Inactive", StringComparison.OrdinalIgnoreCase) Then
-                                MessageBox.Show("This student account is currently deactivated and cannot request documents.", "Deactivated Account", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                                Return
-                            End If
                             ' ILALAGAY ANG DATANG NA-SEARCH
                             txtFullName.Text = reader("FirstName").ToString() & " " & reader("LastName").ToString()
                             txtCourse.Text = reader("Course").ToString()

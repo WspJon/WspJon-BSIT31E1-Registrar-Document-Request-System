@@ -1,4 +1,4 @@
-Imports MySql.Data.MySqlClient
+﻿Imports MySql.Data.MySqlClient
 Imports System.Drawing
 
 Public Class frmSearchStudent
@@ -353,7 +353,7 @@ Public Class frmSearchStudent
                 '===================================================
                 ' ADD ONLY ONE ACTION COLUMN
                 '===================================================
-                'SetupActionColumn()
+                SetupActionColumn()
 
 
                 '===================================================
@@ -446,6 +446,364 @@ Public Class frmSearchStudent
 
 
     '===========================================================
+    ' ACTION BUTTON TEXT
+    '===========================================================
+    Private Sub dgvStudents_CellFormatting(
+        sender As Object,
+        e As DataGridViewCellFormattingEventArgs
+    ) Handles dgvStudents.CellFormatting
+
+        If e.RowIndex < 0 Then
+            Exit Sub
+        End If
+
+
+        If Not dgvStudents.Columns.Contains("Action") Then
+            Exit Sub
+        End If
+
+
+        If e.ColumnIndex <>
+           dgvStudents.Columns("Action").Index Then
+
+            Exit Sub
+
+        End If
+
+
+        Dim status As String =
+            Convert.ToString(
+                dgvStudents.Rows(e.RowIndex).
+                Cells("Status").Value
+            )
+
+
+        If status.Equals(
+            "Active",
+            StringComparison.OrdinalIgnoreCase
+        ) Then
+
+            e.Value = "Deactivate"
+
+        Else
+
+            e.Value = "Activate"
+
+        End If
+
+    End Sub
+
+
+
+    '===========================================================
+    ' ACTION BUTTON DESIGN
+    '===========================================================
+    Private Sub dgvStudents_CellPainting(
+        sender As Object,
+        e As DataGridViewCellPaintingEventArgs
+    ) Handles dgvStudents.CellPainting
+
+        If e.RowIndex < 0 Then
+            Exit Sub
+        End If
+
+
+        If Not dgvStudents.Columns.Contains("Action") Then
+            Exit Sub
+        End If
+
+
+        If e.ColumnIndex <>
+           dgvStudents.Columns("Action").Index Then
+
+            Exit Sub
+
+        End If
+
+
+        e.PaintBackground(
+            e.CellBounds,
+            True
+        )
+
+
+        Dim status As String =
+            Convert.ToString(
+                dgvStudents.Rows(e.RowIndex).
+                Cells("Status").Value
+            )
+
+
+        Dim buttonColor As Color
+        Dim buttonText As String
+
+
+        If status.Equals(
+            "Active",
+            StringComparison.OrdinalIgnoreCase
+        ) Then
+
+            ' RED DEACTIVATE
+            buttonColor =
+                Color.FromArgb(
+                    220,
+                    53,
+                    69
+                )
+
+            buttonText = "Deactivate"
+
+        Else
+
+            ' GREEN ACTIVATE
+            buttonColor =
+                Color.FromArgb(
+                    40,
+                    167,
+                    69
+                )
+
+            buttonText = "Activate"
+
+        End If
+
+
+        Dim buttonRect As New Rectangle(
+            e.CellBounds.X + 5,
+            e.CellBounds.Y + 5,
+            e.CellBounds.Width - 10,
+            e.CellBounds.Height - 10
+        )
+
+
+        Using brush As New SolidBrush(
+            buttonColor
+        )
+
+            e.Graphics.FillRectangle(
+                brush,
+                buttonRect
+            )
+
+        End Using
+
+
+        Using brush As New SolidBrush(
+            Color.White
+        )
+
+            Using font As New Font(
+                e.CellStyle.Font,
+                FontStyle.Bold
+            )
+
+                Dim sf As New StringFormat()
+
+                sf.Alignment =
+                    StringAlignment.Center
+
+                sf.LineAlignment =
+                    StringAlignment.Center
+
+
+                e.Graphics.DrawString(
+                    buttonText,
+                    font,
+                    brush,
+                    buttonRect,
+                    sf
+                )
+
+            End Using
+
+        End Using
+
+
+        e.Handled = True
+
+    End Sub
+
+
+
+    '===========================================================
+    ' ACTION BUTTON CLICK
+    '===========================================================
+    Private Sub dgvStudents_CellContentClick(
+        sender As Object,
+        e As DataGridViewCellEventArgs
+    ) Handles dgvStudents.CellContentClick
+
+        If e.RowIndex < 0 Then
+            Exit Sub
+        End If
+
+
+        If e.ColumnIndex < 0 Then
+            Exit Sub
+        End If
+
+
+        If dgvStudents.Columns(e.ColumnIndex).Name <>
+           "Action" Then
+
+            Exit Sub
+
+        End If
+
+
+        Try
+
+            '===================================================
+            ' GET STUDENT ID
+            '===================================================
+            Dim studentID As String =
+                Convert.ToString(
+                    dgvStudents.Rows(e.RowIndex).
+                    Cells("StudentID").Value
+                )
+
+
+            '===================================================
+            ' GET CURRENT STATUS
+            '===================================================
+            Dim currentStatus As String =
+                Convert.ToString(
+                    dgvStudents.Rows(e.RowIndex).
+                    Cells("Status").Value
+                )
+
+
+            '===================================================
+            ' DETERMINE NEW STATUS
+            '===================================================
+            Dim newStatus As String
+
+
+            If currentStatus.Equals(
+                "Active",
+                StringComparison.OrdinalIgnoreCase
+            ) Then
+
+                newStatus = "Inactive"
+
+            Else
+
+                newStatus = "Active"
+
+            End If
+
+
+            '===================================================
+            ' CONFIRMATION TEXT
+            '===================================================
+            Dim actionText As String
+
+
+            If newStatus = "Inactive" Then
+
+                actionText = "deactivate"
+
+            Else
+
+                actionText = "activate"
+
+            End If
+
+
+            '===================================================
+            ' CONFIRMATION
+            '===================================================
+            Dim result As DialogResult =
+                MessageBox.Show(
+                    "Are you sure you want to " &
+                    actionText &
+                    " student " &
+                    studentID &
+                    "?",
+                    "Confirm Status Change",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                )
+
+
+            If result = DialogResult.No Then
+                Exit Sub
+            End If
+
+
+            '===================================================
+            ' UPDATE DATABASE
+            '===================================================
+            Using conn = dbHelper.GetConnection()
+
+                conn.Open()
+
+
+                Dim updateQuery As String =
+                    "UPDATE tblstudents " &
+                    "SET Status = @status " &
+                    "WHERE StudentID = @studentID"
+
+
+                Using cmd As New MySqlCommand(
+                    updateQuery,
+                    conn
+                )
+
+                    cmd.Parameters.AddWithValue(
+                        "@status",
+                        newStatus
+                    )
+
+                    cmd.Parameters.AddWithValue(
+                        "@studentID",
+                        studentID
+                    )
+
+
+                    cmd.ExecuteNonQuery()
+
+                End Using
+
+            End Using
+
+
+            '===================================================
+            ' REFRESH GRID
+            '===================================================
+            LoadStudents()
+
+
+            '===================================================
+            ' SUCCESS MESSAGE
+            '===================================================
+            MessageBox.Show(
+                "Student " &
+                studentID &
+                " is now " &
+                newStatus &
+                ".",
+                "Status Updated",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            )
+
+
+        Catch ex As Exception
+
+            MessageBox.Show(
+                "Error updating student status: " &
+                ex.Message,
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            )
+
+        End Try
+
+    End Sub
+
+
 
     '===========================================================
     ' PAGINATION UI
@@ -856,7 +1214,4 @@ Public Class frmSearchStudent
 
     End Sub
 
-    Private Sub pnlContent_Paint(sender As Object, e As PaintEventArgs) Handles pnlContent.Paint
-
-    End Sub
 End Class
