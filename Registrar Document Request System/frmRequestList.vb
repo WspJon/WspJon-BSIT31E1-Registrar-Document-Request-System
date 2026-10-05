@@ -129,9 +129,10 @@ Public Class frmRequestList
                         GROUP_CONCAT(d.DocumentName SEPARATOR ', ') AS Documents,
                         r.PaymentStatus,
                         r.Status,
-                        IFNULL(r.ProcessedBy, 'N/A') AS ProcessedByStaff
+                        IFNULL(u.FullName, 'N/A') AS ProcessedByStaff
                     FROM tblrequest r
                     JOIN tblstudents s ON r.StudentID = s.StudentID
+                    LEFT JOIN tblusers u ON r.ProcessedBy = u.UserID
                     LEFT JOIN tblrequestdetails rd ON r.RequestID = rd.RequestID
                     LEFT JOIN tbldocuments d ON rd.DocumentID = d.DocumentID
                     WHERE 1=1 " & whereClause & " GROUP BY r.RequestID " & havingClause & " ORDER BY r.RequestDate DESC LIMIT @limit OFFSET @offset"
