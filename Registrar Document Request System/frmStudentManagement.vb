@@ -26,7 +26,6 @@ Public Class frmStudentManagement
                 conn.Open()
                 Dim query As String = "SELECT StudentID, CONCAT(FirstName, ' ', LastName) AS Name, Course, YearLevel, Status FROM tblstudents WHERE Status != 'Deleted'"
 
-                ' LAST NAME, FIRST NAME, AT STUDENT ID LANG ANG PWEDENG MA-SEARCH
                 If Not String.IsNullOrWhiteSpace(searchTerm) Then
                     query &= " AND (StudentID LIKE @search OR LastName LIKE @search OR FirstName LIKE @search)"
                 End If
@@ -85,6 +84,83 @@ Public Class frmStudentManagement
 
     Private Sub cboCourseFilter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboCourseFilter.SelectedIndexChanged
         LoadStudents(txtSearch.Text.Trim(), GetSelectedCourse())
+    End Sub
+
+    Private Sub dgvStudents_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgvStudents.CellFormatting
+        If e.RowIndex < 0 OrElse Not dgvStudents.Columns.Contains("colActions") OrElse e.ColumnIndex <> dgvStudents.Columns("colActions").Index Then
+            Exit Sub
+        End If
+
+        Dim status As String = Convert.ToString(dgvStudents.Rows(e.RowIndex).Cells("colStatus").Value)
+        If status.Equals("Active", StringComparison.OrdinalIgnoreCase) Then
+            e.Value = "Deactivate"
+        Else
+            e.Value = "Activate"
+        End If
+    End Sub
+
+    Private Sub dgvStudents_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles dgvStudents.CellPainting
+        If e.RowIndex < 0 OrElse Not dgvStudents.Columns.Contains("colActions") OrElse e.ColumnIndex <> dgvStudents.Columns("colActions").Index Then
+            Exit Sub
+        End If
+
+        e.PaintBackground(e.CellBounds, True)
+        Dim status As String = Convert.ToString(dgvStudents.Rows(e.RowIndex).Cells("colStatus").Value)
+        Dim buttonColor As Color
+        Dim buttonText As String
+
+        If status.Equals("Active", StringComparison.OrdinalIgnoreCase) Then
+            buttonColor = Color.FromArgb(220, 53, 69) ' RED DEACTIVATE
+            buttonText = "Deactivate"
+        Else
+            buttonColor = Color.FromArgb(40, 167, 69) ' GREEN ACTIVATE
+            buttonText = "Activate"
+        End If
+
+        Dim buttonRect As New Rectangle(e.CellBounds.X + 5, e.CellBounds.Y + 5, e.CellBounds.Width - 10, e.CellBounds.Height - 10)
+        Using brush As New SolidBrush(buttonColor)
+            e.Graphics.FillRectangle(brush, buttonRect)
+        End Using
+
+        Using font As New Font(e.CellStyle.Font, FontStyle.Bold)
+            Dim textSize As SizeF = e.Graphics.MeasureString(buttonText, font)
+            Dim textX As Single = buttonRect.X + (buttonRect.Width - textSize.Width) / 2
+            Dim textY As Single = buttonRect.Y + (buttonRect.Height - textSize.Height) / 2
+            e.Graphics.DrawString(buttonText, font, Brushes.White, textX, textY)
+        End Using
+
+        e.Handled = True
+    End Sub
+
+    Private Sub dgvStudents_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvStudents.CellClick
+        If e.RowIndex >= 0 AndAlso dgvStudents.Columns(e.ColumnIndex).Name = "colActions" Then
+            Dim studentID As String = dgvStudents.Rows(e.RowIndex).Cells("colStudentID").Value.ToString()
+            Dim currentStatus As String = dgvStudents.Rows(e.RowIndex).Cells("colStatus").Value.ToString()
+            Dim studentName As String = dgvStudents.Rows(e.RowIndex).Cells("colName").Value.ToString()
+            
+            Dim newStatus As String = If(currentStatus = "Active", "Inactive", "Active")
+            Dim actionText As String = If(newStatus = "Inactive", "deactivate", "activate")
+            
+            Dim result As DialogResult = MessageBox.Show($"Are you sure you want to {actionText} {studentName}'s account?", "Confirm Status Change", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            
+            If result = DialogResult.Yes Then
+                Try
+                    Using conn = dbHelper.GetConnection()
+                        conn.Open()
+                        Dim query As String = "UPDATE tblstudents SET Status = @status WHERE StudentID = @id"
+                        Using cmd As New MySqlCommand(query, conn)
+                            cmd.Parameters.AddWithValue("@status", newStatus)
+                            cmd.Parameters.AddWithValue("@id", studentID)
+                            cmd.ExecuteNonQuery()
+                        End Using
+                    End Using
+                    MessageBox.Show($"Student successfully {actionText}d.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    LoadStudents(txtSearch.Text.Trim(), GetSelectedCourse())
+                Catch ex As Exception
+                    MessageBox.Show("Error updating status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+        End If
     End Sub
 
 End Class
