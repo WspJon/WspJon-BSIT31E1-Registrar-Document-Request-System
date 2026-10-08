@@ -278,7 +278,7 @@ Partial Class frmStudentAddEdit
         btnCancel.Cursor = Cursors.Hand
         btnCancel.FlatAppearance.BorderColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnCancel.FlatStyle = FlatStyle.Flat
-        btnCancel.Font = New Font("Segoe UI", 10F)
+        btnCancel.Font = New Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         btnCancel.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         btnCancel.Location = New Point(223, 520)
         btnCancel.Margin = New Padding(3, 4, 3, 4)
@@ -304,7 +304,7 @@ Partial Class frmStudentAddEdit
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.White
+        BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         ClientSize = New Size(514, 600)
         Controls.Add(cboSection)
         Controls.Add(btnCancel)

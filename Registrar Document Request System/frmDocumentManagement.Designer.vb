@@ -43,7 +43,7 @@ Partial Class frmDocumentManagement
         ' pnlMainCard
         ' 
         pnlMainCard.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlMainCard.BackColor = Color.White
+        pnlMainCard.BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         pnlMainCard.Controls.Add(dgvDocuments)
         pnlMainCard.Controls.Add(pnlSearchFilter)
         pnlMainCard.Controls.Add(pnlHeader)
@@ -118,6 +118,7 @@ Partial Class frmDocumentManagement
         colFee.MinimumWidth = 6
         colFee.Name = "colFee"
         colFee.ReadOnly = True
+        colFee.Width = 125
         ' 
         ' colStatus
         ' 
@@ -128,6 +129,7 @@ Partial Class frmDocumentManagement
         colStatus.MinimumWidth = 6
         colStatus.Name = "colStatus"
         colStatus.ReadOnly = True
+        colStatus.Width = 125
         ' 
         ' colActions
         ' 
@@ -140,7 +142,7 @@ Partial Class frmDocumentManagement
         ' pnlSearchFilter
         ' 
         pnlSearchFilter.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlSearchFilter.BackColor = Color.White
+        pnlSearchFilter.BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         pnlSearchFilter.Controls.Add(btnSearch)
         pnlSearchFilter.Controls.Add(txtSearch)
         pnlSearchFilter.Location = New Point(29, 91)
@@ -222,7 +224,7 @@ Partial Class frmDocumentManagement
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(245), CByte(246), CByte(248))
+        BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         ClientSize = New Size(1051, 760)
         Controls.Add(pnlMainCard)
         Margin = New Padding(3, 4, 3, 4)

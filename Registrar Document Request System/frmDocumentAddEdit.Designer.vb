@@ -17,177 +17,185 @@ Partial Class frmDocumentAddEdit
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.lblTitle = New System.Windows.Forms.Label()
-        Me.pnlHeader = New System.Windows.Forms.Panel()
-        Me.lblDocName = New System.Windows.Forms.Label()
-        Me.txtDocName = New System.Windows.Forms.TextBox()
-        Me.lblDescription = New System.Windows.Forms.Label()
-        Me.txtDescription = New System.Windows.Forms.TextBox()
-        Me.lblFee = New System.Windows.Forms.Label()
-        Me.txtFee = New System.Windows.Forms.TextBox()
-        Me.lblStatus = New System.Windows.Forms.Label()
-        Me.cboStatus = New System.Windows.Forms.ComboBox()
-        Me.btnSave = New System.Windows.Forms.Button()
-        Me.btnCancel = New System.Windows.Forms.Button()
-        Me.pnlHeader.SuspendLayout()
-        Me.SuspendLayout()
-        '
-        'pnlHeader
-        '
-        Me.pnlHeader.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.pnlHeader.Controls.Add(Me.lblTitle)
-        Me.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnlHeader.Location = New System.Drawing.Point(0, 0)
-        Me.pnlHeader.Name = "pnlHeader"
-        Me.pnlHeader.Size = New System.Drawing.Size(400, 60)
-        Me.pnlHeader.TabIndex = 0
-        '
-        'lblTitle
-        '
-        Me.lblTitle.AutoSize = True
-        Me.lblTitle.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold)
-        Me.lblTitle.ForeColor = System.Drawing.Color.White
-        Me.lblTitle.Location = New System.Drawing.Point(20, 18)
-        Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(193, 25)
-        Me.lblTitle.TabIndex = 0
-        Me.lblTitle.Text = "Add Document Type"
-        '
-        'lblDocName
-        '
-        Me.lblDocName.AutoSize = True
-        Me.lblDocName.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblDocName.Location = New System.Drawing.Point(25, 80)
-        Me.lblDocName.Name = "lblDocName"
-        Me.lblDocName.Size = New System.Drawing.Size(106, 17)
-        Me.lblDocName.TabIndex = 1
-        Me.lblDocName.Text = "Document Name"
-        '
-        'txtDocName
-        '
-        Me.txtDocName.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.txtDocName.Location = New System.Drawing.Point(25, 100)
-        Me.txtDocName.Name = "txtDocName"
-        Me.txtDocName.Size = New System.Drawing.Size(350, 25)
-        Me.txtDocName.TabIndex = 2
-        '
-        'lblDescription
-        '
-        Me.lblDescription.AutoSize = True
-        Me.lblDescription.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblDescription.Location = New System.Drawing.Point(25, 140)
-        Me.lblDescription.Name = "lblDescription"
-        Me.lblDescription.Size = New System.Drawing.Size(74, 17)
-        Me.lblDescription.TabIndex = 3
-        Me.lblDescription.Text = "Description"
-        '
-        'txtDescription
-        '
-        Me.txtDescription.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.txtDescription.Location = New System.Drawing.Point(25, 160)
-        Me.txtDescription.Multiline = True
-        Me.txtDescription.Name = "txtDescription"
-        Me.txtDescription.Size = New System.Drawing.Size(350, 60)
-        Me.txtDescription.TabIndex = 4
-        '
-        'lblFee
-        '
-        Me.lblFee.AutoSize = True
-        Me.lblFee.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblFee.Location = New System.Drawing.Point(25, 240)
-        Me.lblFee.Name = "lblFee"
-        Me.lblFee.Size = New System.Drawing.Size(28, 17)
-        Me.lblFee.TabIndex = 5
-        Me.lblFee.Text = "Fee"
-        '
-        'txtFee
-        '
-        Me.txtFee.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.txtFee.Location = New System.Drawing.Point(25, 260)
-        Me.txtFee.Name = "txtFee"
-        Me.txtFee.Size = New System.Drawing.Size(160, 25)
-        Me.txtFee.TabIndex = 6
-        Me.txtFee.Text = "0.00"
-        '
-        'lblStatus
-        '
-        Me.lblStatus.AutoSize = True
-        Me.lblStatus.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblStatus.Location = New System.Drawing.Point(215, 240)
-        Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(43, 17)
-        Me.lblStatus.TabIndex = 7
-        Me.lblStatus.Text = "Status"
-        '
-        'cboStatus
-        '
-        Me.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboStatus.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.cboStatus.FormattingEnabled = True
-        Me.cboStatus.Items.AddRange(New Object() {"Active", "Inactive"})
-        Me.cboStatus.Location = New System.Drawing.Point(215, 260)
-        Me.cboStatus.Name = "cboStatus"
-        Me.cboStatus.Size = New System.Drawing.Size(160, 25)
-        Me.cboStatus.TabIndex = 8
-        '
-        'btnSave
-        '
-        Me.btnSave.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.btnSave.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnSave.FlatAppearance.BorderSize = 0
-        Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(265, 310)
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(110, 35)
-        Me.btnSave.TabIndex = 9
-        Me.btnSave.Text = "Save"
-        Me.btnSave.UseVisualStyleBackColor = False
-        '
-        'btnCancel
-        '
-        Me.btnCancel.BackColor = System.Drawing.Color.White
-        Me.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.btnCancel.ForeColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.btnCancel.Location = New System.Drawing.Point(145, 310)
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(110, 35)
-        Me.btnCancel.TabIndex = 10
-        Me.btnCancel.Text = "Cancel"
-        Me.btnCancel.UseVisualStyleBackColor = False
-        '
-        'frmDocumentAddEdit
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(400, 370)
-        Me.Controls.Add(Me.btnCancel)
-        Me.Controls.Add(Me.btnSave)
-        Me.Controls.Add(Me.cboStatus)
-        Me.Controls.Add(Me.lblStatus)
-        Me.Controls.Add(Me.txtFee)
-        Me.Controls.Add(Me.lblFee)
-        Me.Controls.Add(Me.txtDescription)
-        Me.Controls.Add(Me.lblDescription)
-        Me.Controls.Add(Me.txtDocName)
-        Me.Controls.Add(Me.lblDocName)
-        Me.Controls.Add(Me.pnlHeader)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
-        Me.Name = "frmDocumentAddEdit"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Document Details"
-        Me.pnlHeader.ResumeLayout(False)
-        Me.pnlHeader.PerformLayout()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        lblTitle = New Label()
+        pnlHeader = New Panel()
+        lblDocName = New Label()
+        txtDocName = New TextBox()
+        lblDescription = New Label()
+        txtDescription = New TextBox()
+        lblFee = New Label()
+        txtFee = New TextBox()
+        lblStatus = New Label()
+        cboStatus = New ComboBox()
+        btnSave = New Button()
+        btnCancel = New Button()
+        pnlHeader.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' lblTitle
+        ' 
+        lblTitle.AutoSize = True
+        lblTitle.Font = New Font("Segoe UI", 14F, FontStyle.Bold)
+        lblTitle.ForeColor = Color.White
+        lblTitle.Location = New Point(23, 24)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(248, 32)
+        lblTitle.TabIndex = 0
+        lblTitle.Text = "Add Document Type"
+        ' 
+        ' pnlHeader
+        ' 
+        pnlHeader.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        pnlHeader.Controls.Add(lblTitle)
+        pnlHeader.Dock = DockStyle.Top
+        pnlHeader.Location = New Point(0, 0)
+        pnlHeader.Margin = New Padding(3, 4, 3, 4)
+        pnlHeader.Name = "pnlHeader"
+        pnlHeader.Size = New Size(457, 80)
+        pnlHeader.TabIndex = 0
+        ' 
+        ' lblDocName
+        ' 
+        lblDocName.AutoSize = True
+        lblDocName.Font = New Font("Segoe UI", 9.5F)
+        lblDocName.Location = New Point(29, 107)
+        lblDocName.Name = "lblDocName"
+        lblDocName.Size = New Size(128, 21)
+        lblDocName.TabIndex = 1
+        lblDocName.Text = "Document Name"
+        ' 
+        ' txtDocName
+        ' 
+        txtDocName.Font = New Font("Segoe UI", 10F)
+        txtDocName.Location = New Point(29, 133)
+        txtDocName.Margin = New Padding(3, 4, 3, 4)
+        txtDocName.Name = "txtDocName"
+        txtDocName.Size = New Size(399, 30)
+        txtDocName.TabIndex = 2
+        ' 
+        ' lblDescription
+        ' 
+        lblDescription.AutoSize = True
+        lblDescription.Font = New Font("Segoe UI", 9.5F)
+        lblDescription.Location = New Point(29, 187)
+        lblDescription.Name = "lblDescription"
+        lblDescription.Size = New Size(89, 21)
+        lblDescription.TabIndex = 3
+        lblDescription.Text = "Description"
+        ' 
+        ' txtDescription
+        ' 
+        txtDescription.Font = New Font("Segoe UI", 10F)
+        txtDescription.Location = New Point(29, 213)
+        txtDescription.Margin = New Padding(3, 4, 3, 4)
+        txtDescription.Multiline = True
+        txtDescription.Name = "txtDescription"
+        txtDescription.Size = New Size(399, 79)
+        txtDescription.TabIndex = 4
+        ' 
+        ' lblFee
+        ' 
+        lblFee.AutoSize = True
+        lblFee.Font = New Font("Segoe UI", 9.5F)
+        lblFee.Location = New Point(29, 320)
+        lblFee.Name = "lblFee"
+        lblFee.Size = New Size(34, 21)
+        lblFee.TabIndex = 5
+        lblFee.Text = "Fee"
+        ' 
+        ' txtFee
+        ' 
+        txtFee.Font = New Font("Segoe UI", 10F)
+        txtFee.Location = New Point(29, 347)
+        txtFee.Margin = New Padding(3, 4, 3, 4)
+        txtFee.Name = "txtFee"
+        txtFee.Size = New Size(182, 30)
+        txtFee.TabIndex = 6
+        txtFee.Text = "0.00"
+        ' 
+        ' lblStatus
+        ' 
+        lblStatus.AutoSize = True
+        lblStatus.Font = New Font("Segoe UI", 9.5F)
+        lblStatus.Location = New Point(246, 320)
+        lblStatus.Name = "lblStatus"
+        lblStatus.Size = New Size(52, 21)
+        lblStatus.TabIndex = 7
+        lblStatus.Text = "Status"
+        ' 
+        ' cboStatus
+        ' 
+        cboStatus.DropDownStyle = ComboBoxStyle.DropDownList
+        cboStatus.Font = New Font("Segoe UI", 10F)
+        cboStatus.FormattingEnabled = True
+        cboStatus.Items.AddRange(New Object() {"Active", "Inactive"})
+        cboStatus.Location = New Point(246, 347)
+        cboStatus.Margin = New Padding(3, 4, 3, 4)
+        cboStatus.Name = "cboStatus"
+        cboStatus.Size = New Size(182, 31)
+        cboStatus.TabIndex = 8
+        ' 
+        ' btnSave
+        ' 
+        btnSave.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        btnSave.Cursor = Cursors.Hand
+        btnSave.FlatAppearance.BorderSize = 0
+        btnSave.FlatStyle = FlatStyle.Flat
+        btnSave.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        btnSave.ForeColor = Color.White
+        btnSave.Location = New Point(303, 413)
+        btnSave.Margin = New Padding(3, 4, 3, 4)
+        btnSave.Name = "btnSave"
+        btnSave.Size = New Size(126, 47)
+        btnSave.TabIndex = 9
+        btnSave.Text = "Save"
+        btnSave.UseVisualStyleBackColor = False
+        ' 
+        ' btnCancel
+        ' 
+        btnCancel.BackColor = Color.White
+        btnCancel.Cursor = Cursors.Hand
+        btnCancel.FlatAppearance.BorderColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        btnCancel.FlatStyle = FlatStyle.Flat
+        btnCancel.Font = New Font("Segoe UI", 10F)
+        btnCancel.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        btnCancel.Location = New Point(166, 413)
+        btnCancel.Margin = New Padding(3, 4, 3, 4)
+        btnCancel.Name = "btnCancel"
+        btnCancel.Size = New Size(126, 47)
+        btnCancel.TabIndex = 10
+        btnCancel.Text = "Cancel"
+        btnCancel.UseVisualStyleBackColor = False
+        ' 
+        ' frmDocumentAddEdit
+        ' 
+        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleMode = AutoScaleMode.Font
+        BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
+        ClientSize = New Size(457, 493)
+        Controls.Add(btnCancel)
+        Controls.Add(btnSave)
+        Controls.Add(cboStatus)
+        Controls.Add(lblStatus)
+        Controls.Add(txtFee)
+        Controls.Add(lblFee)
+        Controls.Add(txtDescription)
+        Controls.Add(lblDescription)
+        Controls.Add(txtDocName)
+        Controls.Add(lblDocName)
+        Controls.Add(pnlHeader)
+        Font = New Font("Segoe UI", 9F)
+        FormBorderStyle = FormBorderStyle.FixedDialog
+        Margin = New Padding(3, 4, 3, 4)
+        MaximizeBox = False
+        MinimizeBox = False
+        Name = "frmDocumentAddEdit"
+        StartPosition = FormStartPosition.CenterParent
+        Text = "Document Details"
+        pnlHeader.ResumeLayout(False)
+        pnlHeader.PerformLayout()
+        ResumeLayout(False)
+        PerformLayout()
 
     End Sub
 

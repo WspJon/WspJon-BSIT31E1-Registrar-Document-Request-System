@@ -6,8 +6,9 @@ Public Class frmNewRequest
     Private documentFees As New Dictionary(Of Integer, Decimal)()
 
     Private Sub frmNewRequest_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ClearForm()
+        ' I-load muna ang listahan ng mga dokumento bago i-clear ang form
         LoadDocuments()
+        ClearForm()
     End Sub
 
     ' Helper method para i-reset ang form at i-unlock ang lahat ng fields
@@ -18,12 +19,16 @@ Public Class frmNewRequest
         cboYearLevel.SelectedIndex = -1
         txtContactNumber.Text = ""
 
+        ' Gawing unselected/blanko ang document type at payment status
+        cboDocumentType.SelectedIndex = -1
+        cboPaymentStatus.SelectedIndex = -1
+
         ' I-unlock lahat para makapag-search uli
         SetStudentFieldsLock(False)
 
-        txtAmountDue.Text = "0.00"
-        txtCopies.Text = "1"
-        cboPaymentStatus.SelectedIndex = 0
+        ' Gawing blanko ang amount at copies sa simula
+        txtAmountDue.Text = ""
+        txtCopies.Text = ""
     End Sub
 
     ' Helper method para i-lock o i-unlock ang Student Number, Full Name, Course, Year Level, at Contact Number
@@ -59,11 +64,11 @@ Public Class frmNewRequest
             cboDocumentType.DisplayMember = "Text"
             cboDocumentType.ValueMember = "Value"
 
-            If cboDocumentType.Items.Count > 0 Then
-                cboDocumentType.SelectedIndex = 0
-            End If
+            ' Naka-unselected para ang user ang mamili
+            cboDocumentType.SelectedIndex = -1
+
         Catch ex As Exception
-            ' ignore
+            MessageBox.Show("Error loading documents: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -102,7 +107,7 @@ Public Class frmNewRequest
 
                     Using reader = cmd.ExecuteReader()
                         If reader.Read() Then
-                            ' ILALAGAY ANG DATANG NA-SEARCH
+                            ' ILALAGAY ANG DATA NA NA-SEARCH
                             txtFullName.Text = reader("FirstName").ToString() & " " & reader("LastName").ToString()
                             txtCourse.Text = reader("Course").ToString()
                             Dim yLevel As String = reader("YearLevel").ToString().Trim()
@@ -120,7 +125,7 @@ Public Class frmNewRequest
                             End Select
                             txtContactNumber.Text = reader("ContactNo").ToString()
 
-                            ' LITERAL NA LA-LOCKAN LAHAT (STUDENT NUMBER, FULL NAME, COURSE, YEAR LEVEL, AT CONTACT NUMBER)
+                            ' I-LOCK ANG MGA STUDENT FIELDS PAGKATAPOS MA-SEARCH
                             SetStudentFieldsLock(True)
 
                         Else
@@ -139,6 +144,7 @@ Public Class frmNewRequest
         End Try
     End Sub
 
+    ' AUTOMATIC COMPUTATION SA AMOUNT DUE
     Private Sub CalculateAmount()
         If cboDocumentType.SelectedIndex >= 0 AndAlso documentFees.Count > 0 Then
             Dim selectedDoc = cboDocumentType.SelectedItem
@@ -147,6 +153,7 @@ Public Class frmNewRequest
                 Dim fee As Decimal = documentFees(docID)
                 Dim copies As Integer = 0
 
+                ' Nagku-compute lamang kapag may valid na bilang ng copies na inilagay ang user
                 If Integer.TryParse(txtCopies.Text.Trim(), copies) AndAlso copies > 0 Then
                     Dim total As Decimal = fee * copies
                     txtAmountDue.Text = total.ToString("F2")
@@ -154,6 +161,9 @@ Public Class frmNewRequest
                     txtAmountDue.Text = "0.00"
                 End If
             End If
+        Else
+            ' Kapag walang napiling document, nananatiling blanko ang Amount
+            txtAmountDue.Text = ""
         End If
     End Sub
 
@@ -172,13 +182,27 @@ Public Class frmNewRequest
     End Sub
 
     Private Sub btnSubmitRequest_Click(sender As Object, e As EventArgs) Handles btnSubmitRequest.Click
+        ' VALIDATIONS
         If String.IsNullOrWhiteSpace(txtFullName.Text) Then
             MessageBox.Show("Please search and select a student first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
+        If cboDocumentType.SelectedIndex = -1 Then
+            MessageBox.Show("Please select a document type.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cboDocumentType.Focus()
+            Return
+        End If
+
+        If cboPaymentStatus.SelectedIndex = -1 Then
+            MessageBox.Show("Please select a payment status.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cboPaymentStatus.Focus()
+            Return
+        End If
+
+        ' Sisiguraduhing may inilagay na copies ang user
         Dim copies As Integer = 0
-        If Not Integer.TryParse(txtCopies.Text.Trim(), copies) OrElse copies <= 0 Then
+        If String.IsNullOrWhiteSpace(txtCopies.Text) OrElse Not Integer.TryParse(txtCopies.Text.Trim(), copies) OrElse copies <= 0 Then
             MessageBox.Show("Please enter a valid number of copies (must be at least 1).", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             txtCopies.Focus()
             txtCopies.SelectAll()
@@ -254,60 +278,85 @@ Public Class frmNewRequest
                     cmdDet.ExecuteNonQuery()
                 End Using
 
-                ' 4. COMMIT: KAPAG WALANG NAG-ERROR, PERMANENTENG I-SAVE LAHAT
+                ' 4. COMMIT TRANSACTION
                 trans.Commit()
 
                 MessageBox.Show("Document request created successfully!" & vbCrLf & "Request Number: " & requestNo, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                ' I-reset ang buong form at i-unlock para sa susunod na transaction
+                ' Reset ang buong form
                 ClearForm()
 
+                ' Pabalikin sa Dashboard view pagkatapos mag-submit
+                GoToDashboard()
+
             Catch ex As Exception
-                ' 5. ROLLBACK: KAPAG MAY NAGKA-ERROR, KANSELAHIN ANG LAHAT NG BAGONG INSERTED DATA
+                ' 5. ROLLBACK KAPAG MAY ERROR
                 trans.Rollback()
                 MessageBox.Show("Transaction failed. Request was not created to prevent orphaned data. Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Using
     End Sub
 
+    ' HELPER METHOD: Pinakamaayos na paraan para bumalik sa Dashboard View ng Parent Form
+    Private Sub GoToDashboard()
+        Dim parentDashboard = TryCast(Me.ParentForm, frmStaffDashboard)
+        If parentDashboard IsNot Nothing Then
+            ' Executive trigger sa btnDashboard event ng Staff Dashboard
+            parentDashboard.btnDashboard.PerformClick()
+        Else
+            Me.Close()
+        End If
+    End Sub
+
+    ' CANCEL BUTTON
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
-        Me.Close()
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to cancel?", "Confirm Cancel", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+        If result = DialogResult.Yes Then
+            ClearForm()
+            GoToDashboard()
+        End If
     End Sub
 
+    ' DASHBOARD MENU BUTTON
     Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
-        Dim frm As New frmStaffDashboard()
-        frm.Show()
-        Me.Close()
+        ClearForm()
+        GoToDashboard()
     End Sub
 
+    ' MENU NAVIGATION (Tawagin ang buttons sa Parent Dashboard para pareho ang System behavior)
     Private Sub btnRequestList_Click(sender As Object, e As EventArgs) Handles btnRequestList.Click
-        Dim frm As New frmRequestList()
-        frm.Show()
-        Me.Close()
+        Dim parentDashboard = TryCast(Me.ParentForm, frmStaffDashboard)
+        If parentDashboard IsNot Nothing Then
+            parentDashboard.btnRequestList.PerformClick()
+        End If
     End Sub
 
     Private Sub btnSearchStudent_Click(sender As Object, e As EventArgs) Handles btnSearchStudent.Click
-        Dim frm As New frmSearchStudent()
-        frm.Show()
-        Me.Close()
+        Dim parentDashboard = TryCast(Me.ParentForm, frmStaffDashboard)
+        If parentDashboard IsNot Nothing Then
+            parentDashboard.btnSearchStudent.PerformClick()
+        End If
     End Sub
 
     Private Sub btnReports_Click(sender As Object, e As EventArgs) Handles btnReports.Click
-        Dim frm As New frmReports()
-        frm.Show()
-        Me.Close()
+        Dim parentDashboard = TryCast(Me.ParentForm, frmStaffDashboard)
+        If parentDashboard IsNot Nothing Then
+            parentDashboard.btnReports.PerformClick()
+        End If
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        dbHelper.currentUserID = 0
-        dbHelper.currentUserName = ""
-        dbHelper.currentUserRole = ""
-        Dim login As New frmLogin()
-        login.Show()
-        Me.Close()
+        Dim parentDashboard = TryCast(Me.ParentForm, frmStaffDashboard)
+        If parentDashboard IsNot Nothing Then
+            parentDashboard.btnLogout.PerformClick()
+        Else
+            Me.Close()
+        End If
     End Sub
 
     Private Sub pnlContent_Paint(sender As Object, e As PaintEventArgs) Handles pnlContent.Paint
 
     End Sub
+
 End Class

@@ -17,201 +17,210 @@ Partial Class frmUserAddEdit
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.lblTitle = New System.Windows.Forms.Label()
-        Me.pnlHeader = New System.Windows.Forms.Panel()
-        Me.lblFullName = New System.Windows.Forms.Label()
-        Me.txtFullName = New System.Windows.Forms.TextBox()
-        Me.lblUsername = New System.Windows.Forms.Label()
-        Me.txtUsername = New System.Windows.Forms.TextBox()
-        Me.lblPassword = New System.Windows.Forms.Label()
-        Me.txtPassword = New System.Windows.Forms.TextBox()
-        Me.lblRole = New System.Windows.Forms.Label()
-        Me.cboRole = New System.Windows.Forms.ComboBox()
-        Me.lblStatus = New System.Windows.Forms.Label()
-        Me.cboStatus = New System.Windows.Forms.ComboBox()
-        Me.btnSave = New System.Windows.Forms.Button()
-        Me.btnCancel = New System.Windows.Forms.Button()
-        Me.pnlHeader.SuspendLayout()
-        Me.SuspendLayout()
-        '
-        'pnlHeader
-        '
-        Me.pnlHeader.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.pnlHeader.Controls.Add(Me.lblTitle)
-        Me.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnlHeader.Location = New System.Drawing.Point(0, 0)
-        Me.pnlHeader.Name = "pnlHeader"
-        Me.pnlHeader.Size = New System.Drawing.Size(400, 60)
-        Me.pnlHeader.TabIndex = 0
-        '
-        'lblTitle
-        '
-        Me.lblTitle.AutoSize = True
-        Me.lblTitle.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold)
-        Me.lblTitle.ForeColor = System.Drawing.Color.White
-        Me.lblTitle.Location = New System.Drawing.Point(20, 18)
-        Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(161, 25)
-        Me.lblTitle.TabIndex = 0
-        Me.lblTitle.Text = "Add System User"
-        '
-        'lblFullName
-        '
-        Me.lblFullName.AutoSize = True
-        Me.lblFullName.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblFullName.Location = New System.Drawing.Point(25, 80)
-        Me.lblFullName.Name = "lblFullName"
-        Me.lblFullName.Size = New System.Drawing.Size(66, 17)
-        Me.lblFullName.TabIndex = 1
-        Me.lblFullName.Text = "Full Name"
-        '
-        'txtFullName
-        '
-        Me.txtFullName.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.txtFullName.Location = New System.Drawing.Point(25, 100)
-        Me.txtFullName.Name = "txtFullName"
-        Me.txtFullName.Size = New System.Drawing.Size(350, 25)
-        Me.txtFullName.TabIndex = 2
-        '
-        'lblUsername
-        '
-        Me.lblUsername.AutoSize = True
-        Me.lblUsername.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblUsername.Location = New System.Drawing.Point(25, 140)
-        Me.lblUsername.Name = "lblUsername"
-        Me.lblUsername.Size = New System.Drawing.Size(67, 17)
-        Me.lblUsername.TabIndex = 3
-        Me.lblUsername.Text = "Username"
-        '
-        'txtUsername
-        '
-        Me.txtUsername.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.txtUsername.Location = New System.Drawing.Point(25, 160)
-        Me.txtUsername.Name = "txtUsername"
-        Me.txtUsername.Size = New System.Drawing.Size(350, 25)
-        Me.txtUsername.TabIndex = 4
-        '
-        'lblPassword
-        '
-        Me.lblPassword.AutoSize = True
-        Me.lblPassword.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblPassword.Location = New System.Drawing.Point(25, 200)
-        Me.lblPassword.Name = "lblPassword"
-        Me.lblPassword.Size = New System.Drawing.Size(64, 17)
-        Me.lblPassword.TabIndex = 5
-        Me.lblPassword.Text = "Password"
-        '
-        'txtPassword
-        '
-        Me.txtPassword.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.txtPassword.Location = New System.Drawing.Point(25, 220)
-        Me.txtPassword.Name = "txtPassword"
-        Me.txtPassword.Size = New System.Drawing.Size(350, 25)
-        Me.txtPassword.TabIndex = 6
-        Me.txtPassword.UseSystemPasswordChar = True
-        '
-        'lblRole
-        '
-        Me.lblRole.AutoSize = True
-        Me.lblRole.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblRole.Location = New System.Drawing.Point(25, 260)
-        Me.lblRole.Name = "lblRole"
-        Me.lblRole.Size = New System.Drawing.Size(34, 17)
-        Me.lblRole.TabIndex = 7
-        Me.lblRole.Text = "Role"
-        '
-        'cboRole
-        '
-        Me.cboRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboRole.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.cboRole.FormattingEnabled = True
-        Me.cboRole.Items.AddRange(New Object() {"Administrator", "Registrar Staff"})
-        Me.cboRole.Location = New System.Drawing.Point(25, 280)
-        Me.cboRole.Name = "cboRole"
-        Me.cboRole.Size = New System.Drawing.Size(160, 25)
-        Me.cboRole.TabIndex = 8
-        '
-        'lblStatus
-        '
-        Me.lblStatus.AutoSize = True
-        Me.lblStatus.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.lblStatus.Location = New System.Drawing.Point(215, 260)
-        Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(43, 17)
-        Me.lblStatus.TabIndex = 9
-        Me.lblStatus.Text = "Status"
-        '
-        'cboStatus
-        '
-        Me.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboStatus.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.cboStatus.FormattingEnabled = True
-        Me.cboStatus.Items.AddRange(New Object() {"Active", "Inactive"})
-        Me.cboStatus.Location = New System.Drawing.Point(215, 280)
-        Me.cboStatus.Name = "cboStatus"
-        Me.cboStatus.Size = New System.Drawing.Size(160, 25)
-        Me.cboStatus.TabIndex = 10
-        '
-        'btnSave
-        '
-        Me.btnSave.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.btnSave.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnSave.FlatAppearance.BorderSize = 0
-        Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnSave.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(265, 330)
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(110, 35)
-        Me.btnSave.TabIndex = 11
-        Me.btnSave.Text = "Save"
-        Me.btnSave.UseVisualStyleBackColor = False
-        '
-        'btnCancel
-        '
-        Me.btnCancel.BackColor = System.Drawing.Color.White
-        Me.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.btnCancel.ForeColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        Me.btnCancel.Location = New System.Drawing.Point(145, 330)
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(110, 35)
-        Me.btnCancel.TabIndex = 12
-        Me.btnCancel.Text = "Cancel"
-        Me.btnCancel.UseVisualStyleBackColor = False
-        '
-        'frmUserAddEdit
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(400, 390)
-        Me.Controls.Add(Me.btnCancel)
-        Me.Controls.Add(Me.btnSave)
-        Me.Controls.Add(Me.cboStatus)
-        Me.Controls.Add(Me.lblStatus)
-        Me.Controls.Add(Me.cboRole)
-        Me.Controls.Add(Me.lblRole)
-        Me.Controls.Add(Me.txtPassword)
-        Me.Controls.Add(Me.lblPassword)
-        Me.Controls.Add(Me.txtUsername)
-        Me.Controls.Add(Me.lblUsername)
-        Me.Controls.Add(Me.txtFullName)
-        Me.Controls.Add(Me.lblFullName)
-        Me.Controls.Add(Me.pnlHeader)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
-        Me.Name = "frmUserAddEdit"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "User Details"
-        Me.pnlHeader.ResumeLayout(False)
-        Me.pnlHeader.PerformLayout()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        lblTitle = New Label()
+        pnlHeader = New Panel()
+        lblFullName = New Label()
+        txtFullName = New TextBox()
+        lblUsername = New Label()
+        txtUsername = New TextBox()
+        lblPassword = New Label()
+        txtPassword = New TextBox()
+        lblRole = New Label()
+        cboRole = New ComboBox()
+        lblStatus = New Label()
+        cboStatus = New ComboBox()
+        btnSave = New Button()
+        btnCancel = New Button()
+        pnlHeader.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' lblTitle
+        ' 
+        lblTitle.AutoSize = True
+        lblTitle.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
+        lblTitle.ForeColor = Color.White
+        lblTitle.Location = New Point(23, 24)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(206, 32)
+        lblTitle.TabIndex = 0
+        lblTitle.Text = "Add System User"
+        ' 
+        ' pnlHeader
+        ' 
+        pnlHeader.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        pnlHeader.Controls.Add(lblTitle)
+        pnlHeader.Dock = DockStyle.Top
+        pnlHeader.Location = New Point(0, 0)
+        pnlHeader.Margin = New Padding(3, 4, 3, 4)
+        pnlHeader.Name = "pnlHeader"
+        pnlHeader.Size = New Size(457, 80)
+        pnlHeader.TabIndex = 0
+        ' 
+        ' lblFullName
+        ' 
+        lblFullName.AutoSize = True
+        lblFullName.Font = New Font("Segoe UI", 9.5F)
+        lblFullName.Location = New Point(29, 107)
+        lblFullName.Name = "lblFullName"
+        lblFullName.Size = New Size(81, 21)
+        lblFullName.TabIndex = 1
+        lblFullName.Text = "Full Name"
+        ' 
+        ' txtFullName
+        ' 
+        txtFullName.Font = New Font("Segoe UI", 10.0F)
+        txtFullName.Location = New Point(29, 133)
+        txtFullName.Margin = New Padding(3, 4, 3, 4)
+        txtFullName.Name = "txtFullName"
+        txtFullName.Size = New Size(399, 30)
+        txtFullName.TabIndex = 2
+        ' 
+        ' lblUsername
+        ' 
+        lblUsername.AutoSize = True
+        lblUsername.Font = New Font("Segoe UI", 9.5F)
+        lblUsername.Location = New Point(29, 187)
+        lblUsername.Name = "lblUsername"
+        lblUsername.Size = New Size(81, 21)
+        lblUsername.TabIndex = 3
+        lblUsername.Text = "Username"
+        ' 
+        ' txtUsername
+        ' 
+        txtUsername.Font = New Font("Segoe UI", 10.0F)
+        txtUsername.Location = New Point(29, 213)
+        txtUsername.Margin = New Padding(3, 4, 3, 4)
+        txtUsername.Name = "txtUsername"
+        txtUsername.Size = New Size(399, 30)
+        txtUsername.TabIndex = 4
+        ' 
+        ' lblPassword
+        ' 
+        lblPassword.AutoSize = True
+        lblPassword.Font = New Font("Segoe UI", 9.5F)
+        lblPassword.Location = New Point(29, 267)
+        lblPassword.Name = "lblPassword"
+        lblPassword.Size = New Size(76, 21)
+        lblPassword.TabIndex = 5
+        lblPassword.Text = "Password"
+        ' 
+        ' txtPassword
+        ' 
+        txtPassword.Font = New Font("Segoe UI", 10.0F)
+        txtPassword.Location = New Point(29, 293)
+        txtPassword.Margin = New Padding(3, 4, 3, 4)
+        txtPassword.Name = "txtPassword"
+        txtPassword.Size = New Size(399, 30)
+        txtPassword.TabIndex = 6
+        txtPassword.UseSystemPasswordChar = True
+        ' 
+        ' lblRole
+        ' 
+        lblRole.AutoSize = True
+        lblRole.Font = New Font("Segoe UI", 9.5F)
+        lblRole.Location = New Point(29, 347)
+        lblRole.Name = "lblRole"
+        lblRole.Size = New Size(41, 21)
+        lblRole.TabIndex = 7
+        lblRole.Text = "Role"
+        ' 
+        ' cboRole
+        ' 
+        cboRole.DropDownStyle = ComboBoxStyle.DropDownList
+        cboRole.Font = New Font("Segoe UI", 10.0F)
+        cboRole.FormattingEnabled = True
+        cboRole.Items.AddRange(New Object() {"Administrator", "Registrar Staff"})
+        cboRole.Location = New Point(29, 373)
+        cboRole.Margin = New Padding(3, 4, 3, 4)
+        cboRole.Name = "cboRole"
+        cboRole.Size = New Size(182, 31)
+        cboRole.TabIndex = 8
+        ' 
+        ' lblStatus
+        ' 
+        lblStatus.AutoSize = True
+        lblStatus.Font = New Font("Segoe UI", 9.5F)
+        lblStatus.Location = New Point(246, 347)
+        lblStatus.Name = "lblStatus"
+        lblStatus.Size = New Size(52, 21)
+        lblStatus.TabIndex = 9
+        lblStatus.Text = "Status"
+        ' 
+        ' cboStatus
+        ' 
+        cboStatus.DropDownStyle = ComboBoxStyle.DropDownList
+        cboStatus.Font = New Font("Segoe UI", 10.0F)
+        cboStatus.FormattingEnabled = True
+        cboStatus.Items.AddRange(New Object() {"Active", "Inactive"})
+        cboStatus.Location = New Point(246, 373)
+        cboStatus.Margin = New Padding(3, 4, 3, 4)
+        cboStatus.Name = "cboStatus"
+        cboStatus.Size = New Size(182, 31)
+        cboStatus.TabIndex = 10
+        ' 
+        ' btnSave
+        ' 
+        btnSave.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        btnSave.Cursor = Cursors.Hand
+        btnSave.FlatAppearance.BorderSize = 0
+        btnSave.FlatStyle = FlatStyle.Flat
+        btnSave.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        btnSave.ForeColor = Color.White
+        btnSave.Location = New Point(303, 440)
+        btnSave.Margin = New Padding(3, 4, 3, 4)
+        btnSave.Name = "btnSave"
+        btnSave.Size = New Size(126, 47)
+        btnSave.TabIndex = 11
+        btnSave.Text = "Save"
+        btnSave.UseVisualStyleBackColor = False
+        ' 
+        ' btnCancel
+        ' 
+        btnCancel.BackColor = Color.White
+        btnCancel.Cursor = Cursors.Hand
+        btnCancel.FlatAppearance.BorderColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        btnCancel.FlatStyle = FlatStyle.Flat
+        btnCancel.Font = New Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        btnCancel.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        btnCancel.Location = New Point(166, 440)
+        btnCancel.Margin = New Padding(3, 4, 3, 4)
+        btnCancel.Name = "btnCancel"
+        btnCancel.Size = New Size(126, 47)
+        btnCancel.TabIndex = 12
+        btnCancel.Text = "Cancel"
+        btnCancel.UseVisualStyleBackColor = False
+        ' 
+        ' frmUserAddEdit
+        ' 
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleMode = AutoScaleMode.Font
+        BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
+        ClientSize = New Size(457, 520)
+        Controls.Add(btnCancel)
+        Controls.Add(btnSave)
+        Controls.Add(cboStatus)
+        Controls.Add(lblStatus)
+        Controls.Add(cboRole)
+        Controls.Add(lblRole)
+        Controls.Add(txtPassword)
+        Controls.Add(lblPassword)
+        Controls.Add(txtUsername)
+        Controls.Add(lblUsername)
+        Controls.Add(txtFullName)
+        Controls.Add(lblFullName)
+        Controls.Add(pnlHeader)
+        Font = New Font("Segoe UI", 9.0F)
+        FormBorderStyle = FormBorderStyle.FixedDialog
+        Margin = New Padding(3, 4, 3, 4)
+        MaximizeBox = False
+        MinimizeBox = False
+        Name = "frmUserAddEdit"
+        StartPosition = FormStartPosition.CenterParent
+        Text = "User Details"
+        pnlHeader.ResumeLayout(False)
+        pnlHeader.PerformLayout()
+        ResumeLayout(False)
+        PerformLayout()
 
     End Sub
 

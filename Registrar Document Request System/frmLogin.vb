@@ -6,30 +6,54 @@ Public Class frmLogin
     Private selectedRole As String = "Administrator"
 
     ' ──────────────────────────────────────────────
-    ' ROLE TOGGLE — switches active tab styling
+    ' FORM LOAD — Sets default button colors on startup
+    ' ──────────────────────────────────────────────
+    Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Unang bukas ng form: Administrator ang Active (Navy Blue bg, White text)
+        SetActiveRoleUI("Administrator")
+    End Sub
+
+    ' ──────────────────────────────────────────────
+    ' HELPER METHOD — Controls active/inactive tab appearance
+    ' ──────────────────────────────────────────────
+    Private Sub SetActiveRoleUI(role As String)
+        Dim navyColor As System.Drawing.Color = System.Drawing.Color.FromArgb(15, 31, 76)
+        Dim whiteColor As System.Drawing.Color = System.Drawing.Color.White
+
+        If role = "Administrator" Then
+            selectedRole = "Administrator"
+            ' Administrator = ACTIVE (Navy Blue bg, White text)
+            btnAdmin.BackColor = navyColor
+            btnAdmin.ForeColor = whiteColor
+
+            ' Registrar Staff = INACTIVE (White bg, Navy Blue text)
+            btnStaff.BackColor = whiteColor
+            btnStaff.ForeColor = navyColor
+        Else
+            selectedRole = "Registrar Staff"
+            ' Registrar Staff = ACTIVE (Navy Blue bg, White text)
+            btnStaff.BackColor = navyColor
+            btnStaff.ForeColor = whiteColor
+
+            ' Administrator = INACTIVE (White bg, Navy Blue text)
+            btnAdmin.BackColor = whiteColor
+            btnAdmin.ForeColor = navyColor
+        End If
+    End Sub
+
+    ' ──────────────────────────────────────────────
+    ' ROLE TOGGLE — Switches active tab styling
     ' ──────────────────────────────────────────────
     Private Sub btnAdmin_Click(sender As Object, e As EventArgs) Handles btnAdmin.Click
-        selectedRole = "Administrator"
-        ' Active: white bg, navy text
-        btnAdmin.BackColor = System.Drawing.Color.White
-        btnAdmin.ForeColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        ' Inactive: navy bg, white text
-        btnStaff.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        btnStaff.ForeColor = System.Drawing.Color.White
+        SetActiveRoleUI("Administrator")
     End Sub
 
     Private Sub btnStaff_Click(sender As Object, e As EventArgs) Handles btnStaff.Click
-        selectedRole = "Registrar Staff"
-        ' Active: white bg, navy text
-        btnStaff.BackColor = System.Drawing.Color.White
-        btnStaff.ForeColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        ' Inactive: navy bg, white text
-        btnAdmin.BackColor = System.Drawing.Color.FromArgb(15, 31, 76)
-        btnAdmin.ForeColor = System.Drawing.Color.White
+        SetActiveRoleUI("Registrar Staff")
     End Sub
 
     ' ──────────────────────────────────────────────
-    ' LOGIN BUTTON — authentication logic with CourseAssigned
+    ' LOGIN BUTTON — Authentication logic with CourseAssigned
     ' ──────────────────────────────────────────────
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Dim username As String = txtUsername.Text.Trim()
@@ -96,11 +120,15 @@ Public Class frmLogin
         End Try
     End Sub
 
-    Private Sub pnlLeft_Paint(sender As Object, e As PaintEventArgs) Handles pnlLeft.Paint
-
+    Private Sub chkShowPassword_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPassword.CheckedChanged
+        If chkShowPassword.Checked Then
+            txtPassword.PasswordChar = ControlChars.NullChar
+        Else
+            txtPassword.PasswordChar = "•"c
+        End If
     End Sub
 
-    Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub pnlLeft_Paint(sender As Object, e As PaintEventArgs) Handles pnlLeft.Paint
 
     End Sub
 
@@ -108,13 +136,4 @@ Public Class frmLogin
 
     End Sub
 
-    Private Sub chkShowPassword_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPassword.CheckedChanged
-        If chkShowPassword.Checked = True Then
-
-            txtPassword.PasswordChar = ControlChars.NullChar
-        Else
-
-            txtPassword.PasswordChar = "•"c
-        End If
-    End Sub
 End Class

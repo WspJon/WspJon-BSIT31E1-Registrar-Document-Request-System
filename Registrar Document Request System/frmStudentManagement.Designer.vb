@@ -45,7 +45,7 @@ Partial Class frmStudentManagement
         ' pnlMainCard
         ' 
         pnlMainCard.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlMainCard.BackColor = Color.White
+        pnlMainCard.BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         pnlMainCard.Controls.Add(dgvStudents)
         pnlMainCard.Controls.Add(pnlSearchFilter)
         pnlMainCard.Controls.Add(pnlHeader)
@@ -144,16 +144,16 @@ Partial Class frmStudentManagement
         ' colActions
         ' 
         colActions.AutoSizeMode = DataGridViewAutoSizeColumnMode.None
-        colActions.Width = 125
         colActions.HeaderText = "ACTIONS"
         colActions.MinimumWidth = 6
         colActions.Name = "colActions"
         colActions.ReadOnly = True
+        colActions.Width = 125
         ' 
         ' pnlSearchFilter
         ' 
         pnlSearchFilter.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlSearchFilter.BackColor = Color.White
+        pnlSearchFilter.BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         pnlSearchFilter.Controls.Add(btnSearch)
         pnlSearchFilter.Controls.Add(cboCourseFilter)
         pnlSearchFilter.Controls.Add(txtSearch)
@@ -250,7 +250,7 @@ Partial Class frmStudentManagement
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(245), CByte(246), CByte(248))
+        BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         ClientSize = New Size(1051, 760)
         Controls.Add(pnlMainCard)
         Margin = New Padding(3, 4, 3, 4)

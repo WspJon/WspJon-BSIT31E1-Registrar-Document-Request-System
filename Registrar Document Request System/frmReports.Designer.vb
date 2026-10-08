@@ -41,8 +41,9 @@ Partial Class frmReports
         pnlHeader.Controls.Add(lblTitle)
         pnlHeader.Dock = DockStyle.Top
         pnlHeader.Location = New Point(0, 0)
+        pnlHeader.Margin = New Padding(3, 4, 3, 4)
         pnlHeader.Name = "pnlHeader"
-        pnlHeader.Size = New Size(1402, 60)
+        pnlHeader.Size = New Size(1602, 80)
         pnlHeader.TabIndex = 0
         ' 
         ' lblTitle
@@ -50,9 +51,9 @@ Partial Class frmReports
         lblTitle.AutoSize = True
         lblTitle.Font = New Font("Segoe UI", 16F, FontStyle.Bold)
         lblTitle.ForeColor = Color.White
-        lblTitle.Location = New Point(20, 15)
+        lblTitle.Location = New Point(23, 20)
         lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(94, 30)
+        lblTitle.Size = New Size(118, 37)
         lblTitle.TabIndex = 0
         lblTitle.Text = "Reports"
         ' 
@@ -61,9 +62,9 @@ Partial Class frmReports
         lblSelectReport.AutoSize = True
         lblSelectReport.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblSelectReport.ForeColor = Color.DimGray
-        lblSelectReport.Location = New Point(25, 80)
+        lblSelectReport.Location = New Point(29, 107)
         lblSelectReport.Name = "lblSelectReport"
-        lblSelectReport.Size = New Size(94, 15)
+        lblSelectReport.Size = New Size(120, 20)
         lblSelectReport.TabIndex = 1
         lblSelectReport.Text = "SELECT REPORT"
         ' 
@@ -71,9 +72,10 @@ Partial Class frmReports
         ' 
         cmbReportType.Font = New Font("Segoe UI", 11.25F)
         cmbReportType.FormattingEnabled = True
-        cmbReportType.Location = New Point(25, 100)
+        cmbReportType.Location = New Point(29, 133)
+        cmbReportType.Margin = New Padding(3, 4, 3, 4)
         cmbReportType.Name = "cmbReportType"
-        cmbReportType.Size = New Size(1196, 28)
+        cmbReportType.Size = New Size(1366, 33)
         cmbReportType.TabIndex = 2
         ' 
         ' btnGenerate
@@ -83,9 +85,10 @@ Partial Class frmReports
         btnGenerate.FlatStyle = FlatStyle.Flat
         btnGenerate.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold)
         btnGenerate.ForeColor = Color.White
-        btnGenerate.Location = New Point(1227, 100)
+        btnGenerate.Location = New Point(1402, 133)
+        btnGenerate.Margin = New Padding(3, 4, 3, 4)
         btnGenerate.Name = "btnGenerate"
-        btnGenerate.Size = New Size(130, 30)
+        btnGenerate.Size = New Size(149, 40)
         btnGenerate.TabIndex = 3
         btnGenerate.Text = "Generate"
         btnGenerate.UseVisualStyleBackColor = False
@@ -110,48 +113,56 @@ Partial Class frmReports
         dgvReports.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         dgvReports.Columns.AddRange(New DataGridViewColumn() {colRequestNo, colDate, colStudent, colDocument, colAmount, colStatus})
         dgvReports.EnableHeadersVisualStyles = False
-        dgvReports.Location = New Point(25, 150)
+        dgvReports.Location = New Point(29, 200)
+        dgvReports.Margin = New Padding(3, 4, 3, 4)
         dgvReports.Name = "dgvReports"
         dgvReports.ReadOnly = True
         dgvReports.RowHeadersVisible = False
+        dgvReports.RowHeadersWidth = 51
         dgvReports.RowTemplate.Height = 35
         dgvReports.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvReports.Size = New Size(1332, 537)
+        dgvReports.Size = New Size(1522, 716)
         dgvReports.TabIndex = 4
         ' 
         ' colRequestNo
         ' 
         colRequestNo.HeaderText = "REQUEST NO."
+        colRequestNo.MinimumWidth = 6
         colRequestNo.Name = "colRequestNo"
         colRequestNo.ReadOnly = True
         ' 
         ' colDate
         ' 
         colDate.HeaderText = "DATE"
+        colDate.MinimumWidth = 6
         colDate.Name = "colDate"
         colDate.ReadOnly = True
         ' 
         ' colStudent
         ' 
         colStudent.HeaderText = "STUDENT"
+        colStudent.MinimumWidth = 6
         colStudent.Name = "colStudent"
         colStudent.ReadOnly = True
         ' 
         ' colDocument
         ' 
         colDocument.HeaderText = "DOCUMENT"
+        colDocument.MinimumWidth = 6
         colDocument.Name = "colDocument"
         colDocument.ReadOnly = True
         ' 
         ' colAmount
         ' 
         colAmount.HeaderText = "AMOUNT"
+        colAmount.MinimumWidth = 6
         colAmount.Name = "colAmount"
         colAmount.ReadOnly = True
         ' 
         ' colStatus
         ' 
         colStatus.HeaderText = "STATUS"
+        colStatus.MinimumWidth = 6
         colStatus.Name = "colStatus"
         colStatus.ReadOnly = True
         ' 
@@ -162,26 +173,27 @@ Partial Class frmReports
         btnExport.FlatStyle = FlatStyle.Flat
         btnExport.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold)
         btnExport.ForeColor = Color.Black
-        btnExport.Location = New Point(1217, 706)
+        btnExport.Location = New Point(1391, 941)
+        btnExport.Margin = New Padding(3, 4, 3, 4)
         btnExport.Name = "btnExport"
-        btnExport.Size = New Size(140, 40)
+        btnExport.Size = New Size(160, 53)
         btnExport.TabIndex = 5
         btnExport.Text = "Export / Print"
         btnExport.UseVisualStyleBackColor = False
         ' 
         ' frmReports
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.White
-        ClientSize = New Size(1402, 815)
+        BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
+        ClientSize = New Size(1602, 1055)
         Controls.Add(btnExport)
         Controls.Add(dgvReports)
         Controls.Add(btnGenerate)
         Controls.Add(cmbReportType)
         Controls.Add(lblSelectReport)
         Controls.Add(pnlHeader)
-        Cursor = Cursors.Default
+        Margin = New Padding(3, 4, 3, 4)
         Name = "frmReports"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Reports"

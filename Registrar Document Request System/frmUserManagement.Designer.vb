@@ -17,9 +17,9 @@ Partial Class frmUserManagement
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As DataGridViewCellStyle = New DataGridViewCellStyle()
         pnlMainCard = New Panel()
         dgvUsers = New DataGridView()
         colFullName = New DataGridViewTextBoxColumn()
@@ -42,7 +42,7 @@ Partial Class frmUserManagement
         ' pnlMainCard
         ' 
         pnlMainCard.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlMainCard.BackColor = Color.White
+        pnlMainCard.BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         pnlMainCard.Controls.Add(dgvUsers)
         pnlMainCard.Controls.Add(pnlSearchFilter)
         pnlMainCard.Controls.Add(pnlHeader)
@@ -61,25 +61,25 @@ Partial Class frmUserManagement
         dgvUsers.BorderStyle = BorderStyle.None
         dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
         dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        DataGridViewCellStyle1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        DataGridViewCellStyle1.ForeColor = Color.White
-        DataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        DataGridViewCellStyle1.SelectionForeColor = Color.White
-        DataGridViewCellStyle1.WrapMode = DataGridViewTriState.True
-        dgvUsers.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle4.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        DataGridViewCellStyle4.ForeColor = Color.White
+        DataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle4.SelectionForeColor = Color.White
+        DataGridViewCellStyle4.WrapMode = DataGridViewTriState.True
+        dgvUsers.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         dgvUsers.ColumnHeadersHeight = 38
         dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         dgvUsers.Columns.AddRange(New DataGridViewColumn() {colFullName, colUsername, colRole, colStatus, colActions})
-        DataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = Color.White
-        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9.5F)
-        DataGridViewCellStyle3.ForeColor = Color.FromArgb(CByte(43), CByte(43), CByte(43))
-        DataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(CByte(240), CByte(244), CByte(255))
-        DataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        DataGridViewCellStyle3.WrapMode = DataGridViewTriState.False
-        dgvUsers.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = Color.White
+        DataGridViewCellStyle6.Font = New Font("Segoe UI", 9.5F)
+        DataGridViewCellStyle6.ForeColor = Color.FromArgb(CByte(43), CByte(43), CByte(43))
+        DataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(CByte(240), CByte(244), CByte(255))
+        DataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle6.WrapMode = DataGridViewTriState.False
+        dgvUsers.DefaultCellStyle = DataGridViewCellStyle6
         dgvUsers.EnableHeadersVisualStyles = False
         dgvUsers.GridColor = Color.FromArgb(CByte(235), CByte(235), CByte(235))
         dgvUsers.Location = New Point(29, 167)
@@ -119,13 +119,14 @@ Partial Class frmUserManagement
         ' 
         ' colStatus
         ' 
-        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        colStatus.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        colStatus.DefaultCellStyle = DataGridViewCellStyle5
         colStatus.HeaderText = "STATUS"
         colStatus.MinimumWidth = 6
         colStatus.Name = "colStatus"
         colStatus.ReadOnly = True
+        colStatus.Width = 125
         ' 
         ' colActions
         ' 
@@ -138,7 +139,7 @@ Partial Class frmUserManagement
         ' pnlSearchFilter
         ' 
         pnlSearchFilter.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlSearchFilter.BackColor = Color.White
+        pnlSearchFilter.BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         pnlSearchFilter.Controls.Add(btnSearch)
         pnlSearchFilter.Controls.Add(txtSearch)
         pnlSearchFilter.Location = New Point(29, 91)
@@ -220,7 +221,7 @@ Partial Class frmUserManagement
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(245), CByte(246), CByte(248))
+        BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         ClientSize = New Size(1051, 760)
         Controls.Add(pnlMainCard)
         Margin = New Padding(3, 4, 3, 4)

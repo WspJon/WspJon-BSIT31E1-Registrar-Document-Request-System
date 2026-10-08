@@ -17,9 +17,9 @@ Partial Class frmAdminRequestList
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As DataGridViewCellStyle = New DataGridViewCellStyle()
         pnlMainCard = New Panel()
         dgvRequests = New DataGridView()
         colRequestNo = New DataGridViewTextBoxColumn()
@@ -44,7 +44,7 @@ Partial Class frmAdminRequestList
         ' pnlMainCard
         ' 
         pnlMainCard.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlMainCard.BackColor = Color.White
+        pnlMainCard.BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         pnlMainCard.Controls.Add(dgvRequests)
         pnlMainCard.Controls.Add(pnlSearchFilter)
         pnlMainCard.Controls.Add(pnlHeader)
@@ -63,25 +63,25 @@ Partial Class frmAdminRequestList
         dgvRequests.BorderStyle = BorderStyle.None
         dgvRequests.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
         dgvRequests.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        DataGridViewCellStyle1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        DataGridViewCellStyle1.ForeColor = Color.White
-        DataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        DataGridViewCellStyle1.SelectionForeColor = Color.White
-        DataGridViewCellStyle1.WrapMode = DataGridViewTriState.True
-        dgvRequests.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle4.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        DataGridViewCellStyle4.ForeColor = Color.White
+        DataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle4.SelectionForeColor = Color.White
+        DataGridViewCellStyle4.WrapMode = DataGridViewTriState.True
+        dgvRequests.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         dgvRequests.ColumnHeadersHeight = 38
         dgvRequests.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         dgvRequests.Columns.AddRange(New DataGridViewColumn() {colRequestNo, colStudent, colDocuments, colDate, colAmount, colPayment, colStatus})
-        DataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = Color.White
-        DataGridViewCellStyle3.Font = New Font("Segoe UI", 9.5F)
-        DataGridViewCellStyle3.ForeColor = Color.FromArgb(CByte(43), CByte(43), CByte(43))
-        DataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(CByte(240), CByte(244), CByte(255))
-        DataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
-        DataGridViewCellStyle3.WrapMode = DataGridViewTriState.False
-        dgvRequests.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = Color.White
+        DataGridViewCellStyle6.Font = New Font("Segoe UI", 9.5F)
+        DataGridViewCellStyle6.ForeColor = Color.FromArgb(CByte(43), CByte(43), CByte(43))
+        DataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(CByte(240), CByte(244), CByte(255))
+        DataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
+        DataGridViewCellStyle6.WrapMode = DataGridViewTriState.False
+        dgvRequests.DefaultCellStyle = DataGridViewCellStyle6
         dgvRequests.EnableHeadersVisualStyles = False
         dgvRequests.GridColor = Color.FromArgb(CByte(235), CByte(235), CByte(235))
         dgvRequests.Location = New Point(29, 167)
@@ -101,6 +101,7 @@ Partial Class frmAdminRequestList
         colRequestNo.MinimumWidth = 6
         colRequestNo.Name = "colRequestNo"
         colRequestNo.ReadOnly = True
+        colRequestNo.Width = 125
         ' 
         ' colStudent
         ' 
@@ -128,8 +129,8 @@ Partial Class frmAdminRequestList
         ' 
         ' colAmount
         ' 
-        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight
-        colAmount.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight
+        colAmount.DefaultCellStyle = DataGridViewCellStyle5
         colAmount.HeaderText = "AMOUNT"
         colAmount.MinimumWidth = 6
         colAmount.Name = "colAmount"
@@ -142,6 +143,7 @@ Partial Class frmAdminRequestList
         colPayment.MinimumWidth = 6
         colPayment.Name = "colPayment"
         colPayment.ReadOnly = True
+        colPayment.Width = 125
         ' 
         ' colStatus
         ' 
@@ -154,7 +156,7 @@ Partial Class frmAdminRequestList
         ' pnlSearchFilter
         ' 
         pnlSearchFilter.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        pnlSearchFilter.BackColor = Color.White
+        pnlSearchFilter.BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         pnlSearchFilter.Controls.Add(btnSearch)
         pnlSearchFilter.Controls.Add(cboStatusFilter)
         pnlSearchFilter.Controls.Add(txtSearch)
@@ -233,7 +235,7 @@ Partial Class frmAdminRequestList
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(245), CByte(246), CByte(248))
+        BackColor = Color.FromArgb(CByte(255), CByte(249), CByte(229))
         ClientSize = New Size(1143, 760)
         Controls.Add(pnlMainCard)
         Margin = New Padding(3, 4, 3, 4)
