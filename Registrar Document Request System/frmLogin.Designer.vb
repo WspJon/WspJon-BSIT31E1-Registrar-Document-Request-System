@@ -56,7 +56,7 @@ Partial Class frmLogin
         ' 
         Label2.AutoSize = True
         Label2.Font = New Font("Segoe UI Black", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.ForeColor = Color.FromArgb(CByte(245), CByte(197), CByte(24))
+        Label2.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         Label2.Location = New Point(103, 420)
         Label2.Name = "Label2"
         Label2.Size = New Size(194, 41)
@@ -67,7 +67,7 @@ Partial Class frmLogin
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI Black", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.ForeColor = Color.FromArgb(CByte(245), CByte(197), CByte(24))
+        Label1.ForeColor = Color.FromArgb(CByte(15), CByte(31), CByte(76))
         Label1.Location = New Point(33, 365)
         Label1.Name = "Label1"
         Label1.Size = New Size(348, 41)
