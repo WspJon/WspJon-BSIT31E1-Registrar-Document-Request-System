@@ -1,4 +1,4 @@
-﻿Imports MySql.Data.MySqlClient
+Imports MySql.Data.MySqlClient
 Imports System.Drawing
 
 Public Class frmSearchStudent
@@ -348,12 +348,6 @@ Public Class frmSearchStudent
                     dgvStudents.DataSource = dt
 
                 End Using
-
-
-                '===================================================
-                ' ADD ONLY ONE ACTION COLUMN
-                '===================================================
-                SetupActionColumn()
 
 
                 '===================================================
